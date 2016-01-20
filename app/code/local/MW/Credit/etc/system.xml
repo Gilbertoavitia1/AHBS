@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<config>
+	<tabs>
+        <mageworld translate="label">
+            <label>Mage World</label>
+            <sort_order>300</sort_order>
+        </mageworld>
+    </tabs>
+    <sections>
+        <credit translate="label">
+            <label>Credit</label>
+            <tab>mageworld</tab><!-- Tham chieu den ten bat ky mageworld o tren -->
+            <frontend_type>text</frontend_type>
+            <sort_order>101</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>                
+				<options translate="label">
+                    <label>Options</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>2</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                    	<allow_using_credit_to_checkout  translate="label">
+                            <label>Show credit discount on shopping cart</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allow_using_credit_to_checkout>
+                    	<max_credit_to_checkout translate="label">
+                            <label>Max amount of credit to checkout</label>
+                            <frontend_type>text</frontend_type>
+                             <validate>validate-digits</validate>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Customer can use credit to checkout but not over this amount. Input 0 or leave empty if no limitation</comment>
+                        </max_credit_to_checkout>
+                	</fields>
+                </options>
+                <author_information translate="label">
+                    <label>Author Information</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <comment>The Affiliate Extension is developed and supported by &lt;a href="http://www.mage-world.com/"&gt;www.Mage-World.com&lt;/a&gt;.
+							 If you need any support or have any question, please contact us at &lt;a href="mailto:support@mage-world.com"&gt;support@mage-world.com.&lt;/a&gt;
+                    </comment>
+                </author_information>
+				
+            </groups>
+        </credit>
+    </sections>
+</config>

@@ -1,0 +1,42 @@
+<?php
+/**
+ *
+ * @category   MW
+ * @package    MW_Credit
+ * @author Mage World <support@mage-world.com>
+ */
+?>
+<div id="toggleSectionnew">
+<?php $currency = Mage::app()->getStore()->getCurrentCurrencyCode();?>
+<?php $_affiliates = $this->getCollection(); ?>
+<?php if($_affiliates->getSize()): ?>
+	<?php echo $this->getPagerHtml(); ?>
+	<table class="data-table" id="my-credits-table2" >
+	    <thead>
+	        <tr>
+				<th style="text-align: center;"><?php echo $this->__('Date') ?></th>
+				<th style="text-align: center;"><?php echo $this->__('Withdrawal Amount') ?></th>
+				<th style="text-align: center;"><?php echo $this->__('Payment Processing Fee') ?></th>
+	            <th style="text-align: center;"><?php echo $this->__('Net Amount') ?></th>
+	            <th style="text-align: center;"><?php echo $this->__('Currency') ?></th>
+				<th style="text-align: center;"><?php echo $this->__('Status') ?></th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	        <?php foreach ($_affiliates as $_affiliate): ?>
+	            <tr style="text-align:left">
+	                <td style="width: 60px;"><?php echo $this->formatDate($_affiliate->getWithdrawnTime())." ".$this->formatTime($_affiliate->getWithdrawnTime());?></td>
+					<!--  <td style="width: 80px;"><?php //echo date('d/m/Y', strtotime($_affiliate->getWithdrawTime()))." ".date('H:i', strtotime($_affiliate->getWithdrawTime()));?></td>-->
+					<td style=" width:100px;"><?php echo Mage::helper('affiliate')->formatMoney($_affiliate->getWithdrawnAmount());?></td>
+					<td  style="text-align: center;"><?php echo Mage::helper('affiliate')->formatMoney($_affiliate->getFee()); ?></td>
+					<td  style="text-align: center;"><?php echo Mage::helper('affiliate')->formatMoney($_affiliate->getAmountReceive()); ?></td>
+					<td  style="text-align: center;width: 60px;"><?php echo $currency ?></td>
+	            	<td style="text-align: center;width: 60px;"><?php echo $this->getStatusText($_affiliate->getStatus());?></td>
+	            </tr>
+	        <?php endforeach; ?>
+	    </tbody>
+	</table>
+	<?php echo $this->getPagerHtml(); ?>
+	<script type="text/javascript">decorateTable('my-credits-table2')</script>
+<?php endif ?>
+</div>

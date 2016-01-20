@@ -1,0 +1,122 @@
+<?php 
+$referral = Mage::getModel('affiliate/affiliatecustomers')->load(Mage::getSingleton('customer/session')->getCustomer()->getId())->getReferralCode();
+$referral_code = Mage::app()->getRequest()->getPost('referral_code') ? Mage::app()->getRequest()->getPost('referral_code') : $referral;
+$referral_sponsor = Mage::app()->getRequest()->getPost('referral_sponsor') ? Mage::app()->getRequest()->getPost('referral_sponsor') : $referral;
+?>
+<?php $flag = Mage::registry('flag'); ?> 
+
+
+<hr style="margin-top: 0px;">
+
+<div class="dashboard brown-border affilate row">
+    <div class="col-sm-12 col-md-12">
+        <div><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+        <?php if ($flag == 1):?>
+        <div class="page-title page-head brown-gradiant"><h4 class="title"><?php echo $this->__('Binary Registry')?></h4></div>
+	
+        <div class="account-box ad-account-info  box-account box-info">
+            <div class="row">
+                <div class="col-sm-12 col-md-12" >		
+                    <label>Tu N&uacute;mero de Distribuidor:</label>
+                    <h6><?php echo $referral ?> <small>(Puedes usarlo como Colocaci&oacuten, Patrocinador o ambos)</small></h6> 
+                </div>
+                <div class="col-sm-12 col-md-12" >		
+                    <label for="binary_registry_option">
+                        <?php $side = Mage::registry('side') == "l" ? "IZQUIERDO" : "DERECHO"; ?>
+                        <?php $code = Mage::registry('code'); ?>                        
+                        <?php $name = Mage::registry('name'); ?> 
+                        Recuerda que el lado que escogiste para registrar a esta persona es el <?php echo $side ?> de <?php echo "{$name}({$code})"?>; Si te equivocaste, solo cierra esta ventana y vuelve a escoger la posici&oacute;n correcta.                    
+                         
+                     </label>
+                </div>
+            </div>
+            <form action="<?php echo $this->getUrl('affiliate/binary/newregistry') ?>" method="post" id="form-new" >     
+                <input type="hidden" name="parent_id" id="parent_id" value="<?php echo Mage::registry('parent_id'); ?>"/>                            
+                <input type="hidden" name="side" id="side" value="<?php echo Mage::registry('side'); ?>"/>                            
+                <div class="row">
+                    <div class="col-sm-9 col-md-9" style="margin-top:0; padding-top:0">		
+                        <div class="form-box">
+                            <h5 class="legend"><?php echo $this->__('Personal Information') ?></h5>
+                            <div class="col-md-6 col-sm-6">
+                                <label for="name"><span class="required">*</span> <?php echo $this->__('First Name') ?></label>
+                                <input type="text" name="first_name" id="first_name" value="<?php echo Mage::app()->getRequest()->getPost('first_name'); ?>" title="<?php echo $this->__('First Name') ?>" class="form-control input-text required-entry" />
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label for="name"><span class="required">*</span> <?php echo $this->__('Last Name') ?></label>
+                                <input type="text" name="last_name" id="last_name" value="<?php echo Mage::app()->getRequest()->getPost('last_name'); ?>" title="<?php echo $this->__('Last Name') ?>" class="form-control input-text required-entry" />
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-md-5 col-sm-5">
+                                <label for="email_address"><span class="required">*</span> <?php echo $this->__('Email Address') ?></label>
+                                <input type="text" name="email" id="email_address" value="<?php echo Mage::app()->getRequest()->getPost('email'); ?>" title="<?php echo $this->__('Email Address') ?>" class="form-control input-text validate-email required-entry" />
+                            </div>
+
+                            <div class="col-md-2 col-sm-2">
+                                <label for="referral_code"><span class="required">*</span> <?php echo $this->__('# Colocaci&oacute;n') ?></label>
+                                <input type="text" name="referral_code" id="referral_code" value="<?php echo $referral_code ?>" title="<?php echo $this->__('Referral Code') ?>" class="form-control input-text required-entry" />
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+                                <label for="referral_sponsor"><span class="required">*</span> <?php echo $this->__('# Patrocinador') ?></label>
+                                <input type="text" name="referral_sponsor" id="referral_sponsor" value="<?php echo $referral_sponsor ?>" title="<?php echo $this->__('Referral Sponsor') ?>" class="form-control input-text required-entry" />
+                            </div>
+
+                            <?php $_taxvat = $this->getLayout()->createBlock('customer/widget_taxvat') ?>
+                            <?php if ($_taxvat->isEnabled()): ?>
+                                <div class="col-md-2 col-sm-2">
+                                    <label for="tax"><span class="required">*</span> <?php echo $this->__('Tax VAT ID') ?></label>                            
+                                    <input type="text" name="tax" id="tax" value="<?php echo Mage::app()->getRequest()->getPost('tax'); ?>" title="<?php echo $this->__('Tax ID') ?>" class="form-control input-text required-entry" />
+                                </div>
+                                
+                            <?php endif ?>  
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3" style="margin-top:0; padding-top:0">		
+                        <div class="form-box">
+                            <h5 class="legend"><?php echo $this->__('Password') ?></h5>
+                            <label for="password"><span class="required">*</span> <?php echo $this->__('Password') ?></label>
+                            <input type="password" name="password" id="password" title="<?php echo $this->__('Password') ?>" class="form-control input-text required-entry validate-password" />
+
+                            <label for="confirmation"><span class="required">*</span> <?php echo $this->__('Confirm Password') ?></label>
+                            <input type="password" name="confirmation" title="<?php echo $this->__('Confirm Password') ?>" id="confirmation" class="form-control input-text required-entry validate-cpassword" />
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="buttons-set">
+                            <button type="submit" title="<?php echo $this->__('Submit') ?>" class="button_link btn" ><span><span><?php echo $this->__('Submit') ?></span></span></button>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <?php endif;?>
+    </div>
+</div>
+
+<script type="text/javascript">
+    //<![CDATA[
+        var dataForm = new VarienForm('form-new', true);
+    //]]>
+</script>
+
+<style>
+.validation-advice { 
+    color:red;
+    font-weight: bold;
+    font-size: 10px;
+    margin-bottom: 10px;
+}
+ul.messages, ul.messages ul{
+    list-style: none;
+    padding: 0;
+}
+ul.messages li.error-msg{
+    list-style: none;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #a94442;
+    padding: 15px;
+}
+</style>

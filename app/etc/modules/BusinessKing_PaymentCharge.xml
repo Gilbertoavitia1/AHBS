@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <BusinessKing_PaymentCharge>
+            <active>true</active>
+            <codePool>local</codePool>            
+        </BusinessKing_PaymentCharge>
+    </modules>
+</config>

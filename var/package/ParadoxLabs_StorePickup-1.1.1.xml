@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package>
+    <name>ParadoxLabs_StorePickup</name>
+    <version>1.1.1</version>
+    <stability>stable</stability>
+    <license uri="http://store.paradoxlabs.com/license.html">Commercial</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Shipping method that allows your customers to pickup their purchases instead of having them shipped.</summary>
+    <description>Store Pickup is a shipping method extension that gives your customers the option to pickup their purchases in your store instead of having them shipped. You can set a fixed (flat) or percentage-based (variable) shipping fee, or make it totally free.</description>
+    <notes>Fixed issues causing the extension not to work under specific conditions&#xD;
+Key Changes:&#xD;
+	*	Cleaned up code&#xD;
+	*	Fixed issue with all store locations sharing the same method code&#xD;
+	*	Fixed issue with shipping method not being shown when handling fee is 0</notes>
+    <authors><author><name>ParadoxLabs, inc.</name><user>paradoxlabs</user><email>magento@paradoxlabs.com</email></author></authors>
+    <date>2013-06-05</date>
+    <time>15:58:46</time>
+    <contents><target name="magelocal"><dir name="ParadoxLabs"><dir name="StorePickup"><dir name="Model"><dir name="Carrier"><file name="Pickup.php" hash="981838dca42dee6eaeada32df8734ea8"/></dir></dir><dir name="etc"><file name="config.xml" hash="6da86a8eb4f3ab32bf779fd3c0215642"/><file name="system.xml" hash="3dd4c5372000047f7b72066f59a584cb"/></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="ParadoxLabs_StorePickup.xml" hash="2064150e6d2e231e57e0e465314a5425"/></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.3.0</min><max>6.0.0</max></php></required></dependencies>
+</package>

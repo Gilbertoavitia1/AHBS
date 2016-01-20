@@ -1,0 +1,90 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * @see Mage_Page_Block_Template_Links
+ */
+?>
+
+<?php $referral_edit = Mage::getSingleton('affiliate/affiliatecustomers')->load(Mage::getSingleton('customer/session')->getCustomer()->getId());
+      $status =$referral_edit->getStatus(); 
+      if($status == MW_Affiliate_Model_Statusreferral::LOCKED)
+      {?>
+        <p class="error-msg">
+            <?php echo $this->__('Affiliate Account was disabled, please contact us to solve this problem.') ?>                     
+        </p>
+     <?php }else 
+     {
+      $customer = Mage::getSingleton('customer/session')->getCustomer();
+      $name = $customer->getName();
+      $affiliate_customer = Mage::getModel('affiliate/affiliatecustomers')->load($customer->getId());
+      $credit_customer = Mage::getModel('credit/creditcustomer')->load($customer->getId());
+      $payment_gateway = $affiliate_customer->getPaymentGateway();
+      $payment_email = $affiliate_customer->getPaymentEmail();
+      $auto_withdrawn = $affiliate_customer->getAutoWithdrawn();
+      $withdrawn_level = $affiliate_customer->getWithdrawnLevel();
+      $reserve_level = $affiliate_customer->getReserveLevel();
+      $bank_name = $affiliate_customer->getBankName();
+      $name_account = $affiliate_customer->getNameAccount();
+      $bank_country = $affiliate_customer->getBankCountry();
+      $swift_bic = $affiliate_customer->getSwiftBic();
+      $account_number = $affiliate_customer->getAccountNumber();
+      $re_account_number = $affiliate_customer->getReAccountNumber();
+      $referral_site = $affiliate_customer->getReferralSite();
+      $balance = $credit_customer->getCredit();
+      ?>
+
+<?php } ?>
+
+
+
+
+
+<a href="<?php echo Mage::getUrl('checkout/cart');?>"><img src="<?php echo $this->getSkinUrl('img/shopping-cart.png') ?>"> 
+    <strong class="hidden-xs"> 
+        <?php echo $this->__('Cart') ?>
+        <?php $cartItemsCount = Mage::helper('checkout/cart')->getCart()->getItemsCount(); ?>
+        <?php $cartSuffix = ($cartItemsCount != 1) ? 's' : ''; ?>
+        <?php if ($cartItemsCount > 0): ?>
+            <?php echo  '('.$cartItemsCount.')'; ?>
+        <?php endif;?>
+    </strong><strong></strong></a>
+<span class="separator hidden-xs">|</span>
+
+<a href="<?php echo Mage::getUrl('customer/account'); ?>"><img src="<?php echo $this->getSkinUrl('img/account.png') ?>"> <strong class="hidden-xs"> <?php echo $name;?> 
+
+<!-- <?php echo $this->__('My Account') ?> -->
+
+</strong></a>
+<?php $session = Mage::getSingleton('customer/session', array('name'=>'frontend')); ?>
+<?php if (($session->isLoggedIn())): ?>
+    <span class="separator hidden-xs">|</span>
+    <a href="<?php echo Mage::getUrl('customer/account/logout'); ?>"><i class="fa fa-times fa-lg"></i><strong class="hidden-xs"> <?php echo $this->__('Log Out') ?></strong></a>
+<?php endif; ?>
+
+
+

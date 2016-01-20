@@ -1,0 +1,82 @@
+<?php $affiliate = Mage::registry('affiliate_bonus');?>
+<?php //echo '<pre>';print_R($affiliate);echo '</pre>';?>
+<div class="main-col-inner">
+    <div id="messages"></div>
+    <div class="content-header">
+        <h3 class="icon-head head-adminhtml-affiliatebonuspreferred">Cliente Preferente</h3>    
+        <p class="form-buttons">
+            <!--<button style="" onclick="setLocation('http://habitos.dev.b/index.php/admin/affiliate/adminhtml_affiliatebonus/index/key/3a809c0262216dcbc6075a24f2badf8e/')" class="scalable back" type="button" title="Volver" id="id_56319d46f5f0dbb11baf687ca5a20998"><span><span><span>Volver</span></span></span></button>-->
+            <!--<button style="" onclick="editForm.submit();" class="scalable save" type="button" title="Save Reference" id="id_2460ddf1dcb1ba75a0a5aeaf36518185"><span><span><span>Save Reference</span></span></span></button>-->
+        </p>
+    </div>
+    <div class="entry-edit">
+        <form enctype="multipart/form-data" method="post" action="http://habitos.dev.b/index.php/admin/affiliate/adminhtml_affiliatebonus/save/id/59/key/4bf55ff460e1ea65a84ef60be7290e93/" id="edit_form">
+            <div>
+                <input type="hidden" value="tgQNqgnyN2Df6Ol1" name="form_key">
+            </div>
+            <div style="" id="bonuspreferred_tabs_form_section_content">
+                <div class="entry-edit">
+                    <!--<div class="entry-edit-head">
+                        <h4 class="icon-head head-edit-form fieldset-legend">Descripción</h4>
+                        <div class="form-buttons"></div>
+                    </div>
+                    <div id="preferred_form" class="fieldset ">
+                        <div class="hor-scroll">
+                            <table cellspacing="0" class="form-list">
+                                <tbody>
+                                    <tr>
+                                        <td class="label"><label for="title">Patrocinador</label></td>
+                                        <td class="value"><input type="text" class=" input-text" value="" name="title" id="title"></td>
+                                    </tr>    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>-->
+                    <div class="grid">
+                        <table cellspacing="0" class="data">
+                            <thead>
+                                <tr class="headings">
+                                    <th><?php echo $this->__('#')?></th>
+                                    <th><?php echo $this->__('Customer')?></th>
+                                    <th><?php echo $this->__('Order')?></th>                                    
+                                    <th><?php echo $this->__('Page')?></th>
+                                    <th style="text-align: right;"><?php echo $this->__('Total')?></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $total = 0; ?>
+                                <?php foreach ($affiliate as $key => $value): ?>
+                                    <?php $package = unserialize($value['package']) ?>
+                                
+                                    <?php $total = $total + $value['total']?>
+                                    <?php $order_id = "";?>
+                                    <?php $desc = "";?>
+                                    <?php foreach ($package as $k => $v):?>                                    
+                                        <?php $desc .= "<strong>{$v['increment_id']}</strong> | <strong>{$v['sku']}</strong>: {$v['name']}<br>" ?>
+                                    <?php endforeach; ?>
+                                <tr>
+                                    <td><?php echo $key+1 ?></td>
+                                    <td><?php echo Mage::getModel('customer/customer')->load($value['child_id'])->getName() ?></td>
+                                    <td><?php echo $desc ?></td>
+                                    <td><?php echo $value['website_id'] == 1 ? "MX" : "US"?></td>
+                                    <td style="text-align: right;">$ <?php echo number_format($value['total'],2) ?></td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>                            
+                            <tfoot>
+                                <tr>
+                                    <td class="label emph" colspan="4" style="text-align: right;"><strong><big><?php echo $this->__('Total')?></big></strong></td>
+                                    <td class="emph" style="text-align: right;"><strong><big><span class="price">$ <?php echo number_format($total,2) ?></span></big></strong></td>                                    
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <script type="text/javascript">
+        editForm = new varienForm('edit_form', '');
+    </script>
+</div>

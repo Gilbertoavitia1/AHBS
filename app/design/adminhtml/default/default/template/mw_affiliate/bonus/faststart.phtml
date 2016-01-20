@@ -1,0 +1,51 @@
+<div class="content-header">
+    <table cellspacing="0">
+        <tbody>
+            <tr>
+                <td style="width:50%;"><h3 class="icon-head head-adminhtml-affiliatefaststart"><?php echo $this->__('Fast Start Bonus')?></h3></td>
+                <td class="form-buttons">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <div id="cache_grid">
+        <div id="cache_grid_massaction">
+            <table cellspacing="0" cellpadding="0" class="massaction">
+                <tbody>
+                    <tr>
+                        <td>      
+                            <form action="<?php echo Mage::helper("adminhtml")->getUrl('*/*/*'); ?>" method="post">
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="grid">
+            <div class="hor-scroll">
+                <table cellspacing="0" id="cache_grid_table" class="data">                
+                    <thead>
+                        <tr>
+                            <th><?php echo $this->__('Sponsor')?></th>
+                            <th><?php echo $this->__('New Member')?></th>
+                            <th><?php echo $this->__('Rank')?></th>
+                            <th><?php echo $this->__('VP')?></th>
+                            <th><?php echo $this->__('VG')?></th>
+                            <th><?php echo $this->__('Total Package')?></th>
+                            <th><?php echo $this->__('Total')?></th>
+                            <th><?php echo $this->__('Actives')?></th>
+                            <th><?php echo $this->__('Qualify')?></th>
+                        </tr>
+                    <thead>
+                    <tbody>
+                        <tr class="even">
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

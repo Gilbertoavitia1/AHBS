@@ -1,0 +1,5 @@
+<?php
+$category = Mage::getSingleton('catalog/layer')->getCurrentCategory();
+if (empty($category) != true) {
+    $image = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "catalog/category/" . Mage::getModel('catalog/category')->load($category->getId())->getThumbnail();
+    if($image) { ?><div class="main-banner-holder"><img src="<?php echo $image ?>" alt="<?php echo $category->getName() ?>" title="<?php echo $category->getName() ?>" /></div><?php } } ?>

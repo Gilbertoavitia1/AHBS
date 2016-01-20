@@ -1,0 +1,116 @@
+<?php $data = Mage::registry('recurring_data')->getData();?>
+<?php $customer = Mage::getModel("customer/customer")->load($data['customer_id']);?>
+<?php $order = Mage::getModel('sales/order')->load($data['order_id']); ?>
+<?php $incId = $order->getIncrementId();?>
+<?php $plans = Mage::getModel('firstdatae4/plans')->toOptionArray();?>
+<?php $history = Mage::getModel('firstdatae4/history')->getCollection()
+        ->addFieldToFilter('recurring_id', array('eq' => $data['recurring_id']));
+        ?>
+<div class="entry-edit">
+<div class="box-left">
+    <div class="entry-edit-head"><h4 class="icon-head head-customer-view"><?php echo Mage::helper('firstdatae4')->__('Information') ?></h4></div>
+    <fieldset>
+        <table  class="form-list">            
+            <tr>
+                <td class="label"><?php echo Mage::helper('firstdatae4')->__('Plan') ?></td>
+                <td class="value" style="color:red; text-transform: uppercase;"><strong><?php echo Mage::helper('firstdatae4')->__($plans[$data['type']]) ?></strong></td>
+            </tr>
+            <tr>
+                <td class="label"><?php echo Mage::helper('firstdatae4')->__('Reference') ?></td>
+                <td class="value" style="color:green; "><strong><?php echo $incId ?></strong></td>
+            </tr>
+            <tr>
+                <td class="label"><?php echo Mage::helper('firstdatae4')->__('Customer Name') ?></td>
+                <td class="value"><strong><?php echo $customer->getName() ?></strong></td>
+            </tr>            
+            <tr>
+                <td class="label"><?php echo Mage::helper('firstdatae4')->__('Email') ?></td>
+                <td class="value"><strong><?php echo $customer->getEmail() ?></strong></td>
+            </tr>
+            <tr>
+                <td class="label"><?php echo Mage::helper('firstdatae4')->__('Created Date') ?></td>
+                <td class="value"><strong><?php echo $data['created_date'] ?></strong></td>
+            </tr>
+            <tr>
+                <td class="label"><?php echo Mage::helper('firstdatae4')->__('Last Run') ?></td>
+                <td class="value"><strong><?php echo $data['updated_date'] ?></strong></td>
+            </tr>
+            <tr>
+                <td class="label"><?php echo Mage::helper('firstdatae4')->__('Next Run') ?></td>
+                <td class="value"><strong><?php echo $data['next_date'] ?></strong></td>
+            </tr>
+        </table>
+    </fieldset>
+</div>
+
+<div class="box-right">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-customer-sales-statistics"><?php echo Mage::helper('firstdatae4')->__('Order Information') ?></h4>
+    </div>
+    <div class="grid">
+        <table cellspacing="0" class="data">
+            <thead>
+                <tr class="headings">
+                    <th><?php echo Mage::helper('firstdatae4')->__('Item') ?></th>
+                    <th><?php echo Mage::helper('firstdatae4')->__('SKU') ?></th>
+                    <th><?php echo Mage::helper('firstdatae4')->__('Quantity') ?></th>
+                    <th><?php echo Mage::helper('firstdatae4')->__('Price') ?></th>
+                    <th><?php echo Mage::helper('firstdatae4')->__('Total') ?></th>
+                </tr>
+            </thead>
+            <tfoot>
+                <?php $items = $order->getAllVisibleItems(); ?>
+                <?php foreach ($items as $key => $value): ?>
+                <tr>
+                    <td class="label"><strong><?php echo $value->getName();?></strong></td>
+                    <td class="emph"><?php echo $value->getSku();?></strong></td>
+                    <td class="emph"><?php echo number_format($value->getQtyOrdered(), 0, '.', '');?></strong></td>
+                    <td class="emph"><?php echo number_format($value->getPrice(), 2, '.', '').' '.$order->getOrderCurrencyCode();;?></td>
+                    <td class="emph" style="text-align:right;"><?php echo number_format($value->getPrice()*$value->getQtyOrdered(), 2, '.', '').' '.$order->getOrderCurrencyCode();?></td>
+                </tr>
+                <?php endforeach; ?>
+                <?php $amount = $order->getGrandTotal(); ?>
+                <tr>
+                    <td colspan="4" style="text-align:right;"><big><strong><?php echo Mage::helper('firstdatae4')->__('Shipping & Handling')?></strong></big></td>
+                    <td class="emph" style="text-align:right;"><?php echo number_format($order->getShippingAmount(), 2, '.', '').' '.$order->getOrderCurrencyCode();?></td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align:right;"><big><strong><?php echo Mage::helper('firstdatae4')->__('Total')?></strong></big></td>
+                    <td class="emph" style="text-align:right;"><?php echo number_format($amount, 2, '.', '').' '.$order->getOrderCurrencyCode()?></td>
+                </tr>
+      
+            </tfoot>
+                        <tbody>
+                <tr class="no-display"><td colspan="5">d</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+    
+<div class="box-right">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-customer-sales-statistics"><?php echo Mage::helper('firstdatae4')->__('Recurring Information') ?></h4>
+    </div>
+    <div class="grid">
+        <table cellspacing="0" class="data">
+            <thead>
+                <tr class="headings">
+                    <th><?php echo Mage::helper('firstdatae4')->__('Order') ?></th>
+                    <th><?php echo Mage::helper('firstdatae4')->__('Date') ?></th>
+                </tr>
+            </thead>
+            <tfoot>
+                <?php foreach ($history as $key => $value): ?>
+                <?php $link =  Mage::getModel('sales/order')->loadByIncrementId($value['order_created'])->getId();?>
+                <tr>
+                    <td><a href="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/sales_order/view', array('order_id' => $link)) ?>" target="_blank"><?php echo $value['order_created'] ?></a></td>
+                    <td><?php echo $value['date_of_run'] ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<div class="clear"></div>
+</div>

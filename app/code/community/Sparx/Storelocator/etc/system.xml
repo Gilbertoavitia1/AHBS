@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <sparxstore translate="label">
+            <label>Sparx Store Extension</label>
+            <sort_order>300</sort_order>
+        </sparxstore>
+    </tabs>
+    <sections>
+        <storelocator translate="label" module="storelocator">                    
+            <class>separator-top</class>
+            <label>General</label>
+            <tab>sparxstore</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>        
+            <groups>
+                <settings translate="label"> 
+                    <label>General Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>0</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enable Store Locator</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Enable Store Locator</comment>
+                        </active>
+                        <jquery translate="label">
+                            <label>Enable jQuery</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Enable jQuery</comment>
+                        </jquery>
+<!--                        <enablejs translate="label">
+                            <label>Enable JQuery</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Enable JQuery lib</comment>
+                        </enablejs>-->
+<!--                        <toplinks translate="label">
+                            <label>Add Storelocator link to top menu</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </toplinks>-->
+                        <defaultlon translate="label">
+                            <label>Default Longitude</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Default Longitude</comment>
+                        </defaultlon>
+                        <defaultlat translate="label">
+                            <label>Default Latitude</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Default Latitude</comment>
+                        </defaultlat>
+                    </fields>
+                </settings>
+            </groups>
+        </storelocator>
+    </sections>
+</config>
+

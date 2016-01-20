@@ -1,0 +1,161 @@
+<form id="likebox-form" name="likebox-form" method="get" action="">
+<div id="loading-mask" style="display:none">
+    <p class="loader" id="loading_mask_loader"><img src="<?php echo $this->getSkinUrl('mw_affiliate/images/ajax-loader-tr.gif');?>" alt="Loading..."/><br/>Please wait...</p>
+</div>
+<div id="likebox">
+	<div class="page-title page-head">
+    	<h1><?php echo $this->__('My Affiliate Widget') ?></h1>
+	</div>
+	
+	<div id="likebox-form-boxinfo">
+		<div class="likebox-box-head">
+			<h2><?php echo $this->__('General Information')?></h2>
+		</div>
+		<ul class="form-list">
+			<li class="fields">
+				<div class="field">
+					<label for="likebox-title"><em></em><?php echo $this->__('Title:')?></label>
+				</div>
+				<div class="input-box">
+					<input id="likebox-title" type="text" name="likebox_title" value="<?php echo Mage::getStoreConfig('affiliate/likebox/likebox_title')?>" title="<?php echo $this->__('Title')?>" class="input-text" />
+				</div>
+			</li>
+			<li class="fields">
+				<div class="field">
+					<label for="likebox-width"><em></em><?php echo $this->__('Width:')?></label>
+				</div>
+				<div class="input-box">
+					<input id="likebox-width" type="text" name="likebox_width" value="<?php echo Mage::getStoreConfig('affiliate/likebox/likebox_width')?>" title="<?php echo $this->__('Width')?>" class="input-text" />
+				</div>
+			</li>
+			<li class="fields">
+				<div class="field">
+					<label for="likebox-colorscheme"><em></em><?php echo $this->__('Color Scheme:')?></label>
+				</div>
+				<div class="input-box">
+					<select id="likebox-colorscheme" name="likebox_colorscheme" class="required-entry">
+						<option value="1">light</option>
+						<option value="0">dark</option>
+					</select>
+				</div>
+			</li>
+			<li class="fields">
+				<div class="field">
+					<label for="likebox-showborder"><em></em><?php echo $this->__('Show Border:')?></label>
+				</div>
+				<div class="input-box">
+					<select id="likebox-showborder" name="likebox_showborder" class="required-entry">
+						<option value="1">Yes</option>
+						<option value="0">No</option>
+					</select>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div id="likebox-form-iteminfo">
+		<div class="likebox-box-head">
+			<h2>Product Information</h2>
+		</div>
+		<ul class="form-list">
+			<li class="fields">
+				<div class="field">
+					<label for="likebox-product-qty"><em></em><?php echo $this->__('Number of products:')?></label>
+				</div>
+				<div class="input-box">
+					<input id="likebox-product-qty" type="text" name="likebox_product_qty" value="<?php echo Mage::getStoreConfig('affiliate/likebox/likebox_product_qty')?>" title="<?php echo $this->__('Number of products:')?>" class="input-text" />
+				</div>
+			</li>
+			<li class="control">
+				<input id="select-by-bestseller" type="radio" name="product_select_method" class="radio" value="0" checked="checked"/>
+				<label for="select-by-bestseller"><em></em><?php echo $this->__('Select by bestseller')?></label>
+			</li>
+			<li class="control">
+				<input id="select-by-new" type="radio" name="product_select_method" class="radio" value="1"/>
+				<label for="select-by-new"><em></em><?php echo $this->__('Select by new products')?></label>
+			</li>
+			
+			<li class="control">
+				<input id="select-by-category" type="radio" name="product_select_method" class="radio" value="2"/>
+				<label for="select-by-category"><em></em><?php echo $this->__('Select by category')?></label>
+			</li>
+			<li class="fields" id="category-block">
+				<div class="input-box">
+					<select id="category-option" name="category_option">
+						<option value=""><?php echo $this->__('Please select a category')?></option>
+						<?php 
+							$categories = $this->getCategoryOptionArray();
+							foreach($categories as $value => $label):
+						?>
+						<option value="<?php echo $value?>"><?php echo $label?></option>
+						<?php endforeach;?>
+					</select>
+				</div>
+			</li>
+		</ul>
+	</div>
+	
+	<div style="clear:both"></div>
+	
+	<div id="likebox-preview">
+		
+	</div>
+	
+	<div style="clear:both"></div>
+	<button type="button" id="get-code-btn" class="button" onclick="" style=""><span><span><?php echo $this->__('Get code')?></span></span></button>	
+</div>
+
+<div id="code-render-block">
+	<textarea cols="113" rows="10" id="code-render-textarea" onclick="javascript:this.select()" readonly>
+		
+	</textarea>
+	<p>Please copy and insert the code above to your website</p>
+</div>
+</form>
+
+<script type="text/javascript">
+	var elements = $('likebox-width','likebox-colorscheme','likebox-showborder','likebox-title','likebox-product-qty','select-by-bestseller','select-by-new','category-option');
+	var methods  = $('select-by-category','select-by-bestseller','select-by-new');
+	
+	document.observe('dom:loaded', function() {
+		$('code-render-block').hide();
+		$('category-block').hide();
+		updatePreview();
+	});
+
+	elements.invoke('observe', 'change', function() {
+		$('code-render-block').value = '';
+		$('code-render-block').hide();
+
+		updatePreview();
+	});
+
+	methods.invoke('observe','change', function() {
+		if($(this).value == 2) {
+			$('category-block').show();
+		} else {
+			$('category-block').hide();
+		}
+	});
+
+	$('get-code-btn').observe('click', function() {
+		$('code-render-textarea').value = getIframe();
+		$('code-render-block').show();
+	});
+
+	function getIframe() {
+		src = '<?php echo Mage::getUrl('affiliate/likebox/render');?>' + "?"+'customer_id=<?php echo Mage::getSingleton('customer/session')->getCustomer()->getId();?>&' + $('likebox-form').serialize();
+		
+		width = ($('likebox-width').value > 0) ? $('likebox-width').value + 'px' : '195px';
+		colorscheme = ($('likebox-colorscheme').value > 0) ? '#ffffff' : '#333333';
+		border = ($('likebox-showborder').value > 0) ? '1px solid #c1c1c1' : 'none';
+		
+		iframe = '<iframe src="' + src + '" frameborder="0" scrolling="no" style="width:' + width + ';border:' + border + ';background-color:' + colorscheme + ';padding:0 10px 0 5px" allowTransparency="true" onload="javascript:this.style.height=this.contentWindow.document.body.scrollHeight + \'px\';"></iframe>';
+
+		return iframe;
+	}
+			
+	function updatePreview() {
+		$('likebox-preview').update(getIframe());
+	}
+	
+</script>

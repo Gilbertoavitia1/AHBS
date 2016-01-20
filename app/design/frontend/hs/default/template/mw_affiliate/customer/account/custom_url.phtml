@@ -1,0 +1,49 @@
+<?php 
+$referral_edit = Mage::getSingleton('affiliate/affiliatecustomers')->load(Mage::getSingleton('customer/session')->getCustomer()->getId());
+$status =$referral_edit->getStatus(); 
+if($status == MW_Affiliate_Model_Statusreferral::LOCKED){?>
+<p class="error-msg">
+<?php echo $this->__('Affiliate Account was disabled, please contact us to solve this problem.') ?>						
+</p>
+<?php } else {
+    $customer = Mage::getSingleton('customer/session')->getCustomer();
+    $name = $customer->getName();
+
+    $affiliate_customer = Mage::getModel('affiliate/affiliatecustomers')->load($customer->getId());
+
+    $host = parse_url(Mage::getBaseUrl());
+    $custom_url = Mage::getStoreConfig('affiliate/invitation/custom_member_url') ? 
+            Mage::getStoreConfig('affiliate/invitation/custom_member_url1') : 
+            $host['scheme'].'://'.$host['host'].'/miembro/';
+    $url = $affiliate_customer->getCustomerUrl();
+    ?>
+<div id="tabajax">	  
+<form action="<?php echo Mage::getUrl('affiliate/account/editUrl') ?>" method="post" name="mw_custom_url" id="form-validate" >
+<div class="dashboard brown-border affilate">
+    <div class="page-title    page-head brown-gradiant">
+    	<h1><?php echo $this->__('My Custom Url') ?></h1>
+    </div>
+    <div class="account-box ad-account-info    box-account box-info ">		
+        <div class="fieldset">
+            <ul class="form-list">
+                <li class="fields">		             
+                 <div class="field">
+                    <label for="name" ><em></em><?php echo $this->__('Custom URL') ?></label>
+                    	<?php echo $this->getChildHtml('global_messages') ?>
+                    <div class="input-box">
+                        <span><?php echo $custom_url?></span>
+                        <input type="text" name="url" id="email_address" class="form-control" value="<?php echo $url ?>" title="<?php echo $this->__('Custom URL') ?>" class="input-text required-entry" />                         
+                    </div>
+                 </div>   
+                </li>
+	     </ul>
+	    <br />
+         </div>		
+        <div class="buttons-set">   	
+            <button type="submit" title="<?php echo $this->__('Save') ?>" id="referral_acount" class="button_link btn"><span><span><?php echo $this->__('Save') ?></span></span></button>
+        </div>		  
+    </div>
+</div>
+</form>
+</div>
+<?php }?>

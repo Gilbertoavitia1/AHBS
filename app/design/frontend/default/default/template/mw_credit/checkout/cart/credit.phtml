@@ -1,0 +1,45 @@
+<?php 
+/**
+ *
+ * @category   MW
+ * @package    MW_Credit
+ * @author Mage World <support@mage-world.com>
+ */
+ ?>
+ <?php $show = Mage::getStoreConfig('credit/options/allow_using_credit_to_checkout');
+ 	   if($show){
+ ?>
+<form id="discount-credit-form" action="<?php echo $this->getUrl('credit/checkout_cart/creditPost') ?>" method="post">
+    <div class="discount">
+        <h2><?php echo $this->__('Use Credit') ?></h2>
+        <div class="discount-form">
+            <label for="credit_code"><?php echo $this->__('Enter your credit here') ?></label>
+            <input type="hidden" name="removeCredit" id="remove-credit" value="0" />
+            <div class="input-box">
+                <input class="input-text" id="credit_value" name="credit_value" value="<?php //echo $this->htmlEscape(Mage::helper('credit')->getCreditByCheckout()) ?>" />
+            </div>
+            <div class="buttons-set">
+                <button type="button" title="<?php echo $this->__('Apply Credit') ?>" class="button" onclick="creditForm.submit(false)" value="<?php echo $this->__('Apply Credit') ?>"><span><span><?php echo $this->__('Apply Credit') ?></span></span></button>
+                <?php if(strlen(Mage::helper('credit')->getCreditByCheckout())): ?>
+                    &nbsp; <button type="button" title="<?php echo $this->__('Cancel Credit') ?>" class="button" onclick="creditForm.submit(true)" value="<?php echo $this->__('Cancel Credit') ?>"><span><span><?php echo $this->__('Cancel Credit') ?></span></span></button>
+                <?php endif;?>
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+//<![CDATA[
+var creditForm = new VarienForm('discount-credit-form');
+creditForm.submit = function (isRemove) {
+    if (isRemove) {
+        $('credit_value').removeClassName('required-entry');
+        $('remove-credit').value = "1";
+    } else {
+        $('credit_value').addClassName('required-entry validate-number');
+        $('remove-credit').value = "0";
+    }
+    return VarienForm.prototype.submit.bind(creditForm)();
+}
+//]]>
+</script>
+<?php }?>

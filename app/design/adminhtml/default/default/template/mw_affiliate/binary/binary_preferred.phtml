@@ -1,0 +1,60 @@
+<?php $affiliate = Mage::registry('collection');?>
+<?php $customer_id = Mage::registry('id');?>
+<div class="main-col-inner">
+    <div id="messages"></div>
+    <div class="content-header">
+        <h3 class="icon-head head-adminhtml-affiliatebonuspreferred"><?php echo $this->__('Cliente Preferente') ?>: 
+            <?php echo Mage::getModel('customer/customer')->load($customer_id)->getName() ?>
+        </h3>
+                
+        <p class="form-buttons">
+            <button style="" onclick="setLocation('<?php echo Mage::helper('adminhtml')->getUrl("affiliate/adminhtml_affiliatebinary/preferred") ?>')" class="scalable back" type="button" title="Volver"><span><span><span>Volver</span></span></span></button>
+        </p>
+    </div>
+    <div class="entry-edit">        
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-account"><?php echo $this->__('Profit') ?></h4>
+        </div>
+        <div class="fieldset">
+            <div class="grid">
+                <table cellspacing="0" class="data">
+                    <thead>
+                        <tr class="headings">
+                            <th><?php echo $this->__('Customer')?></th>
+                            <th><?php echo $this->__('Order')?></th>  
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($affiliate as $key => $value):?>
+                        <?php $package = json_decode($value['package']);?>
+                        <tr>
+                            <td><?php echo Mage::getModel('customer/customer')->load($value['preferred_id'])->getName()  ?></td>
+                            <td>
+                                <table cellspacing="0" class="data">
+                                <thead>
+                                    <tr class="headings">
+                                        <th><?php echo $this->__('# Order')?></th>
+                                        <th><?php echo $this->__('Profit')?></th>
+                                        <th><?php echo $this->__('Currency')?></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php foreach ($package as $k => $v):?>
+                                    <tr>
+                                        <td><a href="<?php echo Mage::helper('adminhtml')->getUrl("adminhtml/sales_order/view", array('order_id' => $v[3])) ?>" target="_blank"><?php echo $v[0] ?></a></td>
+                                        <td><?php echo $v[4] ?></td>
+                                        <td><?php echo $v[2] ?></td>
+                                    </tr>
+                                <?php endforeach;?>
+                                </tbody> 
+                                </table>
+                            </td>
+                        </tr>
+                        <?php endforeach;?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="clear"></div>            
+    </div>
+</div>

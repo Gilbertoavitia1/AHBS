@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <report>
+            <children>
+                <salesroot translate="title">
+                    <children>
+                        <paypalmx_settlement_reports translate="title">
+                            <title>Reportes de Solución PayPal México</title>
+                            <action>adminhtml/paypal_reportss</action>
+                            <sort_order>100</sort_order>
+                        </paypalmx_settlement_reports>
+                    </children>
+                </salesroot>
+            </children>
+        </report>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <paypalmx>
+                                        <title>Seccion de PayPal Mexico</title>
+                                    </paypalmx>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                    <report>
+                        <children>
+                            <salesroot>
+                                <children>
+                                    <paypalmx_settlement_reports translate="title">
+                                        <title>Reportes de Solución PayPal México</title>
+                                        <children>
+                                            <view translate="title">
+                                                <title>View</title>
+                                            </view>
+                                            <fetch translate="title">
+                                                <title>Fetch</title>
+                                            </fetch>
+                                        </children>
+                                    </paypalmx_settlement_reports>
+                                </children>
+                            </salesroot>
+                        </children>
+                    </report>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

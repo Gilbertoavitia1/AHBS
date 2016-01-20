@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <MW_Member>
+            <version>0.0.1</version>
+        </MW_Member>
+    </modules>
+<frontend>
+    <routers>
+        <member>
+            <use>standard</use>
+            <args>
+                <module>MW_Member</module>
+                <frontName>member</frontName>
+            </args>
+        </member>
+    </routers>
+        <layout>
+            <updates>
+                <mw_member>
+                    <file>mw_member.xml</file>
+                </mw_member>
+            </updates>
+        </layout>
+    </frontend>
+    <global>
+        <events>
+            <controller_front_init_routers>
+                <observers>
+                    <member>
+                        <class>MW_Member_Controller_Router</class>
+                        <method>initControllerRouters</method>
+                    </member>
+                </observers>
+            </controller_front_init_routers>
+        </events>
+    </global>
+</config>

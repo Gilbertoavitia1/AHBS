@@ -1,0 +1,146 @@
+<?php $person = array_pop(Mage::registry('items')); ?>
+<?php $recompra = Mage::registry('recompra'); ?>
+<?php $cp = Mage::registry('cp'); ?>
+
+
+
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <h5>Panel de Control <small><a onclick="javascript:introJs().start();" href="javascript:void(0);" title="Ver Tutorial">VER TUTORIAL</a></small></h5>
+        <div class="col-xs-12 col-md-3">
+            <div class="badger" data-step="1" data-intro="<strong>Volumen personal</strong><br>Es el Volumen Personal de Puntos realizados en el mes en curso.">
+                <i class="fa fa-user fa-3x"></i>
+                <p>
+                    <span style="font-weight: bold;"><?php echo $this->__('VP');?></span><br>
+                    <span id="fc"><?php echo number_format($person['vp']) ?></span>
+                </p>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-3">
+            <div class="badger" data-step="2" data-intro="<strong>Volumen de Constructor</strong><br>Es el 25% de los Puntos por las compras constructor (Excedente de 130 VP) realizadas en el mes.">
+                <i class="fa fa-black-tie fa-3x"></i>
+                <p>
+                    <span style="font-weight: bold;"><?php echo $this->__('V de C');?></span><br>
+                    <span id="vc"><?php echo number_format($person['constructor']) ?></span>
+                </p>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-3">
+            <div class="badger" data-step="3" data-intro="<strong>Cliente Preferente</strong><br>Muestra los <i>puntos</i> de las personas que usted haya patrocinado y sean unicamente <u>Cliente Preferente</u>. De estos puntos se suma el 25% al VG.">
+                <i class="fa fa-user-plus fa-3x"></i>
+                <p>
+                    <span style="font-weight: bold;"><?php echo $this->__('CP');?></span><br>
+                    <span id="fc"><small><?php echo number_format($cp); ?></small></span>
+                </p>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-3">
+            <div class="badger" data-step="4" data-intro="<strong>Volumen Global</strong><br>Son todos los <i>puntos</i> de todas las compras generadas en su red, de acuerdo a la fecha de corte (Viernes Pasado a Jueves Actual), se le recuerda que los cortes son cada JUEVES.">
+                <i class="fa fa-users fa-3x"></i>
+                <p>
+                    <span style="font-weight: bold;"><?php echo $this->__('VG');?></span><br>
+                    <span id="fc"><?php echo number_format($person['vg']); ?></span>
+                </p>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <hr>
+        <div class="col-xs-12 col-md-12">
+            <div class="badger">
+                <i class="fa fa-calendar fa-3x"></i>
+                <p>
+                    <span style="font-weight: bold;"><?php echo $this->__('Vigencia de Recompra');?></span><br>
+                    <span id="fc"><small><?php echo $recompra['expired_package'] ?></small></span>
+                </p>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <hr>
+    </div>
+</div>
+
+
+<style>
+    .badger{
+        background-color: #3f2a14;
+        padding-top: 48px;
+        padding-bottom: 48px;
+        border-radius:  10px;
+        text-align: center;
+        color: #fff;
+        margin-bottom: 10px;
+    }
+    .badgerb{
+        background-color: #166700 !important;
+    }
+    .left-navigation{
+        margin-bottom: 30px;
+    }
+    
+    /* entire container, keeps perspective */
+.flip-container {
+	perspective: 1000;
+	transform-style: preserve-3d;
+}
+	/*  UPDATED! flip the pane when hovered */
+	.flip-container:hover .back {
+		transform: rotateY(0deg);
+	}
+	.flip-container:hover .front {
+	    transform: rotateY(180deg);
+	}
+
+.flip-container, .front, .back {
+	width: 100%;
+}
+
+/* flip speed goes here */
+.flipper {
+	transition: 0.6s;
+	transform-style: preserve-3d;
+
+	position: relative;
+}
+
+/* hide back of pane during swap */
+.front, .back {
+	backface-visibility: hidden;
+	transition: 0.6s;
+	transform-style: preserve-3d;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/*  UPDATED! front pane, placed above back */
+.front {
+	z-index: 2;
+	transform: rotateY(0deg);
+}
+
+/* back, initially hidden pane */
+.back {
+	transform: rotateY(-180deg);
+}
+
+/* 
+	Some vertical flip updates 
+*/
+.vertical.flip-container {
+	position: relative;
+}
+
+	.vertical .back {
+		transform: rotateX(180deg);
+	}
+
+	.vertical.flip-container:hover .back {
+	    transform: rotateX(0deg);
+	}
+
+	.vertical.flip-container:hover .front {
+	    transform: rotateX(180deg);
+	}
+        
+</style>

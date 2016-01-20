@@ -1,0 +1,105 @@
+<?php $customer_id = Mage::getSingleton('customer/session')->getCustomer()->getId(); ?>
+<form id="co-heared4us-form" action="">
+    <?php 
+    $cart = Mage::getSingleton('checkout/session')->getQuote();
+    $array = array('bundle' => 0, "simple" => 0);
+    foreach ($cart->getAllVisibleItems() as $item) {
+        $single = $item->getData();
+        if ($single['product_type'] == 'bundle')
+            $array['bundle'] =  $array['bundle'] + 1;
+        else
+            $array['simple'] =  $array['simple'] + 1;    
+    }?>
+
+    <select id="getvoice" name="getvoice">
+        <?php if (($array['bundle'] > 0) && ($array['simple'] == 0)): ?>
+            <option id="getvoice-two" value="2"><?php echo $this->__('Paquete') ?></option>
+        <?php elseif (($array['bundle'] == 0) && ($array['simple']  > 0)): ?>  
+            <option id="getvoice-one" value="1"><?php echo $this->__('Recompra') ?></option>
+            <option id="getvoice-three" value="3"><?php echo $this->__('Constructor') ?></option>
+    <?php endif; ?>
+    </select>
+</form>
+
+
+<div class="button-set">
+    <p class="required"><?php echo $this->__('* Required Fields') ?></p>
+    <div id="heared4us-buttons-container">
+        <button type="button" class="form-button right btn" onclick="heared4us.save();"><span><?php echo $this->__('Continue') ?></span></button>
+        <span id="heared4us-please-wait" style="display:none;" class="opc-please-wait">
+            <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" class="v-middle" alt="" /> &nbsp; <?php echo $this->__('Loading next step...') ?> &nbsp;
+        </span>
+    </div>
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+
+var Heared4us = Class.create();
+Heared4us.prototype = {
+    initialize: function(form, saveUrl){
+        this.form = form;
+        if ($(this.form)) {
+            $(this.form).observe('submit', function(event){this.save();Event.stop(event);}.bind(this));
+        }
+        this.saveUrl = saveUrl;
+        this.onSave = this.nextStep.bindAsEventListener(this);
+        this.onComplete = this.resetLoadWaiting.bindAsEventListener(this);
+    },
+
+    save: function(){
+        if (checkout.loadWaiting!=false) return;
+
+        var validator = new Validation(this.form);
+        if (validator.validate()) {
+
+            checkout.setLoadWaiting('heared4us');
+            var request = new Ajax.Request(
+                this.saveUrl,
+                {
+                    method: 'post',
+                    onComplete: this.onComplete,
+                    onSuccess: this.onSave,
+                    onFailure: checkout.ajaxFailure.bind(checkout),
+                    parameters: Form.serialize(this.form)
+                }
+            );
+        }
+    },
+
+    resetLoadWaiting: function(transport){
+        checkout.setLoadWaiting(false);
+    },
+
+    nextStep: function(transport){
+        if (transport && transport.responseText){
+            try{
+                response = eval('(' + transport.responseText + ')');
+            }
+            catch (e) {
+                response = {};
+            }
+        }
+
+        if (response.error){
+            if ((typeof response.message) == 'string') {
+                alert(response.message);
+            } else {
+                if (window.billingRegionUpdater) {
+                    billingRegionUpdater.update();
+                }
+
+                alert(response.message.join("\n"));
+            }
+
+            return false;
+        }
+
+        checkout.setStepResponse(response);
+    }    
+}
+
+var heared4us = new Heared4us('co-heared4us-form', '<?php echo $this->getUrl('checkout/onepage/saveHeared4us') ?>');
+
+//]]>
+</script>

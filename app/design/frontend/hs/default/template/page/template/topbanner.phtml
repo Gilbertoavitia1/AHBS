@@ -1,0 +1,25 @@
+<?php $url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$this->getData('background'); ?>
+<?php $height = $this->getData('backgroundHeight') ? $this->getData('backgroundHeight') : '400px'; ?>
+<?php $position = $this->getData('position') ? $this->getData('position') : '0px 0px'; ?>
+
+<div class="full-width-box cm-padding-bottom-36" style="height:<?php echo $height?>; margin-bottom:40px">
+    <div class="fwb-bg" style="background-image: url('<?php echo $url; ?>'); background-position: <?php echo $position?>">
+        <div class="container">
+            <?php if ($this->getData('title')): ?>
+                <h1 style="color:#FFF; margin-top:20px; text-shadow:2px 2px 6px #000"><?php echo $this->getData('title') ?></h1>
+            <?php endif; ?>
+            <?php if ($this->getData('title2')): ?>
+                <h1 style="text-align:left; color:#FFF; text-decoration:underline; margin-top:100px; text-shadow:2px 2px 6px #000"><?php echo $this->getData('title2') ?></h1>
+            <?php endif; ?>
+            <?php if ($this->getData('descripcion')): ?>
+                <p style="text-align:left; color:#FFF; font-weight:bold; text-shadow:2px 2px 6px #000; font-size:2em;"><?php echo $this->getData('descripcion') ?></p>
+            <?php endif; ?>
+            <?php if ($this->getData('img1')): ?>
+                <img style="padding:10px 0" src="<?php echo  Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$this->getData('img1'); ?>">
+            <?php endif; ?>
+            <?php if ($this->getData('img2')): ?>
+                <img style="width:80%" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$this->getData('img2'); ?>">
+            <?php endif; ?>
+        </div>
+    </div>    
+</div>

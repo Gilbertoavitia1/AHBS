@@ -1,0 +1,53 @@
+<?php
+/**
+ *
+ * @category   MW
+ * @package    MW_Credit
+ * @author Mage World <support@mage-world.com>
+ */
+?>
+<?php $size = Mage::helper('affiliate')->getSizeAffiliateHistory();?>
+<div class="dashboard">
+	<div class="page-title    page-head">
+    	<h1><?php echo $this->__('Affiliate History') ?></h1>
+	</div>
+	<div class="box-account box-recent account-box ad-orders">
+	        <div class="head box-head">
+	            <h2><?php echo $this->__('My Commission History') ?></h2>
+	        </div>
+	        <?php if($size == 0 ){?>
+	        <div><?php echo $this->__('No Commission History Found') ?></div>
+	        <?php } else if($size > 0){?>
+<div id="toggleSection">
+<?php $_affiliates = $this->getCollection();?>
+<?php if($_affiliates->getSize()): ?>
+	<?php echo $this->getPagerHtml(); ?>
+	<table class="data-table" id="my-credits-table" >
+	    <thead>
+	        <tr>
+				<th style="text-align: center;"><?php echo $this->__('Date') ?></th>
+				<th style="text-align: center;"><?php echo $this->__('Order Number') ?></th>
+				<th style="text-align: center;"><?php echo $this->__('Commission') ?></th>
+				<th style="text-align: center;"><?php echo $this->__('Customer Discount') ?></th>
+				<th style="text-align: center;"><?php echo $this->__('Status') ?></th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	        <?php foreach ($_affiliates as $_affiliate): ?>
+	            <tr style="text-align:left">
+	            	<td style="width: 50px;"><?php echo $this->formatDate($_affiliate->getTransactionTime())." ".$this->formatTime($_affiliate->getTransactionTime());?></td>
+					<td ><a href='<?php echo $this->getUrl('affiliate/index/viewhistory').'id/'.$_affiliate->getOrderId(); ?>'><?php echo $_affiliate->getOrderId();?></a></td>
+	            	<td style="text-align: center;"><?php echo Mage::helper('affiliate')->formatMoney($_affiliate->getTotalCommission())?></td>
+	            	<td><?php echo Mage::helper('affiliate')->formatMoney($_affiliate->getTotalDiscount())?></td>
+	            	<td style="text-align: center;width: 60px;"><?php echo $this->getStatusText($_affiliate->getStatus());?></td>
+	            </tr>
+	        <?php endforeach; ?>
+	    </tbody>
+	</table>
+	<?php echo $this->getPagerHtml(); ?>
+	<script type="text/javascript">decorateTable('my-credits-table')</script>
+<?php endif ?>
+</div>
+<?php }?>
+</div>
+</div>

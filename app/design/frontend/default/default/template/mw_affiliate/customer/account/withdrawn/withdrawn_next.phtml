@@ -1,0 +1,171 @@
+<?php
+	$store_id = Mage::app()->getStore()->getId();
+	$rate = Mage::helper('core')->currency(1,false);
+  	$customer = Mage::getSingleton("customer/session")->getCustomer();
+    $customer_withdrawn = Mage::getModel('affiliate/affiliatecustomers')->load($customer->getId());
+  	$credit_customer = Mage::getModel('credit/creditcustomer')->load($customer->getId());
+  	$your_balance = doubleval($credit_customer->getCredit());
+    $account_email = $customer_withdrawn ->getPaymentEmail();
+      
+    /* Convert to base price */
+    $withdraw_amount = doubleval($this->getRequest()->getPost("withdraw_amount"));
+    $withdraw_amount = $withdraw_amount/$rate;
+    $currency = Mage::app()->getStore()-> getCurrentCurrencyCode();
+    $reserve_level = $customer_withdrawn->getReserveLevel();
+      
+    $payment_gateway = Mage::helper('affiliate')->getLabelPaymentGateway($customer_withdrawn ->getPaymentGateway());
+    $_payment_gateway = $customer_withdrawn->getPaymentGateway();
+    $withdrawn_period = Mage::helper('affiliate')->getWithdrawnPeriod();
+    
+
+    /* Calculate fee if fee_config is percentage of withdraw amount */
+    $fee = Mage::helper('affiliate/data')->getFeeStore($store_id);
+    if(strpos($fee, '%')) {
+    	$percent = doubleval(substr($fee, 0, strpos($fee, '%')));
+    	$fee = ($percent * $withdraw_amount)/100;
+    } else {
+    	$fee = doubleval($fee);
+    }
+      
+    $withdraw_receive = $withdraw_amount - $fee;
+    $bank_name = $customer_withdrawn->getBankName();
+	$name_account = $customer_withdrawn->getNameAccount();
+	$bank_country = $customer_withdrawn->getBankCountry();
+	$swift_bic = $customer_withdrawn->getSwiftBic();
+	$account_number= $customer_withdrawn->getAccountNumber();
+	$bank_country = Mage::getModel('directory/country')->load($bank_country)->getName();
+?> 
+<form action="<?php echo $this->getUrl('affiliate/index/withdrawnsubmit') ?>" method="post" >
+ <div class="fieldset">
+    <h2 class="legend"><?php echo $this->__('Withdrawal') ?></h2>
+    <ul class="form-list">
+         <li class="fields">
+             <div class="field">
+                 <label for="your_balance" ><em></em><?php echo $this->__('Your Balance:') ?></label>
+             </div>
+             <div>
+             	<?php echo Mage::helper('core')->currency($your_balance);?>
+             	<input type="hidden" name="your_balance" value="<?php echo $your_balance;?>" />        		
+        	</div>
+        </li>
+        <li class="fields">
+             <div class="field">
+             	<label for="payment_gateway" ><em></em><?php echo $this->__('Payment Method:') ?></label>
+             </div>
+             <div>
+             	<?php echo $payment_gateway;?>
+             	<input type="hidden" name="payment_gateway" id="payment_gateway" value="<?php echo $payment_gateway;?>" />        		
+        	</div>
+        </li>
+        <?php if($_payment_gateway != 'banktransfer' && $_payment_gateway != 'check'){?>
+        <li class="fields">
+             <div class="field">
+             	<label for="account_email" ><em></em><?php echo $this->__('Payment Email:') ?></label>
+             </div>
+             <div>
+             	<?php echo $account_email;?>
+             	<input type="hidden" name="account_email" value="<?php echo $account_email;?>" />          		
+        	</div>
+        </li>
+        <?php } if($_payment_gateway == 'banktransfer'){?>
+       <li class="fields">
+             <div class="field">
+             	<label for="bank_name" ><em></em><?php echo $this->__('Bank Name:') ?></label>
+             </div>
+             <div>
+             	<?php echo $bank_name;?>       		
+        	</div>
+       </li>
+       <li class="fields">
+             <div class="field">
+             	<label for="name_account" ><em></em><?php echo $this->__('Name on account:') ?></label>
+             </div>
+             <div>
+             	<?php echo $name_account;?>       		
+        	</div>
+       </li>
+       <li class="fields">
+             <div class="field">
+             	<label for="bank_country" ><em></em><?php echo $this->__('Bank Country:') ?></label>
+             </div>
+             <div>
+             	<?php echo $bank_country;?>      		
+        	</div>
+       </li>
+       <li class="fields">
+             <div class="field">
+             	<label for="swift_bic" ><em></em><?php echo $this->__('SWIFT code:') ?></label>
+             </div>
+             <div>
+             	<?php echo $swift_bic;?>        		
+        	</div>
+       </li>
+       <li class="fields">
+             <div class="field">
+             	<label for="account_number" ><em></em><?php echo $this->__('Account Number:') ?></label>
+             </div>
+             <div>
+             	<?php echo $account_number;?>      		
+        	</div>
+       </li>
+       <?php }?>
+       <li class="fields">
+             <div class="field">
+             	<label for="fee" ><em></em><?php echo $this->__('Payment Processing Fee:') ?></label>
+             </div>
+             <div>
+             	<?php echo Mage::helper('core')->currency($fee);?>
+             	<input type="hidden" name="fee" value="<?php echo $fee;?>" />
+        	</div>
+       </li>
+       <li class="fields">
+             <div class="field">
+             	<label for="reserve_level" ><em></em><?php echo $this->__('Reserve Level:') ?></label>
+             </div>
+             <div>
+             	<?php echo Mage::helper('core')->currency($reserve_level);?>
+             	<input type="hidden" name="currency" value="<?php echo $reserve_level;?>" />
+        	</div>
+       </li>
+       <li class="fields">
+             <div class="field">
+             	<label for="withdraw_amount" ><em></em><?php echo $this->__('Withdrawal Amount:') ?></label>
+             </div>
+             <div>
+             	<?php echo Mage::helper('core')->currency($withdraw_amount);?>
+             	<input type="hidden" name="withdraw_amount" value="<?php echo $withdraw_amount;?>" />
+        	</div>
+       </li>
+       <li class="fields">
+             <div class="field">
+             	<label for="withdraw_receive" ><em></em><?php echo $this->__('Net Amount:') ?></label>
+             </div>
+             <div>
+             	<?php echo Mage::helper('core')->currency($withdraw_receive);?>
+             	<input type="hidden" name="withdraw_receive" value="<?php echo $withdraw_receive;?>" />
+        	</div>
+       </li>
+	   <li class="fields">
+             <div class="field">
+             	<label for="withdrawn_period" ><em></em><?php echo $this->__('Withdrawal Period:') ?></label>
+             </div>
+              <div>
+             	<?php echo $withdrawn_period;?>       		
+        	</div>
+       </li>
+       <li class="fields">
+             <div class="field">
+             	<label for="currency" ><em></em><?php echo $this->__('Currency:') ?></label>
+             </div>
+             <div>
+             	<?php echo $currency;?>
+             	<input type="hidden" name="currency" value="<?php echo $currency;?>" />
+        	</div>
+       </li>
+     </ul>
+  </div>
+  <div class="buttons-set">
+  	  <p class="back-link"><a href="<?php echo $this->getUrl('affiliate/index/withdrawn') ?>" class="back-link"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>   	
+      <button type="submit" title="<?php echo $this->__('Submit') ?>" class="button"><span><span><?php echo $this->__('Submit') ?></span></span></button>
+  </div>
+</form>

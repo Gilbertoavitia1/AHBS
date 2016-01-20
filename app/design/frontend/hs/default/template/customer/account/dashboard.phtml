@@ -1,0 +1,27 @@
+<div class="row dashboard">
+    
+    <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+    
+    
+    <div class="col-sm-12 col-md-12">
+       <h4 class="title"><?php echo $this->__('My Dashboard') ?></h4>        
+        <?php echo $this->getChildHtml('hello') ?>
+        
+        
+    <hr>
+        <?php echo $this->getChildHtml('top') ?>
+        
+        
+        <div class="box-account box-info">
+            <div class="box-head">
+                <h3 class="title"><?php echo $this->__('Account Information') ?></h3>
+            </div>
+            <?php /* Extensions placeholder */ ?>
+            <?php echo $this->getChildHtml('customer.account.dashboard.extra') ?>
+            <?php echo $this->getChildHtml('info') ?>
+            <?php //echo $this->getChildHtml('address') ?>
+        </div>
+        <?php //echo $this->getChildHtml('info1') ?>
+        <?php //echo $this->getChildHtml('info2') ?>
+    </div>
+</div>

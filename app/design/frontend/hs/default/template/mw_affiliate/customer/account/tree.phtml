@@ -1,0 +1,59 @@
+<?php 
+	$size = $this->getSizeAffiliateNetwork();
+?>
+
+<div class="dashboard">
+	<div class="page-title page-head">
+    	<h1><?php echo $this->__('Affiliate Network') ?></h1>
+	</div>
+	<div class="box-account box-recent account-box ad-orders">
+	        <div class="head box-head">
+	            <h2><?php echo $this->__('My Affiliate Network') ?></h2>
+	        </div>
+	        <?php if($size == 0 ){?>
+	        <div><?php echo $this->__('No Affiliate Network Found') ?></div>
+	        <?php } else if($size > 0){?>
+	<div>
+<?php $_affiliates = $this->getCollection();?>
+	<?php //echo $this->getPagerHtml(); ?>
+	<?php if($_affiliates->getSize()){ ?>
+	<table class="data-table" id="mw-my-network" >
+		<colgroup>
+			<col width="1%"/>
+			<col width="25%"/>
+			<col width="15%"/>
+			<col width="10%"/>
+		</colgroup>
+	    <thead>
+	        <tr>
+				<th style="text-align:center;"><?php echo $this->__('Level') ?></th>
+				<th style="text-align:center;"><?php echo $this->__('Name') ?></th>
+				<th style="text-align:center;"><?php echo $this->__('Email') ?></th>
+				<th style="text-align:center;"><?php echo $this->__('Joined Date') ?></th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	        <?php foreach ($_affiliates as $_affiliate): ?>
+	            <tr style="text-align:left">
+	            	<td style="text-align:center;width:15px;"><?php echo $_affiliate->getLevel();?></td>
+					<td style="text-align:left;width:100px">
+						<?php echo $this->showNumberArrows((int)$_affiliate->getLevel()); ?>
+						<?php echo $_affiliate->getName();?>
+					</td>
+					<td style="text-align:center"><?php echo $_affiliate->getEmail()?></td>
+	            	<td style="text-align:center">
+						<?php echo $this->formatDate($_affiliate->getJoinedDate());?>
+					</td>
+	            </tr>
+	        <?php endforeach; ?>
+	    </tbody>
+	</table>
+	<?php //echo $this->getPagerHtml(); ?>
+	<script type="text/javascript">decorateTable('mw-my-network');</script>
+<?php }?>
+
+</div>
+<?php }?>
+</div>
+
+</div>

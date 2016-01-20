@@ -1,0 +1,101 @@
+<?php $promo1 = array('start_date'=> "2015/06/26 00:00:00", 'end_date' => "2015/07/20 23:59:59") ?>
+<?php $promo2 = array('start_date'=> "2015/06/26 00:00:00", 'end_date' => "2015/07/27 23:59:59") ?>
+
+
+<div class="dashboard row">
+    <div class="col-sm-12 col-md-12">
+        <div class="page-title page-head">
+            <h4 class="title"><?php echo $this->__('My Affiliate Orders') ?></h4>
+        </div>
+	<div class="box-account box-recent account-box ad-orders">
+            <div id="toggleSection">
+                <form action="" method="post" name="mw_create_account" id="form-validate" >
+                <div class="col-sm-3 col-md-3">
+                    <label><?php echo $this->__('Start Date')?></label>
+                    <div class="form-group">
+                        <div class="input-group input-append date" data-date-format="dd-mm-yyyy" data-date="<?php echo Mage::registry('__fromz'); ?>" id="d_from">
+                          <input type="text" class="form-control" name="d_from" readonly="" name="d_from" value="<?php echo Mage::registry('__fromz');?>" size="16">
+                          <div class="input-group-addon"><i class="icon-calendar"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-md-3">
+                    <label><?php echo $this->__('End Date')?></label>
+                    <div class="form-group">
+                        <div class="input-group input-append date" data-date-format="dd-mm-yyyy" data-date="<?php echo Mage::registry('__toz');?>" id="d_to">
+                          <input type="text" class="form-control" name="d_to" readonly="" name="d_to" value="<?php echo Mage::registry('__toz');?>" size="16">
+                          <div class="input-group-addon"><i class="icon-calendar"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-4">
+                    <label><?php echo $this->__('Red')?></label>
+                    <div class="form-group">
+                        <select name="rank" class="form-control">
+                            <option value="1" <?php if (Mage::registry('__ranks') == 1) echo 'selected';?>>Mi Red: Directos</option>
+                            <option value="2" <?php if (Mage::registry('__ranks') == 2) echo 'selected';?>>Mi Red: Frontales</option>
+                            <option value="3" <?php if (Mage::registry('__ranks') == 3) echo 'selected';?>>Mi Red: Frontales Directos</option>
+                            <option value="4" <?php if (Mage::registry('__ranks') == 4) echo 'selected';?>>Mis Cliente Preferentes</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2 col-md-2">
+                    <br><button class="btn btn-default" type="submit"><?php echo $this->__('Buscar')?></button>
+                </div>
+                
+                <div class="clearfix"></div>
+                </form>
+		<?php $_affiliates = $this->getCollection();?>
+		<?php if($_affiliates->getSize()): ?>
+                    <table class="data-table table" id="my-credits-table" >
+                        <thead>
+                            <tr>
+                                <th style="text-align: center;"><?php echo $this->__('Sale Date') ?></th>                                
+                                <th style="text-align: center;"><?php echo $this->__('Affiliate Name') ?></th>
+                                <th style="text-align: center;"><?php echo $this->__('Points') ?></th>
+                                <th style="text-align: center;"><?php echo $this->__('Order Description') ?></th>
+                                <th style="text-align: center;"><?php echo $this->__('Type') ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $customer = Mage::getSingleton('customer/session')->getCustomer()->getWebsiteId(); ?>                            
+                            <?php foreach ($_affiliates as $_affiliate): ?>
+                                <?php 
+                                $order = Mage::getModel('sales/order')->loadByIncrementId($_affiliate->getIncrementId());
+                                $items = $order->getAllVisibleItems();
+                                $points = 0;
+                                $desc = "";
+                                $type = 0;
+                                $flag = 0;
+                                
+                                if ((strtotime($promo1['start_date']) < strtotime($_affiliate->getUpdatedAt())) && (strtotime($promo1['end_date']) > strtotime($_affiliate->getUpdatedAt())) && ($customer == 2)){
+                                    $flag = 1;
+                                }
+                                
+                                foreach($items as $i):
+                                    $_product = Mage::getModel('catalog/product')->load($i->getProductId());
+                                    $desc .= number_format($i->getQtyOrdered(), 0, '', '')." <strong>x</strong> ".$_product->getName().'<br>';
+                                    $type = $type == 3 ? 3 : (($_product->getTypeId() == 'bundle') ? ($type == 2 ? 3 : 1): ($type == 1 ? 3 : 2));
+                                    $spoints = (($_product->getSku() == 'CFGBP-002') && ($flag == 1)) ? 20 : $_product->getPuntos();
+                                    
+                                    $points = ($spoints * $i->getQtyOrdered() )+ $points;
+                                endforeach;
+                                ?>
+                                <tr style="text-align:left">                                   
+                                    <td><?php echo $_affiliate->getUpdatedAt()?></td>                                    
+                                    <td><?php echo Mage::getModel('customer/customer')->load($_affiliate->getCustomerId())->getName();?></td>
+                                    <td><?php echo $points; ?></td>
+                                    <td><?php echo $desc ?></td>
+                                    <td><?php echo $type == 1 ? 'Paquete' : ($type == 3 ? 'Paquete y Recompra' : 'Recompra') ?></td>                                   
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <?php echo $this->getPagerHtml(); ?>
+                    <script type="text/javascript">decorateTable('my-credits-table')</script>
+		<?php endif ?>
+            </div>
+	</div>
+    </div>
+</div>
+

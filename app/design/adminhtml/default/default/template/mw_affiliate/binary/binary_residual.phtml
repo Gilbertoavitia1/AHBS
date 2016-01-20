@@ -1,0 +1,431 @@
+<?php $affiliate = Mage::registry('binary');?>
+<?php $datea = new DateTime($affiliate['start_date']);?>
+<?php $dateb = new DateTime($affiliate['end_date']);?>
+<?php $won = $affiliate['paid'] ? $affiliate['paid'] : '0';?>
+<?php $hold = $affiliate['hold'] ? $affiliate['hold'] : '0';?>
+<?php $side = $affiliate['hold_side'];?>
+<?php $weak_leg = $affiliate['vpleft'] == $affiliate['vpright'] ? "-" : ($affiliate['vpleft'] > $affiliate['vpright'] ? 'Derecha' : 'Izquierda')?>
+<?php $percentage = $affiliate['cp'] * .25 ?>
+<?php $active_orders = json_decode($affiliate['active_orders']) ?>
+<?php $active_left = json_decode($affiliate['aleft']) ?>
+<?php $active_right = json_decode($affiliate['aright']) ?>
+<?php $sales = json_decode($affiliate['package']) ?>
+
+<?PHP $end = strtotime("2015-10-09 00:00:00") ?>
+<?PHP $start = strtotime($affiliate['start_date']) ?>
+
+<div class="main-col-inner">
+    <div id="messages"></div>
+    <div class="content-header">
+        <h3 class="icon-head head-adminhtml-affiliatebonuspreferred"><?php echo $this->__('Binary Residual') ?>: 
+            <?php echo Mage::getModel('customer/customer')->load($affiliate['customer_id'])->getName() ?> | 
+                <?php echo $datea->format('Y-m-d').' a '. $dateb->format('Y-m-d') ?> </h3>    
+        <p class="form-buttons">
+            <button style="" onclick="setLocation('<?php echo Mage::helper('adminhtml')->getUrl("affiliate/adminhtml_affiliatebinary/index") ?>')" class="scalable back" type="button" title="Volver"><span><span><span>Volver</span></span></span></button>
+            <!--<button style="" onclick="editForm.submit();" class="scalable save" type="button" title="Save Reference"><span><span><span><?php echo $this->__('Save') ?></span></span></span></button>-->
+        </p>
+    </div>
+    <div class="entry-edit">
+        <form action="<?php echo Mage::helper("adminhtml")->getUrl('affiliate/adminhtml_affiliatebinary/saveresidual', array('id' => Mage::registry('id'))) ?>" class="form-horizontal" method="post" id="edit_form" enctype="multipart/form-data">
+            <?php echo $this->getBlockHtml('formkey')?>
+            
+            <div class="box-left">
+                <div class="entry-edit">
+                    <div class="entry-edit-head">
+                        <h4 class="icon-head head-account">Al Corte</h4>
+                    </div>
+                    <div class="fieldset">
+                        <div class="main-stuff">
+                            <h3><?php echo $this->__('Earned Commission') ?></h3>
+                            <input type="text" class=" input-text form-control" value="<?php echo $won?>" name="comission" id="comission">
+
+                            <h3><?php echo $this->__('Hold') ?> (Puntos)</h3>                    
+                            <input type="text" class=" input-text form-control" value="<?php echo $hold?>" name="hold" id="comission">
+
+                            <h3><?php echo $this->__('Hold Side') ?></h3>
+                            <select name="hold_side" class="form-control">
+                                <option value="0" <?php echo $side ==0 ? "selected" : ""?>>N/A</option>
+                                <option value="1" <?php echo $side ==1 ? "selected" : ""?>>Izquierda</option>
+                                <option value="2" <?php echo $side ==2 ? "selected" : ""?>>Derecha</option>
+                            </select>
+                        </div>
+                        <hr style="border-color: transparent; margin: 15px;">
+                        <div class="grid">
+                            <table cellspacing="0" class="data">
+                                <tbody>
+                                    <tr>
+                                        <td>Porcentaje de Cliente Preferente</td>
+                                        <td><?php echo $percentage ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pierna Izquierda</td>
+                                        <td><?php echo $affiliate['tleft']?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pierna Derecha</td>
+                                        <td><?php echo $affiliate['tright']?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pierna Debil</td>
+                                        <td><?php echo $weak_leg?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        
+                        
+                        <div class="entry-edit">
+                            <div class="entry-edit-head">
+                                <h4 class="icon-head head-products">Ventas de Cliente Preferente</h4>
+                            </div>
+                        </div>
+                        <?php if ($start > $end): ?>
+                        <?php  $package_cp = json_decode($affiliate['package_cp']) ?>
+                        <div class="grid">
+                            <table cellspacing="0" class="data fixed"  width="100%">
+                                <thead>
+                                    <tr class="headings">
+                                        <th><?php echo $this->__('Customer')?></th>
+                                        <th><?php echo $this->__('Order')?></th>
+                                        <th><?php echo $this->__('Points')?></th>
+                                        <th><?php echo $this->__('Currency')?></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($package_cp as $key => $value): ?>
+                                        <tr>
+                                            <?php $order = Mage::getModel('sales/order')->loadByIncrementId($value[0]);?>
+                                            <td><?php echo Mage::getModel('customer/customer')->load($value[3])->getName() ?> </td>
+                                            <td width="100px"><a href="<?php echo Mage::helper('adminhtml')->getUrl("adminhtml/sales_order/view", array('order_id' => $order->getEntityId())) ?>" target="_blank"><?php echo $value[0]?></a></td>
+                                            <td style="text-align: right;"><?php echo $value[1]; Pts ?> </td>
+                                            <td style="text-align: right;"><?php echo $value[4]; ?> </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <?php else: ?> 
+                            <!-- REPORTES ANTIGUOS-->
+                            <?php if (json_decode($affiliate['package_cp'])):?>
+                            <div class="grid">
+                                <table cellspacing="0" class="data">
+                                    <thead>
+                                        <tr class="headings">
+                                            <th><?php echo $this->__('#')?></th>
+                                            <th><?php echo $this->__('Customer')?></th>
+                                            <th><?php echo $this->__('Order')?></th>  
+                                            <th style="text-align: right;"><?php echo $this->__('Total')?></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php $package = json_decode($affiliate['package_cp']) ?>
+                                        <?php foreach ($package as $key => $value):?>
+                                        <?php $increment = $value[0]?>
+                                        <?php $order = Mage::getModel('sales/order')->loadByIncrementId($increment);?>      
+                                        <?php $items = $order->getAllVisibleItems(); ?>
+                                        <?php $vp = 0 ?>
+                                        <?php // array_push($this->orders, array($order->getIncrementId()));
+                                        foreach($items as $item){
+                                            $single = $item->getData(); 
+                                            $puntos = Mage::getModel('catalog/product')->setStoreId($single['store_id'])->load($single['product_id'])->getData('puntos');
+
+                                            if ($single['product_type'] == 'bundle'){
+                                                if (array_search($single['sku'], array('PTK-USA-010','PKT-USA-009','PKT-USA-008','PKT-USA-007','PKT-REC'))){
+                                                    $puntos = $puntos;
+                                                }
+                                                else
+                                                {
+                                                    $puntos = $puntos / 2;
+                                                }
+                                            }
+
+                                            if ($order->getAffiliateSaleType() == 3){ //constructor
+                                                    $constructor = $puntos * $single['qty_ordered'];
+                                                $puntos = $puntos * .25;
+                                            }
+
+                                            $vp = $vp + ($puntos * $single['qty_ordered']);
+                                        }?>
+                                        <?php $class = $customer == $order->getCustomerId() ? "even" : "odd"; ?>
+                                        <tr class='<?php echo $class?>'>
+                                            <td><?php echo $key+1 ?></td>
+                                            <td><?php echo Mage::getModel('customer/customer')->load($order->getCustomerId())->getName() ?> </td>
+                                            <td><a href="<?php echo Mage::helper('adminhtml')->getUrl("adminhtml/sales_order/view", array('order_id' => $order->getEntityId())) ?>" target="_blank"><?php echo $increment?></a></td>
+                                            <td style="text-align: right;"><?php echo $vp; ?> </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <?php endif;?>
+                        <?php endif;?>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="box-right">
+                <div class="entry-edit">
+                    <div class="entry-edit-head">
+                        <h4 class="icon-head head-account">Activos Directos</h4>
+                    </div>
+                    <div class="fieldset">                        
+                        <?php if (((sizeof($active_left) > 0) || (sizeof($active_right) > 0))): ?>                        
+                        
+                        <div class="entry-edit">
+                            <div class="entry-edit-head">
+                                <h4 class="icon-head head-products">Pierna Izquierda</h4>
+                            </div>
+                        </div>
+                        <div class="grid">
+                            <table cellspacing="0" class="data fixed"  width="100%">
+                                <thead>
+                                    <tr class="headings">
+                                        <th><?php echo $this->__('Customer')?></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($active_left as $key => $value): ?>
+                                        <tr>
+                                            <td><?php echo Mage::getModel('customer/customer')->load($value)->getName(); ?> </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br>
+                        <div class="entry-edit">
+                            <div class="entry-edit-head">
+                                <h4 class="icon-head head-products">Pierna Derecha</h4>
+                            </div>
+                        </div>
+                        <div class="grid">
+                            <table cellspacing="0" class="data fixed" width="100%">
+                                <thead>
+                                    <tr class="headings">
+                                        <th><?php echo $this->__('Customer')?></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($active_right as $key => $value): ?>
+                                        <tr>                                            
+                                            <td><?php echo Mage::getModel('customer/customer')->load($value)->getName() ?> </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <?php else:?>
+                            <!-- REPORTES ANTIGUOS-->
+                            <?php if ($active_orders):?>                        
+                            <div class="grid">
+                                <table cellspacing="0" class="data">
+                                    <thead>
+                                        <tr class="headings">
+                                            <th><?php echo $this->__('Customer')?></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php foreach ($active_orders as $key => $value):?>
+                                        <?php $order = Mage::getModel('sales/order')->loadByIncrementId($value[0]);?>
+                                        <tr>
+                                            <td><?php echo Mage::getModel('customer/customer')->load($order->getCustomerId())->getName() ?> </td>
+                                            <td><a href="<?php echo Mage::helper('adminhtml')->getUrl("adminhtml/sales_order/view", array('order_id' => $order->getEntityId())) ?>" target="_blank"><?php echo $value[0]?></a></td>                                
+                                        </tr>
+                                    <?php endforeach;?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <?php else:?>
+                                No tiene activos directos
+                            <?php endif;?>
+                        <?php endif;?>
+                    </div>
+                </div>
+            </div>    
+            <div class="clear"></div>
+            
+            <div class="entry-edit">
+                <div class="entry-edit-head">
+                    <h4 class="icon-head head-products">Ventas</h4>
+                </div>
+            </div>
+            <?php if ($start > $end): ?>
+            <?php $total = 0?>
+            <div class="grid">
+                <table cellspacing="0" class="data fixed" width="100%">
+                    <thead>
+                        <tr class="headings">
+                            <th><?php echo $this->__('Customer')?></th>
+                            <th><?php echo $this->__('Order')?></th>
+                            <th><?php echo $this->__('Date')?></th>
+                            <th style="text-align: right;"><?php echo $this->__('Points')?></th>
+                            <th style="text-align: right;"><?php echo $this->__('Currency')?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($sales as $key => $value): ?>
+                        <?php $order = Mage::getModel('sales/order')->loadByIncrementId($value[0]);?>
+                        <?php $_date = Mage::getResourceModel('sales/order_status_history_collection')
+                               ->addAttributeToFilter('main_table.status', array('eq'=>'complete'))
+                               ->addAttributeToFilter('main_table.parent_id', array('in'=>array( $order->getEntityId()))) 
+                               ->addAttributeToFilter('main_table.entity_name', array('in'=>array('invoice','shipment')))
+                               ->getFirstItem()
+                               ->getData('created_at');
+                        
+                        $created = new DateTime($_date);
+                        $created->sub(new DateInterval('PT7H'));
+                       ?>   
+                       <?php $class = $value[1] == 0 ? "background-color: red; color: white;" : ""?>
+                       <tr style="<?php echo $class ?>">
+                            <td><?php echo Mage::getModel('customer/customer')->load($value[3])->getName() ?> </td>
+                            <td width="100px"><a style="<?php echo $class ?>" href="<?php echo Mage::helper('adminhtml')->getUrl("adminhtml/sales_order/view", array('order_id' => $order->getEntityId())) ?>" target="_blank"><?php echo $value[0]?></a></td>
+                            <td><?php echo  $created->format('Y-m-d H:i:s') ?></td>
+                            <td style="text-align: right;"><?php echo $value[1]; Pts ?> </td>
+                            <td style="text-align: right;"><?php echo $value[4]; ?> </td>
+                        </tr>
+                        <?php  $total = $value[1] + $total ?>
+                    <?php endforeach; ?>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="label emph" colspan="3" style="text-align: right;"><strong><big><?php echo $this->__('Total VG')?></big></strong></td>
+                            <td class="emph"  style="text-align: right;"><strong><big><span class="price"><?php echo $total?></span></big></strong></td>                                    
+                            <td class="emph"  style="text-align: right;"></td>                                    
+                        </tr>
+                        
+                    </tfoot>
+                </table>
+            </div>  
+            
+            
+            
+            
+            
+            <!-- REPORTES ANTIGUOS-->
+            <?php else: ?>
+            <div class="grid">
+                <table cellspacing="0" class="data">
+                    <thead>
+                        <tr class="headings">
+                            <th><?php echo $this->__('#')?></th>
+                            <th><?php echo $this->__('Customer')?></th>
+                            <th><?php echo $this->__('Order')?></th>  
+                            <th><?php echo $this->__('Date')?></th>  
+                            <th style="text-align: right;"><?php echo $this->__('Total')?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $total = 0; ?>
+                        <?php $package = json_decode($affiliate['package']) ?>
+                        <?php $customer = $affiliate['customer_id'] ?>
+                        <?php $vp_ = 0 ?>
+                        <?php $vg_ = 0 ?>
+                        <?php foreach ($package as $key => $value):?>
+                            <?php $increment = $value[0]?>
+                            <?php $order = Mage::getModel('sales/order')->loadByIncrementId($increment);?>  
+                            <?php $_date = Mage::getResourceModel('sales/order_status_history_collection')
+                                ->addAttributeToFilter('main_table.status', array('eq'=>'complete'))
+                                ->addAttributeToFilter('main_table.parent_id', array('in'=>array($order->getEntityId()))) 
+                                ->addAttributeToFilter('main_table.entity_name', array('in'=>array('invoice','shipment')))
+                                ->getFirstItem()
+                                ->getData('created_at');
+                            ?>     
+                            <?php $items = $order->getAllVisibleItems(); ?>
+                            <?php $vp = 0 ?>
+                            <?php // array_push($this->orders, array($order->getIncrementId()));
+                            foreach($items as $item){
+                                $single = $item->getData(); 
+                                $puntos = Mage::getModel('catalog/product')->setStoreId($single['store_id'])->load($single['product_id'])->getData('puntos');
+
+                                if ($single['product_type'] == 'bundle'){
+                                    if (array_search($single['sku'], array('PTK-USA-010','PKT-USA-009','PKT-USA-008','PKT-USA-007','PKT-REC'))){
+                                        $puntos = $puntos;
+                                    }
+                                    else
+                                    {
+                                        $puntos = $puntos / 2;
+                                    }
+                                }
+                                
+                                if ($order->getAffiliateSaleType() == 3){ //constructor
+//                                                $constructor = $puntos * $single['qty_ordered'];
+                                            $puntos = $puntos * .25;
+                                        }
+
+                                $vp = $vp + ($puntos * $single['qty_ordered']);
+                            }?>
+                            <?php $class = $customer == $order->getCustomerId() ? "even" : "odd" ?>
+                            <tr class='<?php echo $class?>'>
+                                <td><?php echo $key+1 ?></td>
+                                <td><?php echo Mage::getModel('customer/customer')->load($order->getCustomerId())->getName() ?> </td>
+                                <td><a href="<?php echo Mage::helper('adminhtml')->getUrl("adminhtml/sales_order/view", array('order_id' => $order->getEntityId())) ?>" target="_blank"><?php echo $increment?></a></td>
+                                <td><?php echo $_date ?></td>
+                                <td style="text-align: right;"><?php echo $vp; ?> </td>
+                            </tr>
+
+
+                        <?php endforeach; ?>
+                    </tbody>                            
+                    <tfoot>
+                        <tr>
+                            <td class="label emph" colspan="4" style="text-align: right;"><strong><big><?php echo $this->__('Total VP')?></big></strong></td>
+                            <td class="emph" style="text-align: right;"><strong><big><span class="price"><?php echo $affiliate['vp'] ?></span></big></strong></td>                                    
+                        </tr>
+                        
+                        <tr>
+                            <td class="label emph" colspan="4" style="text-align: right;"><strong><big><?php echo $this->__('Total VG')?></big></strong></td>
+                            <td class="emph" style="text-align: right;"><strong><big><span class="price"><?php echo $affiliate['vg']?></span></big></strong></td>                                    
+                        </tr>
+                        
+                    </tfoot>
+                </table>
+            
+            
+            <?php endif; ?>
+        </form>
+    </div>
+    
+    <script type="text/javascript">
+        editForm = new varienForm('edit_form', '');
+    </script>
+</div>
+<style>
+    .form-control {
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555;
+    display: block;
+    font-size: 14px;
+    height: 34px;
+    line-height: 1.42857;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 40%;
+    margin: 0 auto;
+    
+    text-align: right;
+}
+
+select.form-control {
+    
+    text-align: left;
+}
+
+.main-stuff{
+    text-align: center;
+    
+}
+
+.main-stuff h3{
+    margin-top: 10px;
+}
+
+table.fixed { table-layout:fixed; }
+table.fixed td { overflow: hidden; }
+    </style>

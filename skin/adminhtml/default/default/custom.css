@@ -1,0 +1,67 @@
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+.header { background: none; } 
+.header .header-top  { 
+    background: url("images/fondo-header.jpg") repeat-x scroll 0 0 #425E66; 
+    border-bottom: none !important;
+}
+.header-right .super, .header-right .super a { color: #EA7601; }
+.header-right .super a { text-decoration: none; }
+.nav-bar, .entry-edit-head{ background-color: #9BBD3A !important;
+    background-image: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.25)) !important;
+    background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.25)) !important;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    
+    border-top: none !important;
+    border-bottom: none !important;
+}
+
+.nav-bar li {
+       border-right: 1px solid rgba(0, 0, 0, 0.15);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+}
+#nav li { background: none !important; }
+.nav-bar li.active { border-left: none; }
+#nav li.active {
+    background: url("images/nav1_active.gif") no-repeat scroll 0 0 rgba(0, 0, 0, 0) !important; 
+}
+
+#nav ul li { 
+    background: none repeat scroll 0 0 #E3ECEE !important;
+    background-repeat: no-repeat !important;
+    padding: 0 !important;
+    
+}
+
+#nav ul {
+    border: 1px solid #DDDDDD !important;
+    margin-left: 2px !important;
+    padding: 0 !important;
+    border-right: none !important;
+}
+#page-help-link {  display: none;}
+
+

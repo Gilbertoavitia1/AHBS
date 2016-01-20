@@ -1,0 +1,43 @@
+<?php $_helper = $this->helper('catalog/output'); ?>
+<?php $products = explode(",",  Mage::getStoreConfig('extras/virtualoffice/products')) ?>
+<?php $catalog = Mage::getModel('catalog/product')->getCollection()->addAttributeToFilter('sku', array('in'=> $products)); ?>
+<hr>
+<div class="dashboard row">
+    <div class="col-sm-12 col-md-12">
+        <div class="page-title page-head">
+            <h3>Adquiere tu Oficina Virtual!</h3>            
+        </div>
+        <div class="box-account">            
+            <div class="col-md-12 col-sm-12" style="text-align: center;">
+                <?php foreach ($catalog as $_product): ?>
+                <div class="row">
+                    <div class="col-sm-3 col-md-3">
+                        <?php $product = $_product->load($_product->getProductId()); ?>
+                        <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" ">
+                            <img src="<?php echo  Mage::getBaseUrl('media') . 'catalog/product/'.$product->getImage();?>" />
+                        </a>            
+                    </div>
+                    <div class="col-sm-9 col-md-9">
+                        <h3><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h3>
+                        <?php if($_product->getRatingSummary()): ?>
+                            <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
+                        <?php endif; ?>
+
+                        <p><?php echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?></p>
+                        <div class="actions">
+                            <?php if($_product->isSaleable()): ?>
+                                <!--<button type="button" title="<?php echo $this->__('View Details') ?>" class="button btn btn-danger success btn-cart btn" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('View Details') ?></span></span></button>-->
+                            <a title="<?php echo $this->__('View Details') ?>" class="button_link btn btn-success" href="<?php echo $_product->getProductUrl() ?>"><strong><?php echo $this->__('View Details') ?></strong></a>
+                            <?php else: ?>
+                                <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <hr>
+                </div>
+                <?php endforeach;?>
+            </div>
+        </div>
+    </div>
+</div>

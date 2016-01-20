@@ -1,0 +1,11 @@
+<config>
+	<modules>
+		<ParadoxLabs_StorePickup>
+			<active>true</active>
+			<codePool>local</codePool>
+			<depends>
+                <Mage_Shipping/>
+            </depends>
+		</ParadoxLabs_StorePickup>
+	</modules>
+</config>

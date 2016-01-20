@@ -1,0 +1,188 @@
+<?php $binary = Mage::registry('binary');?>
+<?php $affiliate = Mage::registry('network');?>
+<?php $firstDay   = date("Y-m-d 00:00:00", strtotime("last friday")); ?>
+<?php $lastDay    = date("Y-m-d 23:59:59", strtotime("this thursday")); ?>
+<?php $period = Mage::getSingleton('core/session')->getPeriodc();?>
+<?php $constructor = array();?>
+
+
+<form action="<?php echo $this->getUrl('affiliate/binary/sales') ?>" method="post" id="form-validate" >
+    <div class="row">  
+        <h5>Mis Ventas</h5>
+        <hr style="margin-top: -5px;">
+        <div class="col-md-4"> 
+            <label>Periodo</label>
+            <select name="period" id="period" class="form-control" onChange="this.form.submit()">
+                <option value="" <?php echo $period == "thisweek" ? "selected": ""?>>Esta semana</option>
+                <?php foreach ($binary as $key => $value): ?>
+                <?php $datea = new DateTime($value['start_date']);?>
+                <?php $dateb = new DateTime($value['end_date']);?>
+                <option value="<?php echo $value['id']?>" <?php echo $period == $value['id'] ? "selected": ""?>>de <?php echo $datea->format('Y-m-d').' a '. $dateb->format('Y-m-d') ?></option>
+                <?php endforeach;?>            
+            </select>
+        </div>
+        <div class="clearfix"></div>
+        
+        
+ <div class="col-xs-12 col-md-12">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Ventas</a></li>
+                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Cliente Preferente</a></li>
+                <li role="presentation"><a href="#constructor" aria-controls="constructor" role="tab" data-toggle="tab">Constructor</a></li>
+            </ul>
+            
+            <div class="tab-content"> 
+                <div role="tabpanel" class="tab-pane active" id="profile">
+                    <label>Ventas al Corte</label>
+                    <table class="data-table table">
+                        <thead>
+                            <tr class="headings">
+                                <th><?php echo $this->__('#')?></th>
+                                <th><?php echo $this->__('Customer')?></th> 
+                                <th style="text-align: right;"><?php echo $this->__('Total')?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $package = $affiliate['package'] ?>
+                            <?php $customer = $affiliate['customer_id'] ?>
+                            <?php $flag= 0; ?>
+                            <?php $cont= 0; ?>
+                            <?php $total= 0; ?>
+                            <?php foreach ($package as $key => $value):?>
+                                <?php $increment = $value[0]?>
+                                <?php $flag= 0?>
+                                <?php $order = Mage::getModel('sales/order')->loadByIncrementId($increment);?> 
+                                <?php if ($customer != $order->getCustomerId()): ?>
+                                <?php $cont ++;?>
+                                    <?php $items = $order->getAllVisibleItems(); ?>
+                                    <?php $vp = 0 ?>
+                                    <?php foreach($items as $item){
+                                        $single = $item->getData(); 
+                                        $puntos = Mage::getModel('catalog/product')->setStoreId($single['store_id'])->load($single['product_id'])->getData('puntos');
+
+                                        if ($single['product_type'] == 'bundle'){
+                                            if (array_search($siWngle['sku'], array('PTK-USA-010','PKT-USA-009','PKT-USA-008','PKT-USA-007','PKT-REC'))){
+                                                $puntos = $puntos;
+                                            }
+                                            else
+                                            {
+                                                $puntos = $puntos / 2;
+                                            }
+                                        }
+
+                                        if ($order->getAffiliateSaleType() == 3){ 
+                                            array_push($constructor, array($order->getIncrementId()));
+                                            $flag = 1;
+                                        }else{
+                                            $vp = $vp + ($puntos * $single['qty_ordered']);
+                                            
+                                        }
+                                    }?>
+
+                                    <?php if ($flag == 0):?>
+                                        <?php $total = $total + $vp; ?>
+                                        <tr>
+                                            <td><?php echo $cont ?></td>
+                                            <td><?php echo Mage::getModel('customer/customer')->load($order->getCustomerId())->getName() ?> </td>
+                                            <td style="text-align: right;"><?php echo $vp; ?> </td>
+                                        </tr>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                                    <tr>
+                                        <td></td>
+                                        <td style="text-align: right;">Total</td>
+                                        <td style="text-align: right;"><?php echo $total; ?></div>
+                                    </tr>
+                        </tbody>
+                    </table>
+                    <div class="clearfix"></div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="messages">
+                    <label>Venta de Cliente Preferente</label>
+                    <table class="data-table table">
+                        <thead>
+                            <tr class="headings">
+                                <th><?php echo $this->__('#')?></th>
+                                <th><?php echo $this->__('Customer')?></th>
+                                <th style="text-align: right;"><?php echo $this->__('Total')?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $total = 0;?>
+                            <?php $cont = 0;?>
+                            <?php $package = json_decode($affiliate['package_cp']) ?>
+                            <?php foreach ($package as $key => $value):?>
+                                <?php $increment = $value[0]?>
+                                <?php $order = Mage::getModel('sales/order')->loadByIncrementId($increment);?>      
+                                <?php if ($customer != $order->getCustomerId()): ?>
+                                    <?php $cont ++;?>
+                                    <?php $items = $order->getAllVisibleItems(); ?>
+                                    <?php $vp = 0 ?>
+                                    <?php array_push($this->orders, array($order->getIncrementId())); ?>
+                                    <?php foreach($items as $item):?>
+                                        <?php $single = $item->getData(); ?>
+                                        <?php $puntos = Mage::getModel('catalog/product')->setStoreId($single['store_id'])->load($single['product_id'])->getData('puntos') * .25; ?>
+                                        <?php $vp = $vp + ($puntos * $single['qty_ordered']);?>
+                                        <?php $total = $total + $vp;?>
+                                    <?php endforeach; ?>
+                                    <tr>
+                                        <td><?php echo $cont ?></td>
+                                        <td><?php echo Mage::getModel('customer/customer')->load($order->getCustomerId())->getName() ?> </td>                      
+                                        <td style="text-align: right;"><?php echo $vp; ?> </td>
+                                    </tr>
+                                <?php endif;?>
+                            <?php endforeach; ?>
+                                    <tr>
+                                        <td></td>
+                                        <td style="text-align: right;">Total</td>
+                                        <td style="text-align: right;"><?php echo $total; ?></div>
+                                    </tr>
+                        </tbody>
+                    </table>
+                    <div class="clearfix"></div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="constructor">
+                    <label>Compras Construtor</label>
+                    <table class="data-table table">
+                        <thead>
+                            <tr class="headings">
+                                <th><?php echo $this->__('#')?></th>
+                                <th><?php echo $this->__('Customer')?></th> 
+                                <th style="text-align: right;"><?php echo $this->__('Total')?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $total = 0; ?>
+                            <?php foreach ($constructor as $key => $value):?>
+                                <?php $increment = $value[0]?>
+                                <?php $order = Mage::getModel('sales/order')->loadByIncrementId($increment);?>      
+                                <?php $items = $order->getAllVisibleItems(); ?>
+                                <?php $vp = 0 ?>
+                                <?php foreach($items as $item){
+                                    $single = $item->getData(); 
+                                    $puntos = Mage::getModel('catalog/product')->setStoreId($single['store_id'])->load($single['product_id'])->getData('puntos') * .25;
+                                    $vp = $vp + ($puntos * $single['qty_ordered']);
+                                    $total = $total + $vp;
+                                }?>
+
+                                <tr>
+                                    <td><?php echo $key+1 ?></td>
+                                    <td><?php echo Mage::getModel('customer/customer')->load($order->getCustomerId())->getName() ?> </td>
+                                    <td style="text-align: right;"><?php echo $vp; ?> </td>
+                                </tr>
+                            <?php endforeach; ?>
+                                <tr>
+                                    <td></td>
+                                    <td style="text-align: right;">Total</td>
+                                    <td style="text-align: right;"><?php echo $total; ?></div>
+                                </tr>                                    
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+

@@ -1,0 +1,190 @@
+<!--  {{block type="core/template" name="invitation_form_ajax" as="invite_form_ajax" template="mw_affiliate/customer/account/invitation/invite_form_ajax.phtml"}}-->
+<script type="text/javascript" src="<?php echo $this->getJsUrl('mw_affiliate/popup.js') ?>"></script>
+<!-- 
+<script type="text/javascript" src="http://www.plaxo.com/css/m/js/util.js"></script>
+<script type="text/javascript" src="http://www.plaxo.com/css/m/js/basic.js"></script>
+<script type="text/javascript" src="http://www.plaxo.com/css/m/js/abc_launcher.js"></script>
+-->
+<link rel="stylesheet" href="<?php echo $this->getSkinUrl('mw_affiliate/css/popup.css') ?>" type="text/css" /> 
+<?php 
+	$url ='';
+ 	if(Mage::helper('affiliate')->getAffiliateActive()>0)
+    	{   
+    		$dk = 1;
+    		$store_id = Mage::app()->getStore()->getId();
+    		$currentUrls = Mage::helper('core/url')->getCurrentUrl();
+    		$not_shares = Mage::helper('affiliate/data')->getAffiliateShareStore($store_id);
+	 		$not_shares = explode("\n",$not_shares);
+	 		//var_dump($not_shares);die();
+	 		foreach ($not_shares as $not_share)
+	 		 {      
+	 		 	if(trim($not_share) !='')  
+		 		 {  
+		 		 	if(substr_count($currentUrls,trim($not_share))>0) $dk = 2;
+		 		 }
+	 				
+	 		}
+	 		if($dk == 1)
+	 		{
+	 			 $url = Mage::helper('affiliate')->getLinkBanner(Mage::getModel('customer/session')->getCustomer(),$currentUrls);
+	 		}
+	 		else if($dk == 2) $url = Mage::helper('affiliate')->getLink(Mage::getModel('customer/session')->getCustomer());
+		?>
+		
+	 	<p> 
+			<a id="mw_popup_invited1" href="#"><?php //echo $this->__('Invited Friend') ?></a>
+			<a id="mw_popup_invited"  style="cursor: pointer;" title="<?php echo Mage::helper('affiliate')->__("Invite Friends");?>"><?php echo Mage::helper('affiliate')->__("Invite Friends");?></a>
+		
+		</p>
+    <?php }
+    	?>
+
+ <div id="mw_popup" class="popup mw_box_popup" style="display: none;">
+    <form id="form-validate" method="post" onsubmit="return false;" >
+    	
+    <div style="left: -2px; top: 0px; width: 1343px; display:none" id="loading-mask">
+	    <p id="loading_mask_loader" style="background: none repeat scroll 0 0 #FFF4E9;border: 2px solid #F1AF73;color: #D85909; font-weight: bold;
+    left: 50%;margin-left: -60px;padding: 15px 60px;position: fixed;text-align: center;top: 45%;width: 120px; z-index: 1000;">
+			<img alt="Loading..." src="<?php echo $this->getSkinUrl('mw_affiliate/images/ajax-loader-tr.gif') ?>"><br>Please wait...
+		</p>
+	</div>
+    <div class="fieldset group-select">
+        <?php echo $this->getBlockHtml('formkey')?>
+        <h2 class="mw_legend"><?php echo $this->__('Invite Friends Via Email');?></h2>
+        <div class="mw-invated-ct">
+	        <div id="errors" >
+			</div>
+			<div id="mw_success_1" class="note-msg">
+				<?php echo $this->__('Your email was sent success') ?>							
+			</div>
+			<div id="mw_success_2" class="note-msg">
+				<?php echo $this->__('Your Emails were sent successfully') ?>							
+			</div>
+	        <ul class="mw-form-list">
+	            <li class="fields">
+	                <div class="customer-name">
+	                	<?php $addonClass="";?>
+	                	<?php if(version_compare(Mage::getVersion(),"1.3.2.4","<=")) $addonClass = " input-box";?>
+					    <div class="field<?php echo $addonClass;?> name-firstname">
+					        <label class="required" for="email"><?php echo Mage::helper('affiliate')->__('Email of your friends');?><em>*</em></label>
+					        <div class="input-box">
+					            <textarea class="input-text required-entry mw_textarea_email" title="Email" name="email" id="email"></textarea>
+	                			<?php 
+					            	//$url_address = Mage::getUrl('affiliate/invitation/widget');
+					            	//$url_address = substr($url_address,strpos($url_address,'/',7));
+					            ?>
+					           <!--   <a href="#" onclick="showPlaxoABChooser('email', '<?php //echo $url_address;?>'); return false"><img style="padding-top:5px;" src="<?php //echo $this->getSkinUrl('mw_affiliate/images/add-address.png')?>" alt="<?php //echo Mage::helper('affiliate')->__('Add from my address book');?>" /></a>-->
+					            <a href="#" onClick="javascript:mw_popup_func();return false;"><img style="padding-top:5px;" src="<?php echo $this->getSkinUrl('mw_affiliate/images/add_button.gif')?>" alt="<?php echo Mage::helper('affiliate')->__('Add from my address book');?>" /></a>
+					            <div id ="mw_email" class="validation-advice">This is a required field.</div>
+					            <div><?php echo $this->__('Separate with commas (,)');?></div>
+					        </div>
+					        <label class="required" for="email"><?php echo Mage::helper('affiliate')->__('Message');?><em>*</em></label>
+					        <div class="input-box">
+					            <textarea class="input-text required-entry" title="Message" name="message" id="message" style="width:380px; height:100px"></textarea>
+					        	<div id ="mw_message" class="validation-advice">This is a required field.</div>
+					        </div>
+					    </div>
+					</div>
+	            </li>
+	           </ul>
+	        </div>  
+			<div class="buttons-set">
+				<p class="required"><?php echo Mage::helper('affiliate')->__("* Required Fields");?></p>
+				<div class="right">
+					<button class="button form-button" title="<?php echo Mage::helper('affiliate')->__("Send");?>" type="button" onClick="javascript: sendRequest();"><span><span>  <?php echo Mage::helper('affiliate')->__("Send");?>  </span></span></button>
+			        <button class="popup_closebox button form-button" title="<?php echo Mage::helper('affiliate')->__("Close");?>" type="button" value="Close" ><span><span>  <?php echo Mage::helper('affiliate')->__("Close");?>  </span></span></button>
+			     </div>				        
+		        <div class="mw_share left">
+					<!--  <a target="_blank" href="https://www.facebook.com/sharer.php?u=<?php //echo $url ?>" title="Share With Facebook"><img  src="<?php //echo $this->getSkinUrl('mw_affiliate/images/icons-share/facebook.png')?>" alt="share" /></a>
+					<a target="_blank" href="https://twitter.com/home/?status=<?php //echo $url ?>" title="Share With Twitter"><img  src="<?php //echo $this->getSkinUrl('mw_affiliate/images/icons-share/twitter.png') ?>" alt="share" /></a>
+					<a target="_blank" href="http://delicious.com/post?v=4&amp;noui&amp;jump=close&amp;url=<?php //echo $url ?>" title="Share With Delicious"><img  src="<?php //echo $this->getSkinUrl('mw_affiliate/images/icons-share/delicious.png') ?>" alt="share" /></a>
+					<a target="_blank" href="http://digg.com/submit?phase=2&amp;url=<?php //echo $url ?>" title="Share With Digg"><img  src="<?php //echo $this->getSkinUrl('mw_affiliate/images/icons-share/digg.png') ?>" alt="share" /></a>
+					<a target="_blank" href="http://www.furl.net/storeIt.jsp?u=<?php //echo $url ?>" title="Share With Furl"><img  src="<?php //echo $this->getSkinUrl('mw_affiliate/images/icons-share/furl.png') ?>" alt="share" /></a>
+					<a target="_blank" href="http://www.stumbleupon.com/submit?url=<?php //echo $url ?>" title="Share With Stumbleupon"><img  src="<?php //echo $this->getSkinUrl('mw_affiliate/images/icons-share/stumbleupon.png') ?>" alt="share" /></a>
+					 
+					    <script>var GBuzz= {
+										url : '<?php //echo $url ?>',
+										title: 'Lets Save Together',
+										customImage : '<?php //echo $this->getSkinUrl('mw_affiliate/images/icons-share/google_buzz.png') ?>'
+										}</script>
+										<script 
+										src="https://orkut-share.googlecode.com/svn/trunk/GBuzz.js">
+										</script>-->
+					<!-- AddThis Button BEGIN -->
+					<div class="addthis_toolbox addthis_default_style addthis_32x32_style"
+						addthis:url="<?php echo $url;?>"
+				        addthis:title="<?php echo $url; ?>"
+				        addthis:description="<?php echo $url; ?>">
+					<a class="addthis_button_preferred_1"></a>
+					<a class="addthis_button_preferred_2"></a>
+					<a class="addthis_button_preferred_3"></a>
+					<a class="addthis_button_preferred_4"></a>
+					<!--  <a class="addthis_button_compact"></a>-->
+					<a href="http://www.addthis.com/bookmark.php?v=250&pubid={YOUR_PROFILE_ID}" class="addthis_button_compact"></a> 
+					<a class="addthis_counter addthis_bubble_style"></a>
+					</div>
+					<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-500a790c6c746380"></script>
+					<!-- AddThis Button END -->
+				</div>
+				<div class="clear_both"><span> </span></div>		  
+		    </div>
+		</div> 
+    </form>
+  </div>
+  <script type="text/javascript">
+    //<![CDATA[
+  	function mw_popup_func(){
+		var popWin =  window.open('<?php echo $this->getUrl('affiliate/invitation/loginmail');?>','newwindow','toolbar=no,location=no,menubar=no,titlebar=no,status=yes,width=500,height=500,resizable=no,scrollbars=yes,top=0,left=0');
+	}
+	
+  	if($('mw_popup_invited')){
+  		var myarray = $('mw_popup_invited').cumulativeOffset();
+  	
+		var mw_left = myarray[0];
+		var mw_top = myarray[1] + 25;
+	  	var positon_new = mw_left+'px,'+mw_top+'px';
+	  //alert(positon_new);
+	    var popup_new = new Popup('mw_popup','mw_popup_invited',{modal:true,position:positon_new});
+	    document.observe('keydown', function( event ) {
+	        if ( event.which == 27 ) {
+	        	popup_new.hide();
+	        }
+	      } );
+  	 }
+    $("mw_message").setStyle({display:"none"});
+    $("mw_email").setStyle({display:"none"});
+    $("mw_success_1").setStyle({display:"none"});
+    $("mw_success_2").setStyle({display:"none"});
+    //]]>
+    
+ 	function sendRequest() {
+		$("mw_message").setStyle({display:"none"});
+	 	$("mw_email").setStyle({display:"none"});
+ 	    $("mw_success_1").setStyle({display:"none"});
+        $("mw_success_2").setStyle({display:"none"});
+    	$("loading-mask").setStyle({display:"block"});
+		new Ajax.Request("<?php echo $this->getUrl('affiliate/invitation/inviteajax');?>", {
+			   method: 'post',
+			   postBody: "email="+$F("email")+"&message="+$F("message")+"&url_link="+'<?php echo $url ?>',
+			   onComplete: showResponse
+	
+		});
+	}
+	function showResponse(req)
+	{
+	   resp = req.responseText.evalJSON();
+	   if(resp.message == '0') $("mw_message").setStyle({display:"block"});
+	   if(resp.email == '0') $("mw_email").setStyle({display:"block"});
+	   if(resp.success == '1') $("mw_success_1").setStyle({display:"block"});
+	   if(resp.success == '2') $("mw_success_2").setStyle({display:"block"});
+	   $("loading-mask").setStyle({display:"none"});
+	   
+	   if(resp.error != '0'){
+		   $('errors').addClassName('error-msg');
+		   $('errors').innerHTML=  resp.error;
+	   }else{
+		   if($('errors').hasClassName('error-msg'))  $('errors').removeClassName('error-msg');
+		   $('errors').replace('');
+	   }
+	}
+</script>

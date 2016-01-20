@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <credit_index_index>
+		<update handle="affiliate_index_account"/>
+        <reference name="content">
+        	<block type="core/template" name="customer_credit_dashboard" template="mw_credit/customer/account/credit.phtml">
+	            <block type="core/template" name="customer_credit_info" as="credit_info" template="mw_credit/customer/account/credit/info.phtml"/>
+				<block type="credit/credit_transaction" name="customer_credit_transaction" as="transaction" template="mw_credit/customer/account/credit/transaction.phtml"/>
+	           <!--   <block type="core/template" name="customer_credit_send" as="send" template="mw_credit/customer/account/credit/send.phtml"/>-->
+	       </block>
+        </reference>
+    </credit_index_index>	
+<!--  	<credit_index_giftfriend>
+		<update handle="credit_index_index"/>
+    </credit_index_giftfriend>-->
+	
+<!-- teamplate checkout cart dung credit de check out ifconfig="credit/options/allow_using_credit_to_checkout"-->
+    <checkout_cart_index>
+	    <reference name="checkout.cart">
+	   <action method="setCartTemplate" ifconfig="affiliate/config/enabled"><value>mw_credit/checkout/cart.phtml</value></action> 
+            <action method="chooseTemplate" ifconfig="affiliate/config/overwrite_cart"/>
+	    	<block type="core/template" name="credit.checkout.cart.credit" as="credit" template="mw_credit/checkout/cart/credit.phtml"/>
+	    	<block type="core/template" name="credit.checkout.cart.referral.code" as="referral_code" template="mw_credit/checkout/cart/referral_code.phtml"/>
+	    </reference>
+    </checkout_cart_index>
+</layout> 

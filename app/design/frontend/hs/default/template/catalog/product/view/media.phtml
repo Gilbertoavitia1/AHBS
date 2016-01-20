@@ -1,0 +1,62 @@
+<?php $_product = $this->getProduct(); ?>
+<?php $_helper = $this->helper('catalog/output'); ?>
+    
+<?php if ($_product->getImage() != 'no_selection' && $_product->getImage()): ?>
+<div class="product-image product-image-zoom">
+<?php    
+    $_img= "<div id='image'><a class='demo' href='{$this->helper('catalog/image')->init($_product, 'image')}'>
+            <img src='{$this->helper('catalog/image')->init($_product, 'image')->resize(256)}'/>
+        </a></div>";
+    echo $_helper->productAttribute($_product, $_img, 'image');
+?>
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+    Event.observe(window, 'load', function() {
+        product_zoom = new Product.Zoom('image', 'track', 'handle', 'zoom_in', 'zoom_out', 'track_hint');
+    });
+//]]>
+</script>
+<?php else: ?>
+<p class="product-image">
+    <?php
+        $_img= "<div id='image'><a class='demo' href='{$this->helper('catalog/image')->init($_product, 'image')}'>
+            <img src='{$this->helper('catalog/image')->init($_product, 'image')->resize(256)}'/>
+        </a></div>";
+        echo $_helper->productAttribute($_product, $_img, 'image');
+    ?>
+</p>
+<?php endif; ?>
+
+
+<hr style="margin: 15px 0px;">
+<?php if (count($this->getGalleryImages()) > 1): ?>
+<div class="more-views">
+    <?php foreach ($this->getGalleryImages() as $_image): ?>
+        <div class="col-md-6"><img style="cursor:pointer;" src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(256); ?>" alt="<?php echo $this->escapeHtml($_image->getLabel()) ?>" data-image="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'image', $_image->getFile()); ?>"/></div>    
+    <?php endforeach; ?>        
+    <div class="cleafix"></div>
+</div>
+<?php endif; ?>
+
+<script  type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/loupe.js', array('_secure'=>true));?>"></script>
+<script>jQuery.noConflict()</script>
+<script>
+jQuery(document).ready(function($) {
+    $('.demo').loupe();
+    $(".more-views img").click(function() {
+        var large = $(this).attr('data-image');
+        var small = $(this).attr('src');
+        $('a.demo').attr('href',large);
+        $('.loupe img').attr('src',large);
+        $('a.demo img').attr('src', small);
+    });
+});
+</script> 
+
+<style>
+.loupe { background-color:#555; background:rgba(0, 0, 0, 0.25); border:5px solid rgba(0, 0, 0, 0); cursor:url(blank.png), url(blank.cur), none; }
+.loupe img {  max-width: 300%; }
+</style>

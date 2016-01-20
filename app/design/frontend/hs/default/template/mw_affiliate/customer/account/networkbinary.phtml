@@ -1,0 +1,78 @@
+<?php $person = array_pop(Mage::registry('items')); ?>
+<?php $items = json_encode(Mage::registry('items'));//$person['vp'] > 0 ? json_encode(Mage::registry('items')) : json_encode(array($person)); ?>
+<?php $flag = Mage::registry('flag'); ?>
+
+<div class="dashboard row">
+    <div class="col-sm-12 col-md-12">
+        <div class="page-title page-head">
+            <h4 class="title"><?php echo $this->__('Affiliate Network') ?>: 
+                <?php 
+                switch ($flag) {
+                    case 1:
+                        echo "Binario";
+                        break;
+                    case 2:
+                        echo "Directos";
+                        break;
+                    case 3:
+                        echo "Tanque de Espera";
+                        break;
+                    default:
+                        break;
+                }
+                ?></h4>
+        </div>
+        
+        <div class="box-account">            
+            <div class="col-md-12 col-sm-12" style="text-align: center;">
+                <!--<a class="btn btn-warning" href="?item=3"><?php echo "Tanque de Espera" ?></a>-->                 
+                <a class="btn" href="?item=1"><?php echo "Red Binario" ?></a>                 
+                <a class="btn" href="?item=2"><?php echo "Frontales Directos" ?></a>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        
+        <?php if ($flag == 3):?>     
+            <?php if (Mage::registry('items')):?>
+            <table class="table" style="margin-top: 50px;">
+                <tr>
+                    <th>Fecha de Petici&oacute;n</th>
+                    <th>C&oacute;digo a agregar</th>
+                    <th>Nombre</th>
+                </tr>
+                <?php foreach (Mage::registry('items') as $key => $value):?>
+                    <tr>
+                        <td><?php echo $value['customer_time'] ?></td>
+                        <td><?php echo $value['referral_code']?></td>
+                        <td><?php echo Mage::getModel('customer/customer')->load($value['customer_id'])->getName()?></td>
+                    </tr>
+                <?php endforeach;?>
+
+            </table>
+            <?php else:?>
+                <p style="background-color: #fcf8e3; padding: 15px; margin-top: 15px;">No hay personas esperando por el momento.</p>
+            <?php endif;?>
+        <?php else:?>
+        <div class="box-account box-recent account-box ad-orders" style="margin-top:15px;">
+            <div class="col-sm-3 col-md-3 pull-right" style="text-align: right; height: 80px; font-size: 13px;">
+                <div class="checkbox"> 
+                    <label><input type="checkbox" name="fit" value="1" checked> Vista de árbol</label>
+                </div>
+            </div>
+            <div id="basicdiagram" style="width: auto; border-width: 1px;" class="">
+                
+            </div>
+        </div> 
+        <?php endif;?>
+    </div>
+</div>
+
+
+<script>
+    var items = <?php echo $items ?>;
+    var _flag = <?php echo $flag == 1 ? 1: 0?>;
+    var ajaxUrl = '<?php echo Mage::getUrl('affiliate/index/ajaxcheckbinary')?>';
+</script>
+
+<style>
+</style>

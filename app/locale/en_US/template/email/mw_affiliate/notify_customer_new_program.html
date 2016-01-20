@@ -1,0 +1,20 @@
+<!--@subject New Affiliate Program - {{var program_name}} @-->
+
+<p>Hello {{var customer_name}},</p>
+
+<p>We have just updated our new Affiliate program.
+Here is the program summary:</p> 
+
+<p>Program name: {{var program_name}}<br>
+Affiliate commission: {{var program_commission}}<br>
+Customer discount: {{var program_discount}}<br>
+Start date: {{var start_date}}<br>
+End date: {{var end_date}} 
+</p>
+<p><u>Description:</u><br> 
+{{var program_description}}</p>
+
+<p>Please <a href="{{var customer_program_link}}">click here</a> to review the program.<br>
+If you have any questions about the program, please feel free to contact us at <a href="mailto:{{config path='trans_email/ident_support/email'}}">{{config path='trans_email/ident_support/email'}}</a> or by phone at {{config path='general/store_information/phone'}}.</p>                                            
+
+<p>This message was sent by the Customer Service department, {{var store_name}}.</p>

@@ -1,0 +1,108 @@
+<?php $size = $this->getSizeAffiliateNetwork(); ?>
+<?php $superarray= array()?>
+<?php $twolevels= array()?>
+<div class="dashboard">
+    <div class="page-title page-head"><h1><?php echo $this->__('Affiliate Network') ?></h1></div>
+    <div class="box-account box-recent account-box ad-orders">
+        <div class="head box-head">
+            <h2><?php // echo $this->__('My Affiliate Network') ?>
+            </h2>
+             <div class="pull-right"><input type="checkbox" name="fit" value="1" checked>Vista de árbol
+                 <input type="checkbox" name="sponsored" value="1">Linea Directa</div>
+        </div>
+	<div>
+        <?php 
+            $customer_id = Mage::getSingleton('customer/session')->getId();
+            $name = Mage::getModel('customer/customer')->load($customer_id)->getName();
+            $name_id = Mage::getModel('customer/customer')->load($customer_id)->getId();
+            $email = Mage::getModel('customer/customer')->load($customer_id)->getEmail();
+            $affiliateCustomer = Mage::getModel('affiliate/affiliatecustomers')->load($customer_id); 
+            $customerCommission = $affiliateCustomer->getTotalCommission();
+            $customerJoinedDate = $affiliateCustomer->getCustomerTime();
+            $customerStatus	= $affiliateCustomer->getActive(); 
+            $code	= $affiliateCustomer->getReferralCode(); 
+            $customer_photo = $affiliateCustomer->getCustomerPhoto();
+            $customer_photo = $customer_photo ? $customer_photo : $this->getSkinUrl('images/avatar.png');
+            $affiliate_group = Mage::getModel('affiliate/affiliategroupmember')->getCollection()
+            ->addFieldToFilter('customer_id',$name_id)->getFirstItem();
+            $affiliate_group = Mage::getModel('affiliate/affiliategroup')->getCollection()
+            ->addFieldToFilter('group_id',$affiliate_group['group_id'])->getFirstItem();
+            //                                ;
+            $group_name = $affiliate_group->getData();
+            $statusOptions = MW_Affiliate_Model_Statusactive::getOptionArray();
+            $newArray = array(
+            'level'		=> 0, 
+            'id'		=> $code, //$name_id, 
+            'image'		=> $customer_photo, 
+            'name'		=> $name,
+            'title'		=> $name,
+            'commission'	=> $customerCommission,
+            'joined_date'	=> $customerJoinedDate,
+            'code'	=> $code,
+            'parent'	=> null,
+	    'personaactive' => 'true',
+            'rank'          => $group_name['group_name'],
+            'status'	=> $statusOptions[$customerStatus],
+            'description'	=> "Rango: {$group_name['group_name']}\n\nCodigo:{$code}"
+            );
+
+            array_push($superarray, $newArray);
+            array_push($twolevels, $newArray);
+
+            ?>  
+            
+        <?php $_affiliates = $this->getCollection();?>
+	<?php if($_affiliates->getSize()): ?>
+            <?php foreach ($_affiliates as $_affiliate): ?>
+                <?php $data = $_affiliate->getData() ?>
+                <?php array_push($superarray, $data) ?>
+                <?php if ($code == $data['sponsor']): ?>
+                <?php $data['parent'] = $code//name_id ?>
+                <?php array_push($twolevels, $data) ?>
+                <?php endif;?>
+
+            <?php endforeach; ?>
+        <?php endif; ?>
+        </div>
+        <div id="basicdiagram" style="width: 100%; height: 480px; border-width: 1px;" />
+    </div>
+</div>
+    
+  
+<?php 
+$tree = json_encode($superarray); 
+$tree2 = json_encode($twolevels); 
+?>
+
+<?php //echo $tree ?>
+    
+    
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/primitives.min.js');?>" ></script>
+<script>
+jQuery.noConflict();
+jQuery(function ($) {
+    var options = new primitives.orgdiagram.Config();
+    var items = <?php echo $tree ?>;
+    var twolevels = <?php echo $tree2 ?>;
+    options.items = items;
+    options.cursorItem = 0;
+    options.hasSelectorCheckbox = primitives.common.Enabled.False;
+    
+    $('#basicdiagram').orgDiagram(options);
+    $('#basicdiagram').orgDiagram("update",primitives.common.UpdateMode.Refresh);
+    
+    $('input[name="fit"]').change(function() {
+        options.pageFitMode = $(this).is(':checked') ? 1 : 0;
+        $('#basicdiagram').orgDiagram(options);
+        $('#basicdiagram').orgDiagram("update", primitives.common.UpdateMode.Refresh);                    
+    });
+    
+    $('input[name="sponsored"]').change(function() {
+        options.items = $(this).is(':checked') ? twolevels : items;
+        $('#basicdiagram').orgDiagram(options);
+        $('#basicdiagram').orgDiagram("update", primitives.common.UpdateMode.Refresh);                    
+    });
+    
+    
+});
+</script>

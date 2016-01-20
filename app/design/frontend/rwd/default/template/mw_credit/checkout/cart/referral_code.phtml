@@ -1,0 +1,46 @@
+<?php 
+/**
+ *
+ * @category   MW
+ * @package    MW_Credit
+ * @author Mage World <support@mage-world.com>
+ */
+ ?>
+ <?php $store_id = Mage::app()->getStore()->getId();
+ 	   $show = Mage::helper('affiliate/data')->getShowReferralCodeCartStore($store_id);
+ 	   if($show){
+ ?>
+<form id="form_referral_code" action="<?php echo $this->getUrl('credit/checkout_cart/referralcodePost') ?>" method="post">
+    <div class="discount">
+        <h2><?php echo $this->__('Referral Code') ?></h2>
+        <div class="discount-form">
+            <label for="credit_code"><?php echo $this->__('Enter your referral code if you have.') ?></label>
+            <input type="hidden" name="removeCode" id="remove-code" value="0" />
+            <div class="input-box">
+                <input class="input-text" id="code_value" name="code_value" value="<?php echo $this->htmlEscape(Mage::helper('affiliate')->getReferralCodeByCheckout()) ?>" />
+            </div>
+            <div class="buttons-set">
+                <button type="button" title="<?php echo $this->__('Apply Code') ?>" class="button" onclick="codeForm.submit(false)" value="<?php echo $this->__('Apply Code') ?>"><span><span><?php echo $this->__('Apply Code') ?></span></span></button>
+                <?php if(strlen(Mage::helper('affiliate')->getReferralCodeByCheckout())): ?>
+                    &nbsp; <button type="button" title="<?php echo $this->__('Cancel Code') ?>" class="button" onclick="codeForm.submit(true)" value="<?php echo $this->__('Cancel Code') ?>"><span><span><?php echo $this->__('Cancel Code') ?></span></span></button>
+                <?php endif;?>
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+//<![CDATA[
+var codeForm = new VarienForm('form_referral_code');
+codeForm.submit = function (isRemove) {
+    if (isRemove) {
+        $('code_value').removeClassName('required-entry');
+        $('remove-code').value = "1";
+    } else {
+        $('code_value').addClassName('required-entry');
+        $('remove-code').value = "0";
+    }
+    return VarienForm.prototype.submit.bind(codeForm)();
+};
+//]]>
+</script>
+<?php }?>

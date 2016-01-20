@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Inchoo_Heared4us>
+         <version>0.1.0</version>
+      </Inchoo_Heared4us>
+   </modules>
+   
+	<global>
+		<models>
+			<heared4us>
+				<class>Inchoo_Heared4us_Model</class>
+			</heared4us>
+			
+            <checkout>
+                <rewrite>
+                    <type_onepage>Inchoo_Heared4us_Model_Type_Onepage</type_onepage>
+                </rewrite>
+            </checkout>   
+            
+	        <inchooadminthemecontroller>
+	             <class>Inchoo_Heared4us_Controller</class>
+	        </inchooadminthemecontroller>            
+                			
+		</models>
+          
+		<helpers>
+			<heared4us>
+				<class>Inchoo_Heared4us_Helper</class>
+			</heared4us>
+		</helpers>
+        
+        <blocks>        
+            <checkout>
+                <rewrite>
+                    <onepage>Inchoo_Heared4us_Block_Onepage</onepage>
+                </rewrite>
+            </checkout>        
+        
+            <heared4us>
+                <class>Inchoo_Heared4us_Block</class>
+            </heared4us>  
+            
+            <heared4usonepage>
+                <class>Inchoo_Heared4us_Block_Onepage</class>
+            </heared4usonepage>                                
+        </blocks>
+
+		<rewrite>
+		  <inchoo_heared4us_onepage>
+		  	<from><![CDATA[#^/checkout/onepage/#]]></from>
+		    <to>/heared4us/onepage/</to>
+		  </inchoo_heared4us_onepage>
+		</rewrite>
+                
+        
+        <resources>
+            <heared4us_setup>
+	            <setup>
+	               <module>Inchoo_Heared4us</module>
+					<class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+	            </setup>
+	            <connection>
+	               <use>core_setup</use>
+	            </connection>
+        	</heared4us_setup>
+        </resources>
+        
+        <events>
+			<!-- START Adds the Admin theme switcher, enables to avoid modify admin themes -->
+		      <adminhtml_controller_action_predispatch_start>
+		        <observers>
+		          <inchoo_themeoverride_observer>
+		            <type>singleton</type>
+		            <!-- inchooadminthemecontroller/observer  -->
+		            <class>Inchoo_Heared4us_Controller_Observer</class>
+		            <method>overrideTheme</method>
+		          </inchoo_themeoverride_observer>
+		        </observers>
+		      </adminhtml_controller_action_predispatch_start>
+		      <!-- END Adds the Admin theme switcher, enables to avoid modify admin themes -->          
+        </events>
+        
+        
+   </global>
+
+    <frontend>
+    
+		<routers>
+			<inchoo_heared4us>
+			<use>standard</use>
+				<args>
+					<module>Inchoo_Heared4us</module>
+					<frontName>heared4us</frontName>
+				</args>
+			</inchoo_heared4us>	
+			
+		</routers>    
+    
+      <events>
+		<!-- START Custom added by Branko Ajzele: Hooks into order save event -->
+		<checkout_onepage_controller_success_action>
+			<observers>
+				<hooksystem_order_success>
+					<type>singleton</type>
+					<class>heared4us/observer</class>
+					<method>hookToOrderSaveEvent</method>
+				</hooksystem_order_success>
+			</observers>
+		</checkout_onepage_controller_success_action>
+		<!-- END Custom added by Branko Ajzele: Hooks into order save event -->
+		
+		
+		
+		
+      </events>
+      
+      <layout>
+		<updates>
+			<heared4us>
+				<file>heared4us.xml</file>
+            </heared4us>
+        </updates>
+	 </layout>      
+      
+   </frontend> 
+</config>

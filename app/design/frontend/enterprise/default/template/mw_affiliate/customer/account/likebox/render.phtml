@@ -1,0 +1,37 @@
+<?php 
+	$data = $this->getIframeInfo();
+	$products = $this->getIframeProducts(); 
+	$affiliate = $this->getCustomer();
+?>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('mw_affiliate/css/likebox.css')?>" />
+<div id="likebox-preview-container">
+	<div class="preview-head">
+		<h2>
+			<a href="<?php echo Mage::helper('affiliate')->getLinkBanner($affiliate, Mage::getBaseUrl())?>" style="color:<?php echo $data['likebox_title_color']?>">
+				<?php echo $data['likebox_title'];?>
+			</a>
+		</h2>
+	</div>
+	<div style="clear:both"></div>
+	<div class="preview-content">
+		<div class="preview-item-list">
+			<?php 			
+			foreach($products as $product):
+				/* The name is too long => Get 3 first words of product name to show */
+				$productName = trim($product->getName());
+				$words = explode(' ', $productName);
+				$productName = implode(' ', array($words[0], $words[1], $words[2]));
+				
+				/* Here is referral link */
+				$url = Mage::helper('affiliate')->getLinkBanner($affiliate, $product->getProductUrl());
+			?>
+				<div class="preview-item">
+					<a href="<?php echo $url?>" target="_blank"><img class="item-thumb" title="<?php echo $product->getName()?>" alt="<?php echo $productName?>" src="<?php echo Mage::helper('catalog/image')->init(Mage::getModel('catalog/product')->load($product->getId()), 'thumbnail')->resize(44, 44); ?>"/></a>
+					<!-- <a class="item-name" href="#" title="<?php //echo $productName?>"><?php //echo $productName?></a>  -->
+					<p class="item-price"><?php echo Mage::helper('core')->currency($product->getPrice());?></p>
+				</div>
+			<?php endforeach;?>
+		</div>
+	</div>
+	<div style="clear:both"></div>
+</div>

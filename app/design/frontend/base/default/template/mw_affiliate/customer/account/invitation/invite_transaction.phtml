@@ -1,0 +1,88 @@
+<?php
+/**
+ *
+ * @category   MW
+ * @package    MW_Credit
+ * @author Mage World <support@mage-world.com>
+ */
+?>
+<?php 
+	$result = $this->getInvitationReport();
+?>
+<div class="fieldset">
+    <h2 class="legend"><?php echo $this->__('Invitation Report') ?></h2>
+    <ul class="form-list">
+         <li class="fields">
+             <div class="field">
+                 <label for="click" ><em></em><?php echo $this->__('Total Clicks:') ?></label>
+             </div>
+             <div>
+             	<?php echo $result['click'];?>   		
+        	</div>
+        </li>
+        <li class="fields">
+             <div class="field">
+             	<label for="register" ><em></em><?php echo $this->__('Total Sign-Ups:') ?></label>
+             </div>
+             <div>
+             	<?php echo $result['register'];?>   		
+        	</div>
+        </li>
+        <li class="fields">
+             <div class="field">
+             	<label for="subscribe" ><em></em><?php echo $this->__('Total Subscribes:') ?></label>
+             </div>
+             <div>
+             	<?php echo $result['subscribe'];?>     		
+        	</div>
+        </li>
+        <li class="fields">
+             <div class="field">
+             	<label for="purchase" ><em></em><?php echo $this->__('Total Purchases:') ?></label>
+             </div>
+             <div>
+             	<?php echo $result['purchase'];?>     		
+        	</div>
+        </li>
+	</ul>
+</div>
+<div id="toggleSection">
+<?php $_invitations = $this->getCollection();?>
+<?php //$_invitations = $this->getInvitationHistory(); ?>
+<?php if($_invitations->getSize()): ?>
+	<?php echo $this->getPagerHtml(); ?>
+	<table class="data-table" id="my-credits-table3">
+	    <thead>
+	        <tr>
+				<th style="text-align: center;"><?php echo $this->__('Date') ?></th>
+				<th style="text-align: center;"><?php echo $this->__('Ip address') ?></th>
+				<th style="text-align: center;"><?php echo $this->__('Email') ?></th>
+				<th style="text-align: center;"><?php echo $this->__('Status') ?></th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	        <?php foreach ($_invitations as $_invitation): ?>
+	            <tr style="text-align:left">
+	                <td style="width: 100px;"><?php echo $this->formatDate($_invitation->getInvitationTime())." ".$this->formatTime($_invitation->getInvitationTime());?></td>
+					<td><?php echo $_invitation->getIp();?></td>
+					<td>
+						<?php
+							if($_invitation->getEmail()) { 
+								$emailComponents 	= explode('@', $_invitation->getEmail());
+								$emailUsername 		= $emailComponents[0];
+								$emailExtension 	= $emailComponents[1];
+								$emailSecure		= substr($emailUsername, 0, 4) . '...' . '@' . $emailExtension; 
+								
+								echo '<b>', $emailSecure, '</b>';
+							}
+						?>
+					</td>
+	            	<td style="text-align: center; width: 120px;"><?php echo $this->getStatusText($_invitation->getStatus());?></td>
+	            </tr>
+	        <?php endforeach; ?>
+	    </tbody>
+	</table>
+	<?php echo $this->getPagerHtml(); ?>
+	<script type="text/javascript">decorateTable('my-credits-table3')</script>
+<?php endif ?>
+</div>

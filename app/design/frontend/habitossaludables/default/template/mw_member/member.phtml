@@ -1,0 +1,51 @@
+<?php 
+Mage::getModel('core/cookie')->delete('customer');
+Mage::getModel('core/cookie')->delete('mw_referral_to');
+$request = $this->getRequest();
+
+$customer_url  = $request->member_url;
+
+$resource = Mage::getModel('core/resource');
+$customer_table = $resource->getTableName('customer/entity');
+  	  
+$collection = Mage::getModel('affiliate/affiliatecustomers')
+        ->getCollection()
+        ->addFieldtoFilter('customer_url', $customer_url);
+
+			       
+if ($collection->getData()):    
+    $data = $collection->getData();
+    $data = $data[0];
+    $customerData = Mage::getModel('customer/customer')->load($data['customer_id'])->getData();
+    
+    echo md5($customerData['email']);
+    $url = trim(Mage::getBaseUrl())."home?mw_aref=".md5($customerData['email']);
+?>
+    <p><strong><?php echo $customerData['firstname'].' '.$customerData['lastname'] ?></strong></p>
+    <?php 
+	$request_url = $request->getRequestString();
+	if (strpos($request_url,'member') !== false) {
+		$store = getStoreByCode('us');
+		$url = trim($store->getUrl(''))."home?mw_aref=".md5($customerData['email']);
+	}
+
+     header("Location: {$url}");die();
+	
+     ?>
+<? else: ?>
+    <p><strong>Usuario no encontrado</strong></p>
+<?php endif;?>
+
+
+<?php function getStoreByCode($storeCode)
+{
+        $stores = array_keys(Mage::app()->getStores());
+        foreach($stores as $id){
+          $store = Mage::app()->getStore($id);
+          if($store->getCode()==$storeCode) {
+            return $store;
+          }
+         }
+         return null; // if not found
+}
+?>

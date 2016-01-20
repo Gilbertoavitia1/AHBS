@@ -1,0 +1,123 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<meta http-equiv="Content-Type" content="<?php echo $this->getContentType() ?>" />
+<title><?php echo $this->getTitle() ?></title>
+<meta name="description" content="<?php echo htmlspecialchars($this->getDescription()) ?>" />
+<meta name="keywords" content="<?php echo htmlspecialchars($this->getKeywords()) ?>" />
+<meta name="robots" content="<?php echo htmlspecialchars($this->getRobots()) ?>" />
+<link rel="icon" href="<?php echo $this->getFaviconFile(); ?>" type="image/x-icon" />
+<link rel="shortcut icon" href="<?php echo $this->getFaviconFile(); ?>" type="image/x-icon" />
+<!--[if lt IE 7]>
+<script type="text/javascript">
+//<![CDATA[
+    var BLANK_URL = '<?php echo $this->helper('core/js')->getJsUrl('blank.html') ?>';
+    var BLANK_IMG = '<?php echo $this->helper('core/js')->getJsUrl('spacer.gif') ?>';
+//]]>
+</script>
+<![endif]-->
+<?php echo $this->getCssJsHtml() ?>
+<?php echo $this->getChildHtml() ?>
+<?php echo $this->helper('core/js')->getTranslatorScript() ?>
+<?php echo $this->getIncludes() ?>
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="<?php echo $this->getSkinUrl('img/favicon.ico') ?>">
+
+<!-- Font -->
+<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Arimo:400,700,400italic,700italic'>    
+
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<link rel='stylesheet' href="<?php echo $this->getSkinUrl('css/ie/ie8.css') ?>">
+  <![endif]-->
+  
+  <style>
+      .widget.cart.display-single-price, .widget.cart, .widget.checkout { margin-bottom: 0px; }
+      .widget.cart.display-single-price header { margin-bottom: 10px; }
+      .widget.cart hr { margin: 10px 0 ; }
+      .widget.cart .table tr:first { margin-top: none; }
+      
+      .widget.cart .update-buttons { 
+          margin-bottom: 10px; display: block; text-align: right;
+      }
+      
+      .widget.cart h3 { font-size: 18px;}
+      
+      .menu .left-navigation ul li {
+          padding: 5px;
+          margin: 0;
+      }
+      .menu .left-navigation ul li.current {
+          color: #166700;
+      }
+      .menu .left-navigation ul li a{
+          padding: 0;
+          background: none;
+      }
+      
+      .menu .left-navigation ul li a:hover{
+          background: none;
+          color: #166700;
+      }
+      
+      .menu .left-navigation ul li a:before{
+          left:0;
+      }
+      
+      .sidebar .block.block-cart, .sidebar .block.block-list,
+      .product-options-bottom .add-to-links, .price-box-bundle, .product-desc > .full-product-price  { display: none; }
+      .product-desc .availability { margin-top: 10px; font-weight: bold; }
+      
+      ul.pagination li a { background-color: #166700;}
+      ul.pagination li.active a { background-color: #eee;}
+      ul.pagination li.active a:hover { background-color: #eee;}
+      
+      #checkoutSteps { margin: 0px; padding:0;}
+      #checkoutSteps li { list-style: none; }
+      #checkoutSteps .step-title h4 { float: left; }
+      
+      #checkoutSteps ul.form-list {  margin: 0px; padding:0; margin-bottom: 10px;}
+      #checkoutSteps ul.form-list li.control {  margin-left: 20px; }
+      
+      #checkoutSteps .sp-methods ul {   margin: 10px; padding:0; }
+      #checkoutSteps .sp-methods input {   float:left; margin-right: 10px; margin-top: 0;}
+      #checkoutSteps #shipping-new-address-form ul { margin: 10px; padding:0; }
+      #checkoutSteps #checkout-review-table h3 { font-size: 14px; }
+      
+      .product-pager .amount, .product-pager .limiter, .product-pager .sorter { display:none;}
+      ul.include { padding-left: 35px; }
+      
+      
+      @media only screen 
+        and (min-device-width: 800px) 
+        and (max-device-width: 1400px){
+            .header .primary .navbar .nav > li {
+          font-size: 12px;
+        }
+    }
+  </style>

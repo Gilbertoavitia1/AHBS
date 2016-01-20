@@ -1,0 +1,39 @@
+<?php
+/**
+ * Note: This mark is a requirement of PayPal
+ * @see Mage_Paypal_Block_Standard_Form
+ */
+/*
+<!-- PayPal Logo -->
+<img src="<?php echo $this->escapeHtml($this->getPaymentAcceptanceMarkSrc())?>" alt="<?php echo Mage::helper('paypalmx')->__('Acceptance Mark') ?>" class="v-middle" />&nbsp;
+<a href="<?php echo $this->getPaymentAcceptanceMarkHref()?>" onclick="javascript:window.open('<?php echo $this->getPaymentAcceptanceMarkHref()?>','olcwhatispaypal','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, ,left=0, top=0, width=400, height=350'); return false;"><?php echo Mage::helper('paypalmx')->__('¿Qué es PayPal?') ?></a>
+<!-- PayPal Logo -->
+*/
+?>
+<!-- PayPal Logo -->
+	<img <?php if ($this->getNoPosAH() == 2) { ?>style="width:105px;height:35px;"<?php }?> id="imagemx" src="<?php 
+	switch ($this->getNoPosAH()){
+		case "1":
+			echo $this->getSkinUrl('images/paypalmx/accpmark_mensualidades_SP.PNG');
+			break;
+		case "2":
+			echo $this->getSkinUrl('images/paypalmx/accpmark_visa_mc_SP.PNG');
+			break;
+		case "3":
+			echo $this->getSkinUrl('images/paypalmx/accpmark_tarjdeb_SP.PNG');
+			break;
+	}
+	?>" alt="<?php echo Mage::helper('paypalmx')->__('Acceptance Mark') ?>" class="v-middle" />&nbsp;
+	<?php if($this->getNoPosAH() == 2){?><span id="tooltip"><a> <?php echo Mage::helper('paypalmx')->__('¿Qué es PayPal?') ?></a><span id="nopos">
+			 <ul>
+				<li>·Es un medio de pago f&aacute;cil, r&aacute;pido y seguro.</li>
+				<li>·Puede hacer pagos con tarjeta de cr&eacute;dito y d&eacute;bito.</li>
+				<li>·Registre en PayPal sus datos financieros una sola vez. No necesitar&aacute; proporcionarlos en compras posteriores.</li>
+				<li>·M&aacute;s de 100 millones de personas en el mundo utilizan PayPal.</li>
+				<li>·PayPal protege su informaci&oacute;n; No compartimos sus datos financieros.</li>
+			</ul> 
+	</span></span>	<?php }?>
+	<script >
+		sortPPMX();
+	</script>
+<!-- PayPal Logo -->

@@ -1,0 +1,33 @@
+<aside class="widget menu">
+    <header>
+        <strong><span><?php echo $this->__('My Binary Account'); ?></span></strong>
+    </header>
+    <nav class="left-navigation">
+        <ul>
+            <?php $_links = $this->getLinks();?>
+            <?php $_index = 1; ?>
+            <?php $_count = count($_links); ?>
+            <?php foreach ($_links as $_link): ?>
+                <?php $class = $this->isActive($_link) ? "current" : "" ?>
+                <?php $_last = ($_index++ >= $_count); ?>
+                <?php if($_link->getName() == 'affiliate_back'):?>
+                    <li style="font-size: 10px;">
+                        <a href="<?php echo $_link->getUrl() ?>"><< <?php echo $_link->getLabel() ?></a>
+                    </li>
+                    <?php else:?>
+                    <li>
+                        <?php if (!$class): ?>
+                            <a href="<?php echo $_link->getUrl() ?>"><?php echo $_link->getLabel() ?></a>
+                        <?php else: ?>
+                            <strong><?php echo $_link->getLabel() ?></strong>
+                        <?php endif;?>
+                    </li>  
+                    
+                <?php endif; ?>
+                
+            <?php endforeach; ?>
+        </ul>
+    </nav>
+</aside>
+
+<hr>

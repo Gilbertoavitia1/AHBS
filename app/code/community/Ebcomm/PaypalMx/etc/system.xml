@@ -1,0 +1,449 @@
+<?xml version="1.0"?>
+
+<config>
+	<sections>
+		<payment>
+			<groups>
+		        <pmxx translate="label comment paypal_title" module="paypalmx">
+                    <label>PayPal <![CDATA[M&eacute;xico (M&eacute;xico)]]></label>
+                    <sort_order>10</sort_order>
+                    <expanded>1</expanded>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <frontend_class>complex</frontend_class>
+                    <frontend_model>paypalmx/adminhtml_system_config_fieldset_group</frontend_model>
+                    <comment>Agrega otro m<![CDATA[&eacute;]]>todo de pago a tus soluciones actuales o selecciónalo independientemente. <![CDATA[<a href="https://www.paypal.com/mx/webapps/mpp/home" target="_blank">Ayuda</a> <script> document.observe("dom:loaded", function() { Fieldset.toggleCollapse('payment_paypal_payment_solutions');});</script>]]></comment>
+                    <paypal_title>Select a Payment Solution</paypal_title>
+                    <fields/>
+                </pmxx>
+		        <paypal_payments>
+		        
+					<ppmxx type="group" translate="label comment">
+                        <label>PayPal <![CDATA[M&eacute;xico (M&eacute;xico)]]></label>
+                        <frontend_type>text</frontend_type>
+                        <show_in_default>1</show_in_default>
+                        <show_in_website>1</show_in_website>
+                        <show_in_store>1</show_in_store>
+                        <sort_order>10</sort_order>
+                        <group>pmxx</group>
+                        <frontend_model>paypalmx/adminhtml_system_config_fieldset_payment</frontend_model>
+                        <frontend_class>ppmx-method</frontend_class>
+                        <include>1</include>
+                        <comment><![CDATA[Especialmente construido para vendedores en M&eacute;xico. Acepta pagos con D&eacute;bito, Cr&eacute;dito y ofrezca mensualidades </br> 
+									<div id="paypalmx-module" style="padding:15px 0 0 35px;">
+										<span><h4 style="color:#576f8e;">Tarjetas de cr&eacute;dito y d&eacute;bito</h4></span>
+										Con PayPal puede aceptar las principales tarjetas de cr&eacute;dito y d&eacute;bito. PayPal le facilita tambi&eacute;n aceptar pagos en 25 divisas de 190 pa&iacute;ses.</br></br>
+										<span><h4 style="color:#576f8e;">Ofrezca mensualidades</h4></span>
+										Brinde a sus clientes la oportunidad de pagarle en mensualidades con tarjetas de cr&eacute;dito Bancomer, Banamex, HSBC, Santander y Banorte.</br>
+										Esto activar&aacute; la tercera opci&oacute;n de pago (bot&oacute;n de mensualidades). Se explicar&aacute; c&oacute;mo el usuario activar&aacute; mensualidades en su cuenta de PayPal
+										</br></br><span><h4 style="color:#576f8e;">Express Checkout Shortcut</h4></span>
+										Brinde a sus usuarios la mejor experiencia de compra con Express Checkout Shortcut. Al implementarlo, los compradores podr&aacute;n terminar su transacci&oacute;n en pocos clics.
+										<br>
+									</div>
+							 ]]></comment>
+                        <activity_path>payment/ppmx/active</activity_path>
+                        <learn_more_link>https://www.paypal.com/mx/webapps/mpp/home</learn_more_link>
+                        <fields>
+                            <ppmx_required type="group" translate="label">
+                                <label>Configuración de Paypal Requerida</label>
+                                <frontend_type>text</frontend_type>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <sort_order>10</sort_order>
+                                <frontend_model>paypalmx/adminhtml_system_config_fieldset_expanded</frontend_model>
+                                <fields>
+                                    <ppmx_required_express_checkout type="group" translate="label">
+                                        <label>Express Checkout</label>
+                                        <frontend_type>text</frontend_type>
+                                        <show_in_default>1</show_in_default>
+                                        <show_in_website>1</show_in_website>
+                                        <frontend_model>paypalmx/adminhtml_system_config_fieldset_expanded</frontend_model>
+                                        <sort_order>10</sort_order>
+                                        <fields>
+                                            <business_account translate="label comment tooltip">
+                                                <label>Email asociado con PayPal Merchant Account</label>
+                                                <comment><![CDATA[<a style="cursor:pointer" onclick="javascript:window.open('https://www.paypal.com/mx/webapps/mpp/referral/paypal-business-account2?partner_id=ZTLPZRKATXU4','ppmx','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, ,left=0, top=0, width=1100, height=650');"> Empieza a recibir pagos con PayPal</a>]]></comment>
+                                                <tooltip>No tienes cuenta de Paypal? Simplemente agrega tu correo.</tooltip>
+                                                <config_path>paypalmx/general/business_account</config_path>
+                                                <show_in_default>1</show_in_default>
+                                                <show_in_website>1</show_in_website>
+                                                <sort_order>10</sort_order>
+                                                <validate>validate-email</validate>
+                                                <shared>1</shared>
+                                            </business_account>
+                                            <api_authentication translate="label">
+                                                <label>M<![CDATA[&eacute;]]>todo de autentificación de la API</label>
+                                                <config_path>paypalmx/ppmx/api_authentication</config_path>
+                                                <frontend_type>select</frontend_type>
+                                                <source_model>paypalmx/config::getApiAuthenticationMethods</source_model>
+                                                <sort_order>20</sort_order>
+                                                <show_in_default>1</show_in_default>
+                                                <show_in_website>1</show_in_website>
+                                                <shared>1</shared>
+                                            </api_authentication>
+                                            <api_username translate="label">
+                                                <label>Usuario de la API</label>
+                                                <config_path>paypalmx/ppmx/api_username</config_path>
+                                                <sort_order>30</sort_order>
+                                                <show_in_default>1</show_in_default>
+                                                <show_in_website>1</show_in_website>
+                                                <shared>1</shared>
+                                            </api_username>
+                                            <api_password translate="label">
+                                                <label>Contraseña de la API</label>
+                                                <config_path>paypalmx/ppmx/api_password</config_path>
+                                                <sort_order>40</sort_order>
+                                                <show_in_default>1</show_in_default>
+                                                <show_in_website>1</show_in_website>
+                                                <shared>1</shared>
+                                            </api_password>
+                                            <api_signature translate="label">
+                                                <label>Firma de la API</label>
+                                                <config_path>paypalmx/ppmx/api_signature</config_path>
+                                                <sort_order>50</sort_order>
+                                                <show_in_default>1</show_in_default>
+                                                <show_in_website>1</show_in_website>
+                                                <depends><api_authentication>0</api_authentication></depends>
+                                                <shared>1</shared>
+                                            </api_signature>
+                                             <api_cert translate="label">
+                                                <label>Certificado de la API</label>
+                                                <config_path>paypalmx/ppmx/api_cert</config_path>
+                                                <frontend_type>file</frontend_type>
+                                                <backend_model>paypalmx/system_config_backend_cert</backend_model>
+                                                <sort_order>60</sort_order>
+                                                <show_in_default>1</show_in_default>
+                                                <show_in_website>1</show_in_website>
+                                                <depends><api_authentication>1</api_authentication></depends>
+                                                <shared>1</shared>
+                                            </api_cert>
+                                            <api_wizard translate="button_label sandbox_button_label">
+                                                <label></label>
+                                                <button_label>Obtener Credenciales de PayPal de Producción</button_label>
+                                                <button_url><![CDATA[https://www.paypal.com/us/cgi-bin/webscr?cmd=_login-api-run]]></button_url>
+                                                <sandbox_button_label>Obtener Credenciales del ambiente de Pruebas de PayPal (Sandbox)</sandbox_button_label>
+                                                <sandbox_button_url><![CDATA[https://www.sandbox.paypal.com/us/cgi-bin/webscr?cmd=_login-api-run]]></sandbox_button_url>
+                                                <frontend_model>paypalmx/adminhtml_system_config_apiWizard</frontend_model>
+                                                <sort_order>70</sort_order>
+                                                <show_in_default>1</show_in_default>
+                                                <show_in_website>1</show_in_website>
+                                            </api_wizard>
+                                            <sandbox_flag translate="label">
+                                                <label>Modo Sandbox</label>
+                                                <config_path>paypalmx/ppmx/sandbox_flag</config_path>
+                                                <frontend_type>select</frontend_type>
+                                                <source_model>adminhtml/system_config_source_yesno</source_model>
+                                                <sort_order>80</sort_order>
+                                                <show_in_default>1</show_in_default>
+                                                <show_in_website>1</show_in_website>
+                                                <shared>1</shared>
+                                            </sandbox_flag>
+                                            <use_proxy translate="label">
+                                                <label>API Utiliza Proxy</label>
+                                                <config_path>paypalmx/ppmx/use_proxy</config_path>
+                                                <frontend_type>select</frontend_type>
+                                                <source_model>adminhtml/system_config_source_yesno</source_model>
+                                                <sort_order>90</sort_order>
+                                                <show_in_default>1</show_in_default>
+                                                <show_in_website>1</show_in_website>
+                                                <shared>1</shared>
+                                            </use_proxy>
+                                            <proxy_host translate="label">
+                                                <label>Host del Proxy</label>
+                                                <config_path>paypalmx/ppmx/proxy_host</config_path>
+                                                <frontend_type>text</frontend_type>
+                                                <sort_order>100</sort_order>
+                                                <show_in_default>1</show_in_default>
+                                                <show_in_website>1</show_in_website>
+                                                <depends><use_proxy>1</use_proxy></depends>
+                                                <shared>1</shared>
+                                            </proxy_host>
+                                            <proxy_port translate="label">
+                                                <label>Puerto del Proxy</label>
+                                                <config_path>paypalmx/ppmx/proxy_port</config_path>
+                                                <frontend_type>text</frontend_type>
+                                                <sort_order>110</sort_order>
+                                                <show_in_default>1</show_in_default>
+                                                <show_in_website>1</show_in_website>
+                                                <depends><use_proxy>1</use_proxy></depends>
+                                                <shared>1</shared>
+                                            </proxy_port>
+                                        </fields>
+                                    </ppmx_required_express_checkout>
+                                    <enable_ppmx translate="label">
+                                        <label>Habilitar esta solución</label>
+                                        <config_path>payment/ppmx/active</config_path>
+                                        <frontend_type>select</frontend_type>
+                                        <source_model>adminhtml/system_config_source_yesno</source_model>
+                                        <sort_order>20</sort_order>
+                                        <show_in_default>1</show_in_default>
+                                        <show_in_website>1</show_in_website>
+                                        <shared>1</shared>
+                                        <requires>ppmx_required_express_checkout</requires>
+                                        <frontend_class>paypal-enabler paypal-ec-enabler</frontend_class>
+                                    </enable_ppmx>
+                                </fields>
+                            </ppmx_required>
+                            <settings_ec_mxx type="group" translate="label">
+                                <label>Configuración básica - PayPal Express Checkout</label>
+                                <frontend_type>text</frontend_type>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website	>
+                                <show_in_store>1</show_in_store>
+                                <frontend_model>paypalmx/adminhtml_system_config_fieldset_expanded</frontend_model>
+                                <sort_order>20</sort_order>
+                                <fields>
+                                    <sort_order translate="label">
+                                        <label>Orden de acomodo</label>
+                                        <config_path>payment/ppmx/sort_order</config_path>
+                                        <frontend_type>text</frontend_type>
+                                        <tooltip>Establezca el orden en el que desea mostrar la opción del sistema de pago electrónico. El más bajo es desplegado primero</tooltip>
+                                        <sort_order>20</sort_order>
+                                        <show_in_default>1</show_in_default>
+                                        <show_in_website>1</show_in_website>
+                                        <show_in_store>1</show_in_store>
+                                        <frontend_class>validate-number</frontend_class>
+                                        <shared>1</shared>
+                                    </sort_order>
+                                    <payment_action translate="label">
+                                        <label>Acción de Pago</label>
+                                        <comment><![CDATA[“Sale” hará que la venta termine en línea y de forma directa.
+													Para utilizar Authorización y Captura por favor refiérase
+													<a style="cursor:pointer" onclick="javascript:window.open('https://cms.paypal.com/es/cgi-bin/?cmd=_render-content&content_ID=developer/howto_admin_authcapture','olcwhatispaypal','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, ,left=0, top=0, width=800, height=650');"> aquí.</a>]]>
+										</comment>
+                                        <config_path>payment/ppmx/payment_action</config_path>
+                                        <frontend_type>select</frontend_type>
+                                        <source_model>paypal/system_config_source_paymentActions_express</source_model>
+                                        <sort_order>30</sort_order>
+                                        <show_in_default>1</show_in_default>
+                                        <show_in_website>1</show_in_website>
+                                        <shared>1</shared>
+                                    </payment_action>
+                                    <visible_on_shipping translate="label">
+                                        <label>Shortcut en el m<![CDATA[&eacute;]]>todo de envío</label>
+                                        <config_path>payment/ppmx/visible_on_shipping</config_path>
+                                        <frontend_type>select</frontend_type>
+                                        <source_model>adminhtml/system_config_source_yesno</source_model>
+                                        <sort_order>35</sort_order>
+                                        <show_in_default>1</show_in_default>
+                                        <show_in_website>1</show_in_website>
+                                        <show_in_store>1</show_in_store>
+                                        <shared>1</shared>
+                                    </visible_on_shipping>
+                                    <activar_mensualidad translate="label">
+                                        <label>Activar pago a mensualidades</label>
+                                        <comment>¿Cómo activar mensualidades? <![CDATA[<a style="cursor:pointer" onclick="javascript:window.open('https://www.paypal.com/mx/webapps/mpp/installments','olcwhatispaypal','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, ,left=0, top=0, width=800, height=650');"
+                                         >(Info.)</a>]]> No muestre mensualidades aquí hasta que las haya habilitado en su cuenta PayPal.</comment>
+                                        <config_path>payment/ppmx_mensualidades2/mensualidades</config_path>
+                                        <frontend_type>select</frontend_type>
+                                        <source_model>adminhtml/system_config_source_yesno</source_model>
+                                        <sort_order>40</sort_order>
+                                        <show_in_default>1</show_in_default>
+                                        <show_in_website>1</show_in_website>
+                                        <show_in_store>1</show_in_store>
+                                        <shared>1</shared>
+                                    </activar_mensualidad>
+                                    <authorization_honor_period translate="label comment">
+                                        <label>Periodo de autorizacion de Honor (días)</label>
+                                        <comment>Especifica que Periodo de autorizacion de honor se tiene en la cuenta de PayPal. Debe reflejar la configuración en Paypal.</comment>
+                                        <config_path>payment/ppmx/authorization_honor_period</config_path>
+                                        <frontend_type>text</frontend_type>
+                                        <sort_order>50</sort_order>
+                                        <show_in_default>1</show_in_default>
+                                        <show_in_website>1</show_in_website>
+                                        <shared>1</shared>
+                                        <depends><payment_action>Order</payment_action></depends>
+                                    </authorization_honor_period>
+                                    <order_valid_period translate="label comment">
+                                        <label>Periodo de valides de orden (días)</label>
+                                        <comment>Especifica el periodo de validez de la orden configurada en la cuenta de PayPal merchant.  Debe reflejar la configuración en Paypal.</comment>
+                                        <config_path>payment/ppmx/order_valid_period</config_path>
+                                        <frontend_type>text</frontend_type>
+                                        <sort_order>60</sort_order>
+                                        <show_in_default>1</show_in_default>
+                                        <show_in_website>1</show_in_website>
+                                        <shared>1</shared>
+                                        <depends><payment_action>Order</payment_action></depends>
+                                    </order_valid_period>
+                                    <child_authorization_number translate="label comment">
+                                        <label>Numero de autorizaciones hijas</label>
+                                        <comment>El numero default de tu cuenta PayPal es 1. Para hacer multiples autorizaciones porfavor contactar a PayPal para solicitar un incremento.</comment>
+                                        <config_path>payment/ppmx/child_authorization_number</config_path>
+                                        <frontend_type>text</frontend_type>
+                                        <sort_order>70</sort_order>
+                                        <show_in_default>1</show_in_default>
+                                        <show_in_website>1</show_in_website>
+                                        <shared>1</shared>
+                                        <depends><payment_action>Order</payment_action></depends>
+                                    </child_authorization_number>
+
+                                    <settings_ec_advanced_mxx type="group" translate="label">
+                                        <label>Configuración Avanzada</label>
+                                        <frontend_class>config-advanced</frontend_class>
+                                        <frontend_type>text</frontend_type>
+                                        <show_in_default>1</show_in_default>
+                                        <show_in_website>1</show_in_website>
+                                        <show_in_store>1</show_in_store>
+                                        <sort_order>80</sort_order>
+                                        <fields>
+                                            <allowspecific translate="label">
+                                                <label>Permitir pagos de</label>
+                                                <config_path>payment/ppmx/allowspecific</config_path>
+                                                <frontend_type>select</frontend_type>
+                                                <source_model>adminhtml/system_config_source_payment_allspecificcountries</source_model>
+                                                <sort_order>10</sort_order>
+                                                <show_in_default>1</show_in_default>
+                                                <show_in_website>1</show_in_website>
+                                                <shared>1</shared>
+                                            </allowspecific>
+                                            <specificcountry translate="label">
+                                                <label>Paises que aplican el tipo de pago</label>
+                                                <config_path>payment/ppmx/specificcountry</config_path>
+                                                <frontend_type>multiselect</frontend_type>
+                                                <source_model>paypal/system_config_source_buyerCountry</source_model>
+                                                <sort_order>20</sort_order>
+                                                <show_in_default>1</show_in_default>
+                                                <show_in_website>1</show_in_website>
+                                                <depends><allowspecific>1</allowspecific></depends>
+                                                <shared>1</shared>
+                                            </specificcountry>
+                                            <debug translate="label">
+                                                <label>Modo Debug</label>
+                                                <config_path>payment/ppmx/debug</config_path>
+                                                <frontend_type>select</frontend_type>
+                                                <source_model>adminhtml/system_config_source_yesno</source_model>
+                                                <sort_order>30</sort_order>
+                                                <show_in_default>1</show_in_default>
+                                                <show_in_website>1</show_in_website>
+                                                <shared>1</shared>
+                                            </debug>
+                                            <verify_peer translate="label">
+                                                <label>Habilitar Certificación SSL</label>
+                                                <config_path>payment/ppmx/verify_peer</config_path>
+                                                <frontend_type>select</frontend_type>
+                                                <source_model>adminhtml/system_config_source_yesno</source_model>
+                                                <sort_order>35</sort_order>
+                                                <show_in_default>1</show_in_default>
+                                                <show_in_website>1</show_in_website>
+                                                <shared>1</shared>
+                                            </verify_peer>
+                                            <express_checkout_settlement_report_xx type="group" translate="label">
+                                                <label>Configuración del Reporte de Solución</label>
+                                                <frontend_type>text</frontend_type>
+                                                <show_in_default>1</show_in_default>
+                                                <show_in_website>1</show_in_website>
+                                                <sort_order>110</sort_order>
+                                                <fields>
+                                                    <heading_sftp translate="label">
+                                                        <label>Credenciales SFTP</label>
+                                                        <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                                                        <sort_order>10</sort_order>
+                                                        <show_in_default>1</show_in_default>
+                                                        <show_in_website>1</show_in_website>
+                                                    </heading_sftp>
+                                                    <settlement_reports_ftp_login translate="label">
+                                                        <label>Usuario</label>
+                                                        <config_path>paypalmx/fetch_reports/ftp_login</config_path>
+                                                        <frontend_type>obscure</frontend_type>
+                                                        <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+                                                        <sort_order>20</sort_order>
+                                                        <show_in_default>1</show_in_default>
+                                                        <show_in_website>1</show_in_website>
+                                                        <shared>1</shared>
+                                                    </settlement_reports_ftp_login>
+                                                    <settlement_reports_ftp_password translate="label">
+                                                        <label>Contraseña</label>
+                                                        <config_path>paypalmx/fetch_reports/ftp_password</config_path>
+                                                        <frontend_type>obscure</frontend_type>
+                                                        <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+                                                        <sort_order>30</sort_order>
+                                                        <show_in_default>1</show_in_default>
+                                                        <show_in_website>1</show_in_website>
+                                                        <shared>1</shared>
+                                                    </settlement_reports_ftp_password>
+                                                    <settlement_reports_ftp_sandbox translate="label">
+                                                        <label>Modo Sandbox</label>
+                                                        <config_path>paypalmx/fetch_reports/ftp_sandbox</config_path>
+                                                        <frontend_type>select</frontend_type>
+                                                        <source_model>adminhtml/system_config_source_yesno</source_model>
+                                                        <sort_order>40</sort_order>
+                                                        <show_in_default>1</show_in_default>
+                                                        <show_in_website>1</show_in_website>
+                                                        <shared>1</shared>
+                                                    </settlement_reports_ftp_sandbox>
+                                                    <settlement_reports_ftp_ip translate="label comment tooltip">
+                                                        <label>Nombre del Servidor Personalizado o Dirección IP</label>
+                                                        <comment>Por defecto es "reports.paypal.com".</comment>
+                                                        <tooltip>Use ":" para especificar el puerto, Por Ejemplo: "test.example.com:5224".</tooltip>
+                                                        <config_path>paypalmx/fetch_reports/ftp_ip</config_path>
+                                                        <frontend_type>text</frontend_type>
+                                                        <sort_order>50</sort_order>
+                                                        <show_in_default>1</show_in_default>
+                                                        <show_in_website>1</show_in_website>
+                                                        <depends><settlement_reports_ftp_sandbox>0</settlement_reports_ftp_sandbox></depends>
+                                                        <shared>1</shared>
+                                                    </settlement_reports_ftp_ip>
+                                                    <settlement_reports_ftp_path translate="label comeent">
+                                                        <label>Directorio Personalizado</label>
+                                                        <comment>Por defecto es "/ppreports/outgoing".</comment>
+                                                        <config_path>paypalmx/fetch_reports/ftp_path</config_path>
+                                                        <frontend_type>text</frontend_type>
+                                                        <sort_order>60</sort_order>
+                                                        <show_in_default>1</show_in_default>
+                                                        <show_in_website>1</show_in_website>
+                                                        <depends><settlement_reports_ftp_sandbox>0</settlement_reports_ftp_sandbox></depends>
+                                                        <shared>1</shared>
+                                                    </settlement_reports_ftp_path>
+                                                </fields>
+                                            </express_checkout_settlement_report_xx>
+                                            <express_checkout_frontend_mxx type="group" translate="label">
+                                                <label>Configuración de la página de pagos de PayPal.</label>
+                                                <frontend_type>text</frontend_type>
+                                                <show_in_default>1</show_in_default>
+                                                <show_in_website>1</show_in_website>
+                                                <show_in_store>1</show_in_store>
+                                                <sort_order>120</sort_order>
+                                                <fields>
+                                                    <paypal_pages translate="label">
+                                                        <label>Estilo de la Página PayPal Merchant</label>
+                                                        <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                                                        <sort_order>20</sort_order>
+                                                        <show_in_default>1</show_in_default>
+                                                        <show_in_website>1</show_in_website>
+                                                        <show_in_store>1</show_in_store>
+                                                        <shared>1</shared>
+                                                    </paypal_pages>
+                                                    <paypal_hdrimg translate='label tooltip'>
+                                                        <label>URL de la Imagen de tu Encabezado</label>
+                                                        <comment>PayPal rechazará la transacción si se excede el máximo permitido de 127 caracteres en la URL.</comment>
+                                                        <config_path>paypalmx/style/paypal_hdrimg</config_path>
+                                                        <tooltip><![CDATA[ Ingrese la url para el banner de la empresa (750px de ancho con 90px de alto). Se recomienda que el banner resida en un servidor seguro (<strong style="color:red">SSL</strong>). De lo contrario, en algunos exploradores mostrarán advertencias de que existen elementos no seguros en la página.]]></tooltip>
+                                                        <sort_order>40</sort_order>
+                                                        <show_in_default>1</show_in_default>
+                                                        <show_in_website>1</show_in_website>
+                                                        <show_in_store>1</show_in_store>
+                                                        <shared>1</shared>
+                                                    </paypal_hdrimg>
+                                                    <paypal_payflowcolor translate="label tooltip">
+                                                        <label>Color de fondo de la página</label>
+                                                        <config_path>paypalmx/style/paypal_payflowcolor</config_path>
+                                                        <tooltip><![CDATA[El color de gradiente en formato hexadecimal a aplicar al carrito de compras de PayPal.]]></tooltip>
+                                                        <sort_order>70</sort_order>
+                                                        <show_in_default>1</show_in_default>
+                                                        <show_in_website>1</show_in_website>
+                                                        <show_in_store>1</show_in_store>
+                                                        <shared>1</shared>
+                                                    </paypal_payflowcolor>
+                                                </fields>
+                                            </express_checkout_frontend_mxx>
+                                        </fields>
+                                    </settings_ec_advanced_mxx>
+                                </fields>
+                            </settings_ec_mxx>
+                        </fields>
+                    </ppmxx></paypal_payments>
+      		</groups>
+		</payment>
+  	</sections>
+</config>

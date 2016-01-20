@@ -1,0 +1,46 @@
+<?php 
+	$contacts = $this->getContact();
+?>
+<button type="button" class="button" name="done-selected" style="margin-bottom:10px" onclick="javascript:done()"><span><span>Done</span></span></button>
+
+<p>
+	<a href="#" id="uncheck-all-btn" style="padding:10px 10px 10px 0;" onclick="javascript:unCheckAll()">Uncheck All</a>
+	<a href="#" id="check-all-btn" onclick="javascript:checkAll()">Check All</a>
+</p>
+<div>
+	<?php foreach($contacts as $contact):?>
+		<p>
+			<input class="item-check" type="checkbox" name="item-check[]" value="<?php echo $contact['email']?>" checked="checked"/>
+			<span><?php echo $contact['name'], ' (', $contact['email'], ')'?></span>
+		</p>
+	<?php endforeach;?>
+</div>
+
+<script>
+	function checkAll() {
+		$$('.item-check').each(function(item) {
+			item.checked = true;
+		});	
+	}
+
+	function unCheckAll() {
+		$$('.item-check').each(function(item) {
+			item.checked = false;
+		});
+	}
+
+	function done() {
+		var emails = new Array(),
+			count=0;
+		$$('.item-check').each(function($item) {
+			if($item.checked) {
+				emails[count] = $item.value;
+				++count;
+			}	
+		});
+
+		window.opener.document.getElementById('email').value = emails.join(',');
+		window.close();
+	}
+	
+</script>

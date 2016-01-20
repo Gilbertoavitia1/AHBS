@@ -1,0 +1,47 @@
+<?php
+$storeid = Mage::app()->getStore()->getId();
+$lng = Mage::getStoreConfig('storelocator/settings/defaultlon', $storeid);
+$lat = Mage::getStoreConfig('storelocator/settings/defaultlat', $storeid);
+$id      = $this->getRequest()->getParam('id');
+$storeData = Mage::getModel('storelocator/storelocator')->load($id);
+ $zoomlevel = Sparx_Storelocator_Helper_Data::storezoomLevel;
+if($storeData && $storeData->getId()){
+        $lng = $storeData->getLongitude();
+        $lat = $storeData->getLatitude();
+if($storeData->getZoomLevel()){
+  $zoomlevel = $storeData->getZoomLevel();  
+}        
+}     
+?>
+<div id="store-locator-container store-locator-detail">
+ 
+    <h1><?php echo $this->__("Store Locator"); ?></h1>	
+    <div class="bottom-line"></div>
+    <div id="form-container">
+        <form id="user-location" method="post" action="#">
+            <input type="hidden" name="url" value="<?php echo $this->getBaseUrl() . 'storelocator/index/storedetaillocation?id='.$id; ?>" id="url">
+            <input type="hidden" name="searchurl" value="<?php echo $this->getBaseUrl() . 'storelocator/index/searchlocation'; ?>" id="searchurl">
+            <input type="hidden" name="url1" value="<?php echo $this->getBaseUrl() . 'storelocator/index/infowindowdescription'; ?>" id="url1">
+            <input type="hidden" name="url2" value="<?php echo $this->getBaseUrl() . 'storelocator/index/infoonstoredetail?id='.$id; ?>" id="url2">
+<!--            <div id="form-input">
+                <label for="address">Enter City or State or Country or Phone or Zip Code:</label>
+                <input type="text" id="address" name="address" />
+            </div>            -->
+            <!--<button id="submit" type="submit">Submit</button>-->
+        </form>
+    </div>
+    <div id="map-container">	
+        <div id="loc-list" class="loc-list-detail">
+            <ul id="list"></ul>
+        </div>
+        <div id="map" class="map-on-detail"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    jQuery(function() {
+        jQuery('#map-container').storeLocator({'slideMap' : true, 'originMarker' : true, 'zoomLevel' : <?php echo $zoomlevel; ?>, 'fullMapStart' : true, 'defaultLoc': true, 'defaultLat': '<?php echo $lat; ?>', 'defaultLng' : '<?php echo $lng; ?>' });
+    });
+</script>
+
+

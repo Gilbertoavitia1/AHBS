@@ -1,0 +1,122 @@
+<?php 
+	$websites = $this->getCollection();
+?>
+
+<div class="dashboard">
+	<div class="page-title page-head">
+    	<h1><?php echo $this->__('Affiliate Website') ?></h1>
+	</div>
+	
+	<form action="<?php echo $this->getUrl('affiliate/website/save') ?>" method="post" name="website-new-form" id="form-validate" >	
+		<button type="button" id="website-new-add-btn" class="button" style="margin-bottom:5px"><span><span><?php echo $this->__('Add New') ?></span></span></button>
+		<div class="account-box ad-account-info box-account box-info" id="new-website-block" style="display:none">
+			<div class="head box-head">
+				<h2><?php echo $this->__('New website')?></h2>
+			</div>
+			<div class="col2-set">
+				<div class="col-1">
+					 <ul class="form-list">
+			        	<li class="fields">
+			        		<div class="field">
+			        			<label for="website-domain"><em></em><?php echo $this->__('Your domain:')?></label>
+			        		</div>
+			        		<div class="input-box">
+			        			<input id="website-domain" type="text" name="website_domain" value="" title="<?php echo $this->__('Website Domain')?>" class="input-text required-entry" />
+			        			<button type="submit" title="<?php echo $this->__('Save') ?>" id="website-new-save-btn" class="button" style="margin-top:5px"><span><span><?php echo $this->__('Save') ?></span></span></button>
+			        			<button type="button" title="<?php echo $this->__('Remove') ?>" id="website-new-remove-btn" class="button" style="margin-top:5px"><span><span><?php echo $this->__('Remove') ?></span></span></button>
+			        		</div>
+			        	</li>
+        			</ul>
+	    		</div>
+			</div>
+		</div>
+	</form>
+
+	<div class="box-account box-recent account-box ad-orders">
+        <div class="head box-head">
+            <h2><?php echo $this->__('My Affiliate Website') ?></h2>
+        </div>
+        <?php if($websites->getSize() < 1) { ?>
+        <div><?php echo $this->__('No Affiliate Website Found') ?></div>
+        <?php } else { ?>
+		<div>
+		<?php echo $this->getPagerHtml(); ?>
+			<table class="data-table" id="mw-my-website" >
+				<colgroup>
+					<col width="5%"/>
+					<col width="30%"/>
+					<col width="30%"/>
+					<col width="20%"/>
+					<col width="15%"/>
+				</colgroup>
+			    <thead>
+			        <tr>
+						<th style="text-align:center;"><?php echo $this->__('ID') ?></th>
+						<th style="text-align:center;"><?php echo $this->__('Domain name') ?></th>
+						<th style="text-align:center;"><?php echo $this->__('Verification Key') ?></th>
+						<th style="text-align:center;"><?php echo $this->__('Verification File')?></th>
+						<th style="text-align:center;"><?php echo $this->__('Status') ?></th>
+			        </tr>
+			    </thead>
+			    <tbody>
+			        <?php foreach($websites as $website): ?>
+			        	<tr>
+			        		<td><?php echo $website['affiliate_website_id']?></td>
+			        		<td><?php echo $website['domain_name']?></td>
+			        		<td>
+								<textarea readonly onclick="this.select();" rows="3" cols="30"><?php echo htmlspecialchars($website['verified_key'])?></textarea>
+								
+							</td>
+			        		<td style="text-align:center">
+			        			<?php
+			        				if($website['status'] < 1) {
+			        					echo '<a href="' . Mage::getUrl('affiliate/website/download', array('website_id' => $website['affiliate_website_id'])) . '">'.$this->__('Download').'</a>';
+			        				}	 
+			        			?>
+			        		</td>
+			        		<td style="text-align:center">
+			        			<?php
+									$color = '';
+									if($website['status'] == 1)
+										$color = 'green';
+									else
+										$color = 'red';
+										
+			        				echo '<span style="color: '.$color.';font-weight: bold;">'.MW_Affiliate_Model_Statuswebsite::getLabel($website['status']).'</span>';
+			        				if($website['status'] < 1) {
+			        					echo '<a href="' . Mage::getUrl('affiliate/website/verify', array('website_id' => $website['affiliate_website_id'])) . '" style="display:block">'.$this->__('Verify now').'</a>';
+			        				}
+									echo '<a href="' . Mage::getUrl('affiliate/website/remove', array('website_id' => $website['affiliate_website_id'])) . '" style="display:block">'.$this->__('Remove').'</a>';
+			        			?>
+		        			</td>
+			        	</tr>
+			        <?php endforeach;?>
+			    </tbody>
+			</table>
+			<?php echo $this->getPagerHtml(); ?>
+			<script type="text/javascript">decorateTable('mw-my-website');</script>
+			
+			<div style="margin-top:20px">
+				<label for="note_affiliate">
+					<em><strong><?php echo $this->__('* Note: ')?></strong><?php echo $this->__('In order to verify your website, please copy the verification key and insert to your website header OR download the verification file and upload to your host. Then click to "Verfiy now" to verify.') ?></em>
+				</label>
+			</div>
+		</div>	
+		<?php }?>
+	</div>
+</div>
+
+<script>
+	$('website-new-add-btn').observe('click', function() {
+		$('new-website-block').show();	
+		$('website-new-add-btn').hide();		
+	});
+
+	$('website-new-remove-btn').observe('click', function() {
+		$('website-domain').update('');
+		$('new-website-block').hide();
+		$('website-new-add-btn').show();	
+	});
+
+	$('website-new-save-btn').observe('click', function() {});
+</script>

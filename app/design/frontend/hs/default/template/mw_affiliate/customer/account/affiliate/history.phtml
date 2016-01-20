@@ -1,0 +1,65 @@
+<?php 
+	$collections = $this->getCollection();
+	$size = sizeof($collections);
+?>
+<div class="dashboard brown-border affilate row">
+    <div class="col-sm-12 col-md-12">
+    	<h4 class="title"><?php echo $this->__('Affiliate History')?></h4>
+	
+        <div class="form-box">
+	<div class="box-account box-recent account-box ad-orders">
+            <h5 class="title"><?php echo $this->__('My Commission History')?></h5>
+        </div>
+        <?php if($size == 0):?>
+	    <p><?php echo $this->__('No Commission History Found')?></p>
+        <?php elseif($size > 0): ?>
+	    
+        <div id="toggleSection">
+            <?php echo $this->getPagerHtml(); ?>
+            <table class="data-table table" id="my-credits-table">
+		<colgroup>
+                    <col width="25%">
+                    <col width="15%">
+                    <col width="5%">
+                    <col width="5%">
+                    <col width="30%">
+                    <col width="20%">
+		</colgroup>
+                <thead>
+                    <tr>
+                        <th style="text-align:center;"><?php echo $this->__('Date') ?></th>
+                        <th style="text-align:center;"><?php echo $this->__('Commission Type') ?></th>
+                        <th style="text-align:center;"><?php echo $this->__('Commission') ?></th>
+                        <th style="text-align:center;"><?php echo $this->__('Customer Discount') ?></th>
+                        <th style="text-align:center;"><?php echo $this->__('Detail') ?></th>
+                        <th style="text-align:center;"><?php echo $this->__('Status') ?></th>
+
+                        <!-- <th style="text-align: center;"><?php //echo $this->__('Order Number') ?></th> -->
+                    </tr>
+                </thead>
+                <tbody>
+		    <?php foreach ($collections as $collection): ?>
+	            <tr style="text-align:left">
+	            	<td><?php echo $this->formatDate($collection->getTransactionTime())." ".$this->formatTime($collection->getTransactionTime());?></td>
+	            	<td><?php echo $this->getCommissionType($collection->getCommissionType());?></td>
+	            	<td style="text-align:center">
+                            <?php echo Mage::helper('affiliate')->formatMoney($collection->getTotalCommission())?>
+	            	</td>
+	            	<td style="text-align:center">
+                            <?php echo Mage::helper('affiliate')->formatMoney($collection->getTotalDiscount())?>
+	            	</td>
+	            	<td>
+                            <?php echo $this->getTransactionDetail($collection->getCommissionType(),$collection->getOrderId(),false,$collection->getCustomerId()); ?>
+	            	</td>
+	            	<td style="text-align:center">
+                            <?php echo $this->getStatusText($collection->getStatus());?>
+	            	</td>
+                    </tr>
+	            <?php endforeach; ?> 
+                </tbody>
+            </table>
+        </div>
+    <?php endif; ?>
+        </div>
+</div>
+</div>

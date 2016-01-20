@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Mage_Firstdatae4>
+            <version>0.1.4</version>
+        </Mage_Firstdatae4>
+    </modules>    
+    <frontend>
+        <secure_url>
+            <firstdatae4_standard>/firstdatae4/standard</firstdatae4_standard>
+        </secure_url>
+        <routers>
+            <firstdatae4>
+                <use>standard</use>
+                <args>
+                    <module>Mage_Firstdatae4</module>
+                    <frontName>firstdatae4</frontName>
+                </args>
+            </firstdatae4>
+        </routers>
+    </frontend>
+    <admin>
+        <routers>
+            <firstdatae4>
+                <use>admin</use>
+                <args>
+                        <module>Mage_Firstdatae4</module>
+                        <frontName>firstdatae4</frontName>
+                </args>
+            </firstdatae4>
+        </routers>        
+    </admin>
+    <adminhtml>
+        <menu>
+            <firstdatae4 module="firstdatae4">
+                <title>Firstdatae4 Recurring Profiles</title>
+                <sort_order>30</sort_order>               
+                <children>
+                    <withdrawn module="firstdatae4">
+                        <title>Profiles</title>
+                        <sort_order>0</sort_order>
+                        <action>firstdatae4/adminhtml_recurring</action>
+                    </withdrawn>
+                </children>
+            </firstdatae4>
+        </menu>       
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <firstdatae4 module="firstdatae4">
+                            <title>Firstdatae4 Recurring Profiles</title>
+                            <sort_order>30</sort_order>               
+                            <children>
+                                <withdrawn module="firstdatae4">
+                                    <title>Profiles</title>
+                                    <sort_order>0</sort_order>
+                                    <action>firstdatae4/adminhtml_recurring</action>
+                                </withdrawn>
+                            </children>
+                        </firstdatae4>  
+                        <system>
+                            <children>
+                                                                              
+                                <config>
+                                    <children>
+                                        <firstdatae4>
+                                            <title>Firstdatae4 Config Profiles</title>
+                                        </firstdatae4>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+            
+            <!--<resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <Mage_Firstdatae4>
+                            <title>Firstadae4</title>
+                            <sort_order>10</sort_order>
+                        </Mage_Firstdatae4>
+                    </children>
+                </admin>
+                <system>
+                    <children>
+                        <config>
+                            <children>
+                                <firstdatae4 translate="title" module="firstdatae4">
+                                    <title>firstdatae4</title>
+                                </firstdatae4 >
+                            </children>
+                        </config>
+                    </children>
+                </system>
+            </resources> -->
+        </acl> 
+        <layout>
+            <updates>
+                <firstdatae4>
+                    <file>mage_firstdatae4.xml</file>
+                </firstdatae4>
+            </updates>
+        </layout>     
+        <translate>
+            <modules>
+                <Mage_Firstdatae4>
+                    <files>
+                        <default>Mage_Firstdatae4.csv</default>
+                    </files>
+                </Mage_Firstdatae4>
+            </modules>
+        </translate>  
+    </adminhtml>
+    <global>
+        <models>
+           <firstdatae4>
+              <class>Mage_Firstdatae4_Model</class>
+              <resourceModel>firstdatae4_mysql4</resourceModel>
+           </firstdatae4>
+           <firstdatae4_mysql4>
+              <class>Mage_Firstdatae4_Model_Mysql4</class>
+              <entities>
+                <recurring>
+                    <table>firstdata_recurring</table>
+                </recurring>
+                <detail>
+                    <table>firstdata_recurring_detail</table>
+                </detail>
+                <history>
+                    <table>firstdata_recurring_history</table>
+                </history>
+                <firstdatae4_debug><table>firstdata_debug</table></firstdatae4_debug>
+              </entities>
+           </firstdatae4_mysql4>
+        </models>
+        <resources>
+            <firstdatae4_setup>
+                <setup>
+                    <module>Mage_Firstdatae4</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </firstdatae4_setup>
+            <firstdatae4_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </firstdatae4_write>
+            <firstdatae4_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </firstdatae4_read>
+        </resources>
+        <blocks>
+            <firstdatae4>
+                <class>Mage_Firstdatae4_Block</class>
+            </firstdatae4>
+        </blocks>
+        <helpers>
+            <firstdatae4>
+                <class>Mage_Firstdatae4_Helper</class>
+            </firstdatae4>
+        </helpers>
+    </global>
+    <default>
+        <payment>
+            <firstdatae4_standard>
+                  <model>firstdatae4/standard</model>
+                  <title>Firstdatae4 Payment Gateway</title>
+                  <allowspecific>0</allowspecific>
+                  <order_status>pending_firstdatae4</order_status>
+            </firstdatae4_standard>
+        </payment>
+    </default>
+    <crontab>
+        <jobs>
+            <!--<firstdata_recurring>
+                <schedule><cron_expr>*/5 * * * *</cron_expr></schedule>
+                <run><model>firstdatae4/observer::runCron</model></run>
+            </firstdata_recurring>-->
+        </jobs>
+    </crontab>
+</config>

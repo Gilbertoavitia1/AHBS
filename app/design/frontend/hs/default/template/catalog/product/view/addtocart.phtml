@@ -1,0 +1,22 @@
+<?php $_product = $this->getProduct(); ?>
+<?php $buttonTitle = $this->__('Add to Cart'); ?>
+
+<br><br>
+<p><strong><?php echo $this->__('Add to Cart'); ?></strong></p>
+<?php if($_product->isSaleable()): ?>
+    <div class="add-to-cart">
+        <?php if(!$_product->isGrouped()): ?>
+            <div class="col-md-2 col-sm-3 col-xs-3">
+                <input type="text" name="qty" id="qty" maxlength="12" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Qty') ?>" class="form-control input-text qty" />
+        
+            </div>
+        
+        <?php endif; ?>
+            <div class="col-md-10 col-sm-9  col-xs-9">
+                <button type="button" title="<?php echo $buttonTitle ?>" id="product-addtocart-button" class="button btn btn-cart" onclick="productAddToCartForm.submit(this)"><span><span><?php echo $buttonTitle ?></span></span></button>
+        
+            </div>
+    <div class="clearfix"></div>
+        <?php echo $this->getChildHtml('', true, true) ?>
+    </div>
+<?php endif; ?>

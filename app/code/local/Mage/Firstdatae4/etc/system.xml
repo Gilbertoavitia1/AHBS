@@ -1,0 +1,218 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   Mage
+ * @package    Mage_Firstdatae4
+ * @author		Gayatri S Ajith <gayatri@schogini.com>
+ * @copyright  Copyright (c) 2012 Schogini Systems (http://www.schogini.com)
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+-->
+<config>
+    <tabs>
+        <firstdatae4_standard translate="label">
+            <label>firstdatae4 Standard</label>
+            <sort_order>300</sort_order>
+        </firstdatae4_standard>
+    </tabs>
+    
+   <sections>
+       <firstdatae4 translate="label">
+            <label>Recurring Profiles</label>
+            <tab>firstdatae4_standard</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>100</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>  
+                <settings translate="label"> 
+                    <label>General Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>0</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                         <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                         <reporteruser translate="label">
+                            <label>Username</label>
+                            <frontend_type>password</frontend_type>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </reporteruser>
+                         <reporterpwd translate="label">
+                            <label>Password</label>
+                            <frontend_type>password</frontend_type>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                         </reporterpwd>
+                    </fields>
+                </settings>	
+                <config translate="label"> 
+                    <label>Recurring Plans</label>
+                    <frontend_type>text</frontend_type>
+                    <frontend_model>firstdatae4/adminhtml_system_config_form_fieldset_customer_groups</frontend_model>                   
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                </config>	
+            </groups>
+        </firstdatae4>
+        
+        
+        <payment>
+            <groups>
+                <firstdatae4_standard translate="label" module="firstdatae4">
+                    <label>FirstData E4 Payment Gateway</label>
+					<comment>
+					<![CDATA[
+						<p>
+						<b><u>Notes on how to setup the FirstData E4 Payment Module</u></b>
+						<ol>
+						  <li>The value of the Transaction Key can be found within the "Security" tab of the Global Gateway e4 Payment Page configuration</li>
+						  <li>Login ID is the Payment Page ID from the Global Gateway e4 Payment Pages interface. Max length 20, case-sensitive.</li>
+						</ol>
+						</p>
+						<br />
+					]]>
+					</comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>102</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <store_id translate="label">
+                            <label>Login ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>  
+                        </store_id>
+                        <shared_secret translate="label">
+                            <label>Transaction Key</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </shared_secret>
+						<testmode translate="label">
+                            <label>Test Mode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </testmode>
+                        <payment_action translate="label">      
+                            <label>Payment Action</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>firstdatae4/source_paymentAction</source_model>
+                            <sort_order>6</sort_order>             
+                            <show_in_default>1</show_in_default> 
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>    
+                        </payment_action>
+						<email_cust translate="label">
+                            <label>Email receipt to customer</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </email_cust>
+						<merchant_email translate="label">
+                            <label>Email a copy of the receipt to this email</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>8</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>Leave this blank if, you do not want to email a copy</comment>
+                        </merchant_email>
+						<order_status translate="label">
+                            <label>New order status</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>firstdatae4/source_processing</source_model>
+                            <sort_order>9</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </order_status>						
+                        <cctypes translate="label">
+                            <label>Credit Card Types</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>firstdatae4/source_cctype</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cctypes>						
+                         <sort_order translate="label">
+                            <label>Sort order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sort_order>
+                    </fields>
+                </firstdatae4_standard>
+            </groups>
+        </payment>
+    </sections>
+</config>

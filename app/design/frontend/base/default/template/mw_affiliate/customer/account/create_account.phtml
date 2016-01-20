@@ -1,0 +1,326 @@
+<?php 
+	  $referral_edit = Mage::getSingleton('affiliate/affiliatecustomers')->load(Mage::getSingleton('customer/session')->getCustomer()->getId());
+      $active = $referral_edit->getActive();
+	 if($active == MW_Affiliate_Model_Statusactive::PENDING)
+	 {?>
+		<p class="note-msg">
+			<?php echo $this->__('You have registered in our Affiliate system. Please wait for the response of administrator.') ?>							
+		</p>
+<?php }
+       else if($active == MW_Affiliate_Model_Statusactive::NOTAPPROVED)
+	 {?>
+		<p class="note-msg">
+			<?php echo $this->__('You have not successfully registered. For more details, Please contact with the administrator.') ?>							
+		</p>
+<?php }
+	  else if(Mage::getSingleton('customer/session')->getCustomer()->getId() ){?>
+<form action="<?php echo $this->getUrl('affiliate/index/createpost') ?>" method="post" name="mw_create_account" id="form-validate" >
+<div class="dashboard">
+	<div class="page-title    page-head">
+    	<h1><?php echo $this->__('Signup Affiliate Account Information') ?></h1>
+	</div>
+	<div class="account-box ad-account-info    box-account box-info">
+	    <div class="head    box-head">
+	    	<h2><?php echo $this->__('Signup Affiliate Account Information') ?></h2>
+	    </div>
+	    
+	  <?php 
+        	$session = Mage::getSingleton('core/session');
+        	$check_affiliate = $session->getCheckAffiliate();
+        	if(!$check_affiliate) 
+        	{
+        		$session->unsetData('check_affiliate');
+             	$session->unsetData('payment_gateway');
+             	$session->unsetData('payment_email');
+             	$session->unsetData('auto_withdrawn');
+             	$session->unsetData('withdrawn_level');
+             	$session->unsetData('reserve_level');
+             	$session->unsetData('bank_name');
+             	$session->unsetData('name_account');
+             	$session->unsetData('bank_country');
+             	$session->unsetData('swift_bic');
+             	$session->unsetData('referral_site');
+        	}	
+        	$payment_gateway = $session->getPaymentGateway();
+		    $payment_email = $session->getPaymentEmail();
+		    $auto_withdrawn = $session->getAutoWithdrawn();
+		    if($auto_withdrawn == MW_Affiliate_Model_Autowithdrawn::MANUAL) $session->unsetData('withdrawn_level');
+		    $withdrawn_level = $session->getWithdrawnLevel();
+		    $reserve_level = $session->getReserveLevel();
+		    $bank_name = $session->getBankName();
+		    $name_account = $session->getNameAccount();
+		    $bank_country = $session->getBankCountry();
+		    $swift_bic = $session->getSwiftBic();
+		    $referral_site = $session->getReferralSite();
+		    //echo $withdrawn_level;die();
+		    $check = false;
+		    if($check_affiliate) $check = true;
+        ?>
+	 <div class="fieldset">
+	  <h2 class="legend"><?php echo $this->__('Signup Affiliate Account') ?></h2>  
+	    <ul class="form-list">
+	       <li class="control">
+                    <div class="input-box">
+                        <input type="checkbox" id="check_affiliate" name="check_affiliate" <?php if($check == true) echo 'checked="checked"';?> title="<?php echo $this->__('Signup For Affiliate') ?>" class="checkbox"  onclick="hideForm();"/>
+                    </div>
+                    <label for="check_affiliate"><?php echo $this->__('Signup For Affiliate') ?></label>
+           </li>
+           <ul id="form_register">
+	       <li class="fields">
+                    <div class="field">
+                         <label for="getway_withdrawn" class="required"><em>*</em><?php echo $this->__('Payment Method') ?></label>
+	                     <div class="input-box">
+	                     	<select id="getway_withdrawn" name="getway_withdrawn" class="required-entry">
+	                     		<option value=""><?php echo $this->__('Please select a payment method') ?></option>
+								<?php $gateways = unserialize(Mage::helper('affiliate/data')->getGatewayStore());?>
+	                        	<?php foreach ($gateways as $gateway) {
+	                        		if(strtolower(trim($gateway['mw_status'])) == 'yes'){
+	                        	?>
+								<option <?php if($payment_gateway == $gateway['gateway_value']) echo 'selected="selected"'?> value="<?php echo $gateway['gateway_value'];?>"><?php echo $gateway['gateway_title'];?></option>
+						    	<?php }
+	                        	}?>
+							</select>
+	                    </div>
+                    </div>
+                    <div class="field" id="mw_paypal_email">
+						<label for="email_address" class="required"><em>*</em><?php echo $this->__('Payment Email') ?></label>
+	                    <div class="input-box">
+	                        <input type="text" name="paypal_email" id="paypal_email" value="<?php echo $payment_email;?>" title="<?php echo $this->__('Payment Email') ?>" class="input-text validate-email required-entry" />
+	                    
+	                    </div>
+				    </div>
+                </li>
+                <ul id="form_account_bank">
+                <li class="fields">
+                     <div class="field">
+						<label for="bank_name" class="required"><em>*</em><?php echo $this->__('Bank Name') ?></label>
+	                    <div class="input-box">
+	                        <input type="text" name="bank_name" id="bank_name" value="<?php echo $bank_name;?>" title="<?php echo $this->__('Bank Name') ?>" class="input-text required-entry" />
+	                    
+	                    </div>
+				    </div>
+                    <div class="field">
+						<label for="name_account" class="required"><em>*</em><?php echo $this->__('Name on account') ?></label>
+	                    <div class="input-box">
+	                        <input type="text" name="name_account" id="name_account" value="<?php echo $name_account;?>" title="<?php echo $this->__('Name on account') ?>" class="input-text required-entry" />
+	                    </div>
+				    </div>
+                </li>
+                <li class="fields">
+                     <div class="field">
+						<label for="bank_country" class="required"><em>*</em><?php echo $this->__('Bank Country') ?></label>
+	                    <div class="input-box">
+	                    	<!--  <input type="text" name="bank_country" id="bank_country" value="<?php //echo $this->htmlEscape($this->getFormData()->getCity()) ?>" title="<?php //echo $this->__('Bank Country') ?>" class="input-text required-entry"/>-->
+	                    	<?php echo Mage::getBlockSingleton('directory/data')->getCountryHtmlSelect($bank_country,'bank_country','bank_country','Bank Country') ?>
+	                    </div>
+				    </div>
+                    <div class="field">
+						<label for="swift_bic" class="required"><em>*</em><?php echo $this->__('SWIFT code') ?></label>
+	                    <div class="input-box">
+	                        <input type="text" name="swift_bic" id="swift_bic" value="<?php echo $swift_bic;?>" title="<?php echo $this->__('SWIFT code') ?>" class="input-text required-entry" />
+	                    
+	                    </div>
+				    </div>
+                </li>
+                <li class="fields">
+                     <div class="field">
+						<label for="account_number" class="required"><em>*</em><?php echo $this->__('Account Number') ?></label>
+	                    <div class="input-box">
+	                        <input type="text" name="account_number" id="account_number" value="<?php //echo $account_number;?>" title="<?php echo $this->__('Account Number') ?>" class="input-text required-entry" />
+	                    
+	                    </div>
+				    </div>
+				    <div class="field">
+						<label for="re_account_number" class="required"><em>*</em><?php echo $this->__('Re-enter Account Number') ?></label>
+	                    <div class="input-box">
+	                        <input type="text" name="re_account_number" id="re_account_number" value="<?php //echo $re_account_number;?>" title="<?php echo $this->__('Re-enter Account Number') ?>" class="input-text required-entry validate-re_account_number" />
+	                    
+	                    </div>
+				    </div>
+				</li>
+				</ul>
+                <li class="fields">
+                  <div class="field">
+                        <label for="auto_withdrawn" class="required"><em>*</em><?php echo $this->__('Auto Withdrawal') ?></label>
+	                    <div class="input-box">
+	                        <select id="auto_withdrawn" name="auto_withdrawn">
+								<?php $auto_withdrawns = MW_Affiliate_Model_Autowithdrawn::getOptionArray();?>
+	                        	<?php foreach ($auto_withdrawns as $value=>$autowithdrawn) {?>
+								<option <?php if($auto_withdrawn == $value) echo 'selected="selected"'?> value="<?php echo $value;?>"><?php echo $autowithdrawn;?></option>
+						    	<?php }?>
+							</select>
+	                    </div>
+                    </div>
+                	<div class="field" id="payment_release_level_">
+                		<?php  $store_id = Mage::app()->getStore()->getId();
+                			   $max = Mage::helper('affiliate/data')->getWithdrawMaxStore($store_id);
+	  					       $min = Mage::helper('affiliate/data')->getWithdrawMinStore($store_id);?>
+						<label for="payment_release_level" class="required"><em>*</em><?php echo $this->__('Auto payment when account balance reaches (%s - %s)',Mage::helper('core')->currency($min),Mage::helper('core')->currency($max))?></label>
+						<div class="input-box">
+							<input type="text" name="payment_release_level" id="payment_release_level" value ="<?php echo $withdrawn_level;?>" title="<?php echo $this->__('Auto payment when account balance reaches') ?>" class="input-text validate-digits required-entry" />
+						</div>
+				    </div>
+                </li>
+                <li class="fields">
+                    <div class="field">
+						<label for="reserve_level"><?php echo $this->__('Reserve Level') ?><br /><?php echo $this->__('(to be kept in account)') ?></label>
+	                    <div class="input-box">
+	                        <input type="text" name="reserve_level" id="reserve_level" value ="<?php echo $reserve_level;?>" title="<?php echo $this->__('Reserve Level') ?>" class="input-text validate-digits" />
+	                    </div>
+	                    
+				    </div>
+				    <div class="field">
+						<label for="referral_site"><?php echo $this->__('Affiliate\'s Website(s)') ?></label>
+	                    <div class="input-box">
+	                    	<textarea class="input-text" title="<?php echo $this->__('Affiliate Website(s)') ?>" name="referral_site" id="referral_site" ><?php echo $referral_site;?></textarea>
+	                    </div>
+	                    <div style="display:none" id="website-validation-error" class="validation-advice"></div>
+				    </div>
+                </li>
+                
+              </ul>
+	     </ul>
+	     <br />
+	     <label  class="page-title" for="note_affiliate" ><?php echo $this->__('* Note: Affiliate may use balance as store credit in shopping cart.') ?></label>
+	  </div>
+  </div>
+  <div class="buttons-set">   	
+      <button type="submit" title="<?php echo $this->__('Save') ?>" id="create_account" class="button"><span><span><?php echo $this->__('Save') ?></span></span></button>
+  </div>
+</div>
+</form>
+
+   
+<script type="text/javascript">
+	var dataForm = new VarienForm('form-validate', true);
+
+	if($('check_affiliate').checked==true) {
+		$('form_register').show();
+		$('form_account_bank').hide();
+		
+		if($('auto_withdrawn').value=='2')
+        {
+        	$('payment_release_level_').hide(); 
+        }
+        else
+        {
+        	$('payment_release_level_').show();
+        };
+        if($('getway_withdrawn').value=='banktransfer')
+        {
+        	$('form_account_bank').show();
+        	$('mw_paypal_email').hide(); 
+        	
+        }
+        else if($('getway_withdrawn').value=='check'){
+        	$('form_account_bank').hide(); 
+        	$('mw_paypal_email').hide();
+        }
+        else
+        {
+        	$('mw_paypal_email').show(); 
+        	$('form_account_bank').hide();
+        };
+		
+	}
+	else {
+		$('form_register').hide();
+	};
+
+	function hideForm() {
+		if($('check_affiliate').checked==true) {
+			$('form_register').show();
+			$('form_account_bank').hide();
+			
+			if($('auto_withdrawn').value=='2')
+	        {
+	        	$('payment_release_level_').hide(); 
+	        }
+	        else
+	        {
+	        	$('payment_release_level_').show();
+	        };
+			if($('getway_withdrawn').value =='banktransfer')
+	        {
+	        	$('form_account_bank').show();
+	        	$('mw_paypal_email').hide(); 
+	        	
+	        }
+			else if($('getway_withdrawn').value=='check'){
+	        	$('form_account_bank').hide(); 
+	        	$('mw_paypal_email').hide();
+	        }
+	        else
+	        {
+	        	$('mw_paypal_email').show(); 
+	        	$('form_account_bank').hide();
+	        };
+		}
+		else {
+			$('form_register').hide();
+		}
+	};
+	$('auto_withdrawn').observe('change', function () {	
+            if($('auto_withdrawn').value =='2')
+            {
+            	$('payment_release_level_').hide(); 
+            }
+            else
+            {
+            	$('payment_release_level_').show();
+            }
+			 
+	});
+	$('getway_withdrawn').observe('change', function () {	
+		if($('getway_withdrawn').value=='banktransfer')
+        {
+        	$('form_account_bank').show(); 
+        	$('mw_paypal_email').hide();
+        }
+		else if($('getway_withdrawn').value=='check'){
+        	$('form_account_bank').hide(); 
+        	$('mw_paypal_email').hide();
+        }
+        else
+        {
+        	$('mw_paypal_email').show();
+        	$('form_account_bank').hide();
+        }
+			 
+	});
+
+</script>
+
+<script type="text/javascript">
+	$('referral_site').observe('change', function() {
+		if($(this).value) {
+			var referralSite = $('referral_site').value,
+				ajaxUrl = '<?php echo Mage::getUrl('affiliate/index/ajaxcheckwebsite')?>';
+			
+			new Ajax.Request(ajaxUrl, {
+				method: 'get',
+				parameters: {referral_site: referralSite},
+				requestHeaders: {Accept: 'application/json'},
+				onSuccess: function(transport) {
+					var response = transport.responseText.evalJSON(true);
+					
+					if(response.status !== 'success') {
+						$('website-validation-error').update(response.message);
+						$('website-validation-error').show();
+					} else {
+						$('website-validation-error').update('');
+						$('website-validation-error').hide();
+					}
+				}
+			});
+		}
+	});
+
+	$('create_account').observe('click', function(e) {
+		if($('website-validation-error').innerHTML) {
+			Event.stop(e);			
+		}
+		 
+	});
+</script>
+<?php }?>

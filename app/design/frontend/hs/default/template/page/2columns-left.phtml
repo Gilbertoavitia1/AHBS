@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html lang="en" id="top" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" id="top" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" id="top" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" id="top" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" id="top" class="no-js"> <!--<![endif]-->
+<head>
+    <?php echo $this->getChildHtml('head') ?>
+</head>
+<body>
+    <div class="page-box">
+    <div class="page-box-content">
+        <?php echo $this->getChildHtml('after_body_start') ?>
+        <?php echo $this->getChildHtml('global_notices') ?>        
+        <?php echo $this->getChildHtml('header') ?>
+        <?php echo $this->getChildHtml('topbanner') ?>         
+        <section id="main" style="padding:20px 0 0 0;">  
+            <div class="container bottom-padding">
+                <div class="row" style="font-size:1.2em">
+                    <div id="sidebar" class="sidebar col-sm-12 col-md-3">
+                        <?php echo $this->getChildHtml('randomproducts') ?>  
+                        <?php echo $this->getChildHtml('left') ?>
+                    </div>
+                    <div class="content col-sm-12 col-md-9"  style="padding-right:40px">
+                        <?php echo $this->getChildHtml('content') ?>
+                    </div>                    
+                </div>
+            </div>                        
+            <div class="clearfix"></div>	
+            <?php echo $this->getChildHtml('prefooter') ?>
+        </section><!-- #main -->
+    </div><!-- .page-box-content -->
+</div><!-- .page-box -->
+<?php echo $this->getChildHtml('footer_before') ?>
+<?php echo $this->getChildHtml('footer') ?>
+<?php echo $this->getChildHtml('global_cookie_notice') ?>
+<?php echo $this->getChildHtml('before_body_end') ?>
+<?php echo $this->getAbsoluteFooter() ?>  
+<?php echo $this->getChildHtml('script') ?> 
+</body>
+</html>
+
+
+
+
+    
+    

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<layout version="0.1.0">
+
+<checkout_onepage_index>
+	<reference name="checkout.onepage">
+		<!-- Extra step added to OnePage Checkout -->
+		<block type="heared4us/onepage_heared4us" name="checkout.onepage.heared4us" as="heared4us" after="checkout.onepage.billing" template="checkout/onepage/heared4us.phtml"/>		
+	</reference>
+</checkout_onepage_index>
+
+</layout>

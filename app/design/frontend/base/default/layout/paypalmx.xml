@@ -1,0 +1,201 @@
+<?xml version="1.0"?>
+<layout version="0.1.0"><!-- 
+    <checkout_cart_index>
+        <reference name="checkout.cart.top_methods">
+            <block type="paypalmx/express_shortcut" name="checkout.cart.methods.paypalmx_express.top" before="-" template="paypalmx/express/shortcut.phtml">
+                <action method="setIsQuoteAllowed"><value>1</value></action>
+                <action method="setIsInCart"><value>1</value></action>
+            </block>
+        </reference>
+        <reference name="checkout.cart.methods">
+            <block type="paypalmx/express_shortcut" name="checkout.cart.methods.paypalmx_express.bottom" before="-" template="paypalmx/express/shortcut.phtml">
+                <action method="setIsQuoteAllowed"><value>1</value></action>
+                <action method="setIsInCart"><value>1</value></action>
+            </block>
+        </reference>
+        <update handle="SHORTCUT_popup" />
+    </checkout_cart_index>
+	
+	<checkout_onepage_shippingmethod>
+		<reference name="root">
+			<block type="paypalmx/express_shortcut" name="checkout.onepage.shipping.method.available.paypalmx_express.top" before="-" template="paypalmx/express/shortcut.phtml">
+				<action method="setIsQuoteAllowed"><value>1</value></action>
+	        </block>
+	    </reference>
+		<update handle="SHORTCUT_popup" />
+	</checkout_onepage_shippingmethod>
+	
+	<checkout_onepage_additional>
+		<reference name="root">
+			<action method="setTemplate">
+				<template>paypalmx/express/shortcut.phtml</template>
+	        </action>
+	    </reference>
+		<update handle="SHORTCUT_popup" />
+	</checkout_onepage_additional>
+	 -->
+	<checkout_onepage_index>
+		<reference name="content">
+			<block type="paypalmx/express_shortcut" name="checkout.onepage.shipping.method.available.paypalmx_express.top" before="-" template="paypalmx/express/shortcut.phtml">
+				<action method="setIsQuoteAllowed"><value>1</value></action>
+	        </block>
+	    </reference>
+		<update handle="SHORTCUT_popup" />
+	</checkout_onepage_index>
+	
+	     
+    <paypalmx_express_review translate="label">
+        <label>PayPal Express Order Review Form</label>
+        <remove name="right"/>
+        <remove name="left"/>
+
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="paypalmx/express_review" name="paypalmx.express.review" template="paypalmx/express/review.phtml">
+                <block type="paypalmx/express_review_billing" name="express.review.billing" as="billing" template="paypalmx/express/review/address.phtml"/>
+                <block type="paypalmx/express_review_shipping" name="express.review.shipping" as="shipping" template="paypalmx/express/review/address.phtml"/>
+                <block type="paypalmx/express_review" name="express.review.shipping.method" as="shipping_method" template="paypalmx/express/review/shipping/method.phtml"/>
+                <block type="paypalmx/express_review_details" name="paypalmx.express.review.details" as="details" template="paypalmx/express/review/details.phtml">
+                    <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/onepage/review/item.phtml</template></action>
+                    <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/onepage/review/item.phtml</template></action>
+                    <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/onepage/review/item.phtml</template></action>
+                    <block type="checkout/cart_totals" name="paypalmx.express.review.details.totals" as="totals" template="checkout/onepage/review/totals.phtml"/>
+                </block>
+                <block type="checkout/agreements" name="paypalmx.express.review.details.agreements" as="agreements" template="checkout/onepage/agreements.phtml"/>
+            </block>
+        </reference>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/checkout/review.js</name></action>
+        </reference>
+        <block type="core/text_list" name="additional.product.info" />
+    </paypalmx_express_review>
+
+    <paypalmx_express_review_details>
+        <block type="paypalmx/express_review_details" name="root" output="toHtml" template="paypalmx/express/review/details.phtml">
+            <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/onepage/review/item.phtml</template></action>
+            <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/onepage/review/item.phtml</template></action>
+            <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/onepage/review/item.phtml</template></action>
+            <block type="checkout/cart_totals" name="paypalmx.express.review.details.totals" as="totals" template="checkout/onepage/review/totals.phtml"/>
+        </block>
+    </paypalmx_express_review_details>
+<!-- 
+Available logo types can be assigned with action="setLogoType":
+ - wePrefer_150x60
+ - wePrefer_150x40
+ - nowAccepting_150x60
+ - nowAccepting_150x40
+ - paymentsBy_150x60
+ - paymentsBy_150x40
+ - shopNowUsing_150x60
+ - shopNowUsing_150x40
+
+    <catalog_product_view>
+        <reference name="product.info.addtocart"> 
+            <block type="page/html_wrapper" name="product.info.addtocart.paypalmx.wrapper" translate="label">
+                <label>PayPal Express Checkout Shortcut Wrapper</label>
+                <block type="paypalmx/express_shortcut" name="product.info.addtocart.paypalmx" template="paypalmx/express/shortcut.phtml">
+                    <action method="setIsInCatalogProduct"><value>1</value></action>
+                </block>            
+            </block>
+        </reference> 
+        <update handle="SHORTCUT_popup" />
+        <reference name="right">
+            <block type="paypalmx/logo" name="paypalmx.partner.right.logo" template="paypalmx/partner/logo.phtml">
+                 action method="setLogoType"><value>wePrefer_150x60</value></action
+            </block>
+        </reference>
+    </catalog_product_view>
+
+    <catalog_category_default>
+        <update handle="SHORTCUT_popup" />
+        <reference name="right">
+            <block type="paypalmx/logo" name="paypalmx.partner.right.logo" template="paypalmx/partner/logo.phtml"/>
+        </reference>
+    </catalog_category_default>
+
+    <catalog_category_layered>
+        <update handle="SHORTCUT_popup" />
+        <reference name="right">
+            <block type="paypalmx/logo" name="paypalmx.partner.right.logo" template="paypalmx/partner/logo.phtml"/>
+        </reference>
+    </catalog_category_layered>
+-->
+    <catalog_product_compare_index>
+        <update handle="SHORTCUT_popup" />
+    </catalog_product_compare_index>
+
+    <catalogsearch_result_index>
+        <update handle="SHORTCUT_popup" />
+    </catalogsearch_result_index>
+
+    <catalogsearch_advanced_result>
+        <update handle="SHORTCUT_popup" />
+    </catalogsearch_advanced_result>
+
+    <tag_product_list>
+        <update handle="SHORTCUT_popup" />
+    </tag_product_list>
+    <tag_customer_view>
+        <update handle="SHORTCUT_popup" />
+    </tag_customer_view>
+
+    <wishlist_index_index>
+        <update handle="SHORTCUT_popup" />
+    </wishlist_index_index>
+    <review_product_list>
+        <update handle="SHORTCUT_popup" />
+    </review_product_list>
+
+    <checkout_onepage_success>
+        <update handle="SHORTCUT_popup" />
+    </checkout_onepage_success>
+    <checkout_onepage_failure>
+        <update handle="SHORTCUT_popup" />
+    </checkout_onepage_failure>
+ <!--
+    <default> 
+        <reference name="topCart.extra_actions">
+            <block type="paypalmx/express_shortcut" name="paypalmx.partner.top_cart.shortcut" template="paypalmx/express/shortcut.phtml"/>
+        </reference>
+        <reference name="cart_sidebar.extra_actions">
+            <block type="paypalmx/express_shortcut" name="paypalmx.partner.cart_sidebar.shortcut" template="paypalmx/express/shortcut.phtml">
+            		<action method="setIsInCatalogProduct"><value>1</value></action>
+            </block>
+        </reference> 
+    </default>
+-->
+    <checkout_onepage_review>
+        <reference name="checkout.onepage.review.info.items.after">
+            <block type="paypalmx/iframe" name="paypalmx.iframe" />
+        </reference>
+        <reference name="checkout.onepage.review.button">
+            <action method="setTemplate"><template helper="paypalmx/hss/getReviewButtonTemplate"><name>paypalmx/hss/review/button.phtml</name><block>checkout.onepage.review.button</block></template></action>
+        </reference>
+    </checkout_onepage_review>
+
+    <paypalmx_payflow_link_iframe>
+        <block type="paypalmx/payflow_link_iframe" name="payflow.link.iframe" template="paypalmx/payflowlink/form.phtml" />
+    </paypalmx_payflow_link_iframe>
+
+    <paypalmx_payflow_advanced_iframe>
+        <block type="paypalmx/payflow_advanced_iframe" name="payflow.advanced.iframe" template="paypalmx/payflowadvanced/form.phtml" />
+    </paypalmx_payflow_advanced_iframe>
+
+    <paypalmx_hosted_pro_iframe>
+        <block type="paypalmx/hosted_pro_iframe" name="hosted.pro.iframe" template="paypalmx/hss/form.phtml"/>
+    </paypalmx_hosted_pro_iframe>
+<!--  -->
+    <SHORTCUT_popup>
+        <reference name="product.tooltip">
+            <block type="page/html_wrapper" name="product.info.addtocart.paypalmx.wrapper" translate="label">
+                <block type="paypalmx/express_shortcut" name="product.info.addtocart.paypalmx" template="paypalmx/express/shortcut.phtml">
+                    <action method="setIsInCatalogProduct"><value>1</value></action>
+                    <action method="setShowOrPosition"><value>after</value></action>
+                </block>
+            </block>
+        </reference>
+    </SHORTCUT_popup>
+     -->
+</layout>

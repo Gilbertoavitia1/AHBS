@@ -1,0 +1,24 @@
+<?php $category_products = Mage::getResourceModel('catalog/product_collection')->joinField('category_id','catalog/category_product','category_id','product_id=entity_id',null,'left')->addAttributeToFilter('category_id', array('in' => 14))->addAttributeToFilter('status', 1)->addAttributeToSelect('*')->load();?>
+    <?php $_helper = $this->helper('catalog/output'); ?>
+    
+<aside class="widget specials">
+    <header>
+          <h3 class="title">Delicioso Café Enriquecido</h3>
+    </header>
+    <ul>
+        <?php foreach($category_products as $product):  ?>
+        <li class="clearfix">
+            <?php $_product = Mage::getModel('catalog/product')->load($product->getEntityId()); ?>
+            <a class="product-image" href="<?php echo $_product->getProductUrl() ?>">
+                  <img width="72" height="72" title="" alt="" src="<?php echo  Mage::getBaseUrl('media') . 'catalog/product/'.$product->getImage();?>">
+            </a>
+            <h3 class="product-name">
+                  <a href="<?php echo $_product->getProductUrl() ?>"><strong><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></strong></a>
+            </h3>
+            <div class="price-box">
+                  <span class="price"><?php echo Mage::app()->getStore()->getCurrentCurrencyCode(). ' '.number_format($_product->getPrice(), 2)  ?></span>
+             </div>
+        </li>
+        <?php  endforeach; ?>
+    </ul>
+</aside>

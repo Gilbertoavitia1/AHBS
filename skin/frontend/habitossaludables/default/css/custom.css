@@ -1,0 +1,236 @@
+/*===================================================================
+Template header
+====================================================================*/
+
+#bg-header {
+    background-image: url('../images/gradient-header.png');
+    border-top:solid 5px #060;
+     height: auto;
+    overflow: hidden;
+}
+
+#bg-header.logged {  background-color: #d9dad5; border: none; height: 226px; }
+
+.header-container {
+    height:116px/*138px*/; width:1020px; margin:auto;
+}
+.logged .header-container {
+    height:192px;/*138px*/; width:1020px; margin:auto;
+}
+
+.logo-container {
+    margin:22px 0 0; /*float:left*/ text-align: center ;
+}
+
+
+/* NEW HEADER */
+
+.logged .header-container { width: 1190px; }
+.logged .user-icons { width: 470px; margin: 10px 0;}
+.logged .socialnetwork { float: right;  width: 100px; }
+.logged .logo-container  { width: 370px; }
+.logged .mwaffiliate { width: 350px;}
+.logged .user-flag { text-align: right; margin-bottom: 115px; }
+.logged .user-flag img { height: 50px; }
+/**/
+
+.logged .logo-container { display: inline-block; }
+
+.logged .flag img { width: 50px; }
+.logged .flag { margin-bottom: 110px;
+    margin-top: 10px; }
+.logged .socialnetwork .icons { width: 150px; text-align: right;}
+.logged .user-data { height: 224px; width: 70%; }
+.logged .icon {  color: transparent; background-image: url('../images/social-network.png'); width: 42px; height: 42px;  display: inline-block;}
+.logged .icona {  float:left;background-image: url('../images/account.png'); width: 37px; height: 42px;  display: inline-block;}
+
+.logged .icon.twitter { background-position: 0px 0px; }
+.logged .icon.fb { background-position: -41px 0px; }
+.logged .icon.mail { background-position: -83px 0px; }
+.logged .icona.cart { background-position: 0px 0px; }
+.logged .icona.user { background-position: 37px 0px; }
+
+.header-container .user-photo { 
+    background-color: #094f1e; 
+    width: 168px;
+    height: 192px;
+    margin-top: 16px; 
+    float:left; }
+.header-container .user-info { 
+    float: left;
+    height: 204px;
+    margin: 20px 0 0 6px;
+    width: auto;  }
+.storeInformation-container {
+    /*float:right; margin-top:18px;*/ margin-right: 170px; margin-top: -25px; text-align: right;
+}
+
+
+.header-container .user-info p { 
+    font-size: 21px; height: 126px;overflow: hidden;  padding: 12px;
+}
+.account-links ul li{ 
+    float: left;
+    margin-right: 7px;
+    color: black;
+}
+
+
+.account-links a { 
+ color: #000000;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: bold;
+    padding-top: 8px;
+}
+
+ ul.social-links  {
+    display:inline-block;
+    float:right;
+    padding-top: 0px;
+}
+ul.social-links li span { display: none; }
+ul.social-links li {
+    display: inline;
+    margin-left: 5px;
+}
+
+ul.social-links li a {
+    display:inline-block;
+    width:22px;
+    height:22px;
+    font-size:16px;
+    padding:8px 8px 8px 8px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    text-align: center;
+    -webkit-transition: -webkit-transform .4s; /* For Safari 3.1 to 6.0 */
+    transition: transform .4s;
+
+}
+
+
+ul.social-links li a:hover {
+   
+    -webkit-transform: rotate(360deg); /* Chrome, Safari, Opera */
+    transform: rotate(360deg);
+    text-align:right;
+}
+
+a.fb {
+    background-color: #3b5998;
+    color:#fff;
+}
+
+a.tw {
+    background-color: #4099FF;
+    color:#fff;
+}
+
+a.yt {
+    background-color: red;
+    color:#fff;
+    font-weight: bold;
+}
+
+.phonenumber-container {
+    float:left; font-weight:bold; font-size:1.8em; margin:20px 20px 6px 0; font-weight:700;
+}
+
+.phonenumber-container .message {
+    font-size:.7em; line-height:1em; color:#728E0F; font-style:italic;
+}
+
+.joinNow-container {
+    float:right;  margin:5px 0px 0 0; clear:both; line-height:32px;
+}
+
+.joinNow-container .button_link.btn_blue {
+    outline: none; opacity: 1; float: left;
+}
+
+.account-block {
+    display:inline-block;
+    padding-top: 10px;
+}
+
+.account-block ul li {
+    list-style-type: none;
+    float:left;
+    margin-left: 15px;
+}
+
+.account-block ul li a {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.account-block ul li i {
+    color:#e8750f;
+    font-size: 18px;
+}
+
+.account-block ul li span {
+    color:#000;
+}
+
+.account-block ul li span:hover {
+    text-decoration: underline;
+
+}
+
+.menu-wrapper .menu-holder {
+    width:1020px; margin:auto;
+}
+
+.clear {
+    clear: both;
+}
+
+.menu-wrapper .menu-holder a.level0 {
+    text-transform: uppercase;
+}
+
+.main-banner-holder {
+    width:100%;
+    overflow: hidden;
+    text-align:center;
+}
+
+.separator-shadow {
+    background:url('../images/bgshadow.jpg') center top no-repeat;
+    padding-top: 65px;
+}
+
+.product-list {
+    width:70%;
+}
+
+.product-list .product-item {
+
+    border-bottom: solid 1px #ccc;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.product-list .product-item .product-image {
+    width: 243px;
+    float:left;
+}
+
+.product-list .product-item .product-description {
+    width: 440px;
+    float:right;
+    text-align: left;
+}
+
+.product-list .product-item .product-description h2.product-name a {
+    font-weight: bold;
+    color:#000;
+}
+
+.big {
+    font-size:5em;
+}
+

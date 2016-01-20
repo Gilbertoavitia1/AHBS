@@ -1,0 +1,88 @@
+<?php 
+	$collections = $this->getCollection();
+	$size = sizeof($collections);
+?>
+<div class="dashboard">
+	<div class="page-title    page-head">
+    	<h1><?php echo $this->__('Affiliate History')?></h1>
+	</div>
+	<div class="box-account box-recent account-box ad-orders">
+        <div class="head box-head">
+            <h2><?php echo $this->__('My Commission History')?></h2>
+        </div>
+        <?php if($size == 0) {?>
+	    <div><?php echo $this->__('No Commission History Found')?></div>
+	    <?php } else if($size > 0) {?>
+	    
+<div id="toggleSection">
+	<?php echo $this->getPagerHtml(); ?>
+	<table class="data-table" id="my-credits-table">
+		<colgroup>
+			<col width="25%">
+			<col width="15%">
+			<col width="5%">
+			<col width="5%">
+			<col width="30%">
+			<col width="20%">
+		</colgroup>
+	    <thead>
+	        <tr>
+				<th style="text-align:center;"><?php echo $this->__('Date') ?></th>
+				<th style="text-align:center;"><?php echo $this->__('Commission Type') ?></th>
+				<th style="text-align:center;"><?php echo $this->__('Commission') ?></th>
+				<th style="text-align:center;"><?php echo $this->__('Customer Discount') ?></th>
+				<th style="text-align:center;"><?php echo $this->__('Detail') ?></th>
+				<th style="text-align:center;"><?php echo $this->__('Status') ?></th>
+			
+				<!-- <th style="text-align: center;"><?php //echo $this->__('Order Number') ?></th> -->
+	        </tr>
+	    </thead>
+	    <tbody>
+		    <?php 
+		    	foreach ($collections as $collection):
+		    ?>
+	            <tr style="text-align:left">
+	            	<td><?php echo $this->formatDate($collection->getTransactionTime())." ".$this->formatTime($collection->getTransactionTime());?></td>
+	            	<td><?php echo $this->getCommissionType($collection->getCommissionType());?></td>
+	            	<td style="text-align:center">
+	            			<?php echo Mage::helper('affiliate')->formatMoney($collection->getTotalCommission())?>
+	            	</td>
+	            	<td style="text-align:center">
+	            		<?php echo Mage::helper('affiliate')->formatMoney($collection->getTotalDiscount())?>
+	            	</td>
+	            	<td>
+	            		<?php
+	            			echo $this->getTransactionDetail($collection->getCommissionType(),$collection->getOrderId(),false,$collection->getCustomerId());
+	            		?>
+	            	</td>
+	            	<td style="text-align:center">
+	            		<?php echo $this->getStatusText($collection->getStatus());?>
+	            	</td>
+
+	            	<!-- <td><a href='<?php //echo $this->getUrl('affiliate/index/viewhistory').'id/'.$_affiliate->getOrderId(); ?>'><?php //echo $_affiliate->getOrderId();?></a></td> -->
+	            </tr>
+	            <?php 	
+	        endforeach; 
+	        ?>    
+		    
+	        <?php /*foreach ($_affiliates as $_affiliate): ?>
+	            <tr style="text-align:left">
+	            	<td style="width: 50px;"><?php echo $this->formatDate($_affiliate->getTransactionTime())." ".$this->formatTime($_affiliate->getTransactionTime());?></td>
+	            	<td></td>
+	            	<td style="text-align: center;"><?php echo Mage::helper('affiliate')->formatMoney($_affiliate->getTotalCommission())?></td>
+	            	<td><?php echo Mage::helper('affiliate')->formatMoney($_affiliate->getTotalDiscount())?></td>
+	            	<td></td>
+	            	<td></td>
+	            	<td style="text-align: center;width: 60px;"><?php echo $this->getStatusText($_affiliate->getStatus());?></td>
+
+	            	<!-- <td><a href='<?php //echo $this->getUrl('affiliate/index/viewhistory').'id/'.$_affiliate->getOrderId(); ?>'><?php //echo $_affiliate->getOrderId();?></a></td> -->
+	            </tr>
+	        <?php endforeach; */?>
+	    </tbody>
+	</table>
+	<?php echo $this->getPagerHtml(); ?>
+	<script type="text/javascript">decorateTable('my-credits-table')</script>
+</div>
+<?php }?>
+</div>
+</div>

@@ -1,0 +1,330 @@
+<?php $binary = Mage::registry('binary');?>
+<?php $affiliate = Mage::registry('network');?>
+<?php $firstDay   = date("Y-m-d 00:00:00", strtotime("last friday")); ?>
+<?php $lastDay    = date("Y-m-d 23:59:59", strtotime("this thursday")); ?>
+<?php $period = Mage::getSingleton('core/session')->getPeriodc();?>
+<?php $constructor = array();?>
+
+
+<form action="<?php echo $this->getUrl('affiliate/binary/residual') ?>" method="post" id="form-validate" >
+    <div class="row">  
+        <h5>Cliente Preferente</h5>
+        <hr style="margin-top: -5px;">
+        <div class="col-md-4"> 
+            <label>Periodo</label>
+            <select name="period" id="period" class="form-control" onChange="this.form.submit()">
+                <option value="" <?php echo $period == "thisweek" ? "selected": ""?>>Esta semana</option>
+                <?php foreach ($binary as $key => $value): ?>
+                <?php $datea = new DateTime($value['start_date']);?>
+                <?php $dateb = new DateTime($value['end_date']);?>
+                <option value="<?php echo $value['id']?>" <?php echo $period == $value['id'] ? "selected": ""?>>de <?php echo $datea->format('Y-m-d').' a '. $dateb->format('Y-m-d') ?></option>
+                <?php endforeach;?>            
+            </select>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="col-xs-12 col-sd-6 col-md-3" >
+            <div class="card-panel">
+                <i class="fa fa-shopping-cart bg-danger transit stats-icon"></i>
+                <h3 class="transit"><?php echo $affiliate['vp']?></h3>
+                <span class="text-muted transit">VP</span>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sd-6 col-md-3" >
+            <div class="card-panel">
+                <i class="fa fa-usd bg-success transit stats-icon"></i>
+                <h3 class="transit"><?php echo $affiliate['paid']?></h3>
+                <span class="text-muted transit">A Pagar</span>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sd-6 col-md-3" >
+            <div class="card-panel">
+                <i class="fa fa-users  bg-info transit stats-icon"></i>
+                <h3 class="transit"><?php echo $affiliate['tvg']?></h3>
+                <span class="text-muted transit">VG</span>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sd-6 col-md-3" >
+            <div class="card-panel">
+                <i class="fa fa-circle-o-notch bg-warning  fa-spin transit stats-icon"></i>
+                <h3 class="transit"><?php echo $affiliate['hold']?></h3>
+                <span class="text-muted transit">Espera</span>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+
+            <?php if ( $affiliate['paid'] == '0') { ?>
+                                
+                        <?php  } else{   ?>
+                        <br><br>
+                                 <div class="col-md-4"> 
+
+                <label>Cheque a Cobrar</label>
+                <div class="check">
+                    <br><br>
+                    <span id="leftleg"><?php echo $affiliate['name']?></span>
+                    <br>
+                    <span id="leftleg"><?php echo $affiliate['paid']?></span>
+                    <br>
+                    <span id="leftleg"></span>
+                </div>
+
+            </div>
+
+              <hr>
+                        <?php } ?>
+
+           
+
+            <div class="clearfix"></div>
+         <hr>
+
+        <div class="col-xs-3 col-md-3 col-md-offset-3">
+            <div class="badger">
+                <span style="font-weight: bold;"><?php echo $this->__('Pierna Izquierda');?></span><br>
+                <span id="leftleg"><?php echo $affiliate['tleft']?> Pts</span>
+            </div>
+        </div>
+        <div class="col-xs-3 col-md-3">
+            <div class="badger">
+                <span style="font-weight: bold;"><?php echo $this->__('Pierna Derecha');?></span><br>
+                <span id="rightleg"><?php echo $affiliate['tright']?> Pts</span>
+            </div>
+        </div>
+
+        <br><br><br><br><br><br>
+
+
+        <div class="col-xs-3 col-md-3 col-md-offset-3">
+            <div class="badger2">
+                <span style="font-weight: bold;"><?php echo $this->__('Pierna Izquierda');?></span><br>
+                <span id="leftleg"><?php echo $affiliate['tleft']?> Pts</span>
+            </div>
+        </div>
+        <div class="col-xs-3 col-md-3">
+            <div class="badger2">
+                <span style="font-weight: bold;"><?php echo $this->__('Pierna Derecha');?></span><br>
+                <span id="rightleg"><?php echo $affiliate['tright']?> Pts</span>
+            </div>
+        </div>
+        <div class="clearfix"></div>    
+        <Br>
+        <hr style="margin-top: 7px;">
+        <div class="col-xs-12 col-md-12">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Ventas</a></li>
+                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Cliente Preferente</a></li>
+                <li role="presentation"><a href="#constructor" aria-controls="constructor" role="tab" data-toggle="tab">Constructor</a></li>
+            </ul>
+            
+            <div class="tab-content"> 
+                <div role="tabpanel" class="tab-pane active" id="profile">
+                    <label>Ventas al Corte</label>
+                    <table class="data-table table">
+                        <thead>
+                            <tr class="headings">
+                                <th><?php echo $this->__('#')?></th>
+                                <th><?php echo $this->__('Customer')?></th> 
+                                <th style="text-align: right;"><?php echo $this->__('Total')?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $package = $affiliate['package'] ?>
+                            <?php $customer = $affiliate['customer_id'] ?>
+                            <?php $flag= 0; ?>
+                            <?php $cont= 0; ?>
+                            <?php $total= 0; ?>
+                            <?php foreach ($package as $key => $value):?>
+                                <?php $increment = $value[0]?>
+                                <?php $flag= 0?>
+                                <?php $order = Mage::getModel('sales/order')->loadByIncrementId($increment);?> 
+                                <?php if ($customer != $order->getCustomerId()): ?>
+                                <?php $cont ++;?>
+                                    <?php $items = $order->getAllVisibleItems(); ?>
+                                    <?php $vp = 0 ?>
+                                    <?php foreach($items as $item){
+                                        $single = $item->getData(); 
+                                        $puntos = Mage::getModel('catalog/product')->setStoreId($single['store_id'])->load($single['product_id'])->getData('puntos');
+
+                                        if ($single['product_type'] == 'bundle'){
+                                            if (array_search($siWngle['sku'], array('PTK-USA-010','PKT-USA-009','PKT-USA-008','PKT-USA-007','PKT-REC'))){
+                                                $puntos = $puntos;
+                                            }
+                                            else
+                                            {
+                                                $puntos = $puntos / 2;
+                                            }
+                                        }
+
+                                        if ($order->getAffiliateSaleType() == 3){ 
+                                            array_push($constructor, array($order->getIncrementId()));
+                                            $flag = 1;
+                                        }else{
+                                            $vp = $vp + ($puntos * $single['qty_ordered']);
+                                            
+                                        }
+                                    }?>
+
+                                    <?php if ($flag == 0):?>
+                                        <?php $total = $total + $vp; ?>
+                                        <tr>
+                                            <td><?php echo $cont ?></td>
+                                            <td><?php echo Mage::getModel('customer/customer')->load($order->getCustomerId())->getName() ?> </td>
+                                            <td style="text-align: right;"><?php echo $vp; ?> </td>
+                                        </tr>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                                    <tr>
+                                        <td></td>
+                                        <td style="text-align: right;">Total</td>
+                                        <td style="text-align: right;"><?php echo $total; ?></div>
+                                    </tr>
+                        </tbody>
+                    </table>
+                    <div class="clearfix"></div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="messages">
+                    <label>Venta de Cliente Preferente</label>
+                    <table class="data-table table">
+                        <thead>
+                            <tr class="headings">
+                                <th><?php echo $this->__('#')?></th>
+                                <th><?php echo $this->__('Customer')?></th>
+                                <th style="text-align: right;"><?php echo $this->__('Total')?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $total = 0;?>
+                            <?php $cont = 0;?>
+                            <?php $package = json_decode($affiliate['package_cp']) ?>
+                            <?php foreach ($package as $key => $value):?>
+                                <?php $increment = $value[0]?>
+                                <?php $order = Mage::getModel('sales/order')->loadByIncrementId($increment);?>      
+                                <?php if ($customer != $order->getCustomerId()): ?>
+                                    <?php $cont ++;?>
+                                    <?php $items = $order->getAllVisibleItems(); ?>
+                                    <?php $vp = 0 ?>
+                                    <?php array_push($this->orders, array($order->getIncrementId())); ?>
+                                    <?php foreach($items as $item):?>
+                                        <?php $single = $item->getData(); ?>
+                                        <?php $puntos = Mage::getModel('catalog/product')->setStoreId($single['store_id'])->load($single['product_id'])->getData('puntos') * .25; ?>
+                                        <?php $vp = $vp + ($puntos * $single['qty_ordered']);?>
+                                        <?php $total = $total + $vp;?>
+                                    <?php endforeach; ?>
+                                    <tr>
+                                        <td><?php echo $cont ?></td>
+                                        <td><?php echo Mage::getModel('customer/customer')->load($order->getCustomerId())->getName() ?> </td>                      
+                                        <td style="text-align: right;"><?php echo $vp; ?> </td>
+                                    </tr>
+                                <?php endif;?>
+                            <?php endforeach; ?>
+                                    <tr>
+                                        <td></td>
+                                        <td style="text-align: right;">Total</td>
+                                        <td style="text-align: right;"><?php echo $total; ?></div>
+                                    </tr>
+                        </tbody>
+                    </table>
+                    <div class="clearfix"></div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="constructor">
+                    <label>Compras Construtor</label>
+                    <table class="data-table table">
+                        <thead>
+                            <tr class="headings">
+                                <th><?php echo $this->__('#')?></th>
+                                <th><?php echo $this->__('Customer')?></th> 
+                                <th style="text-align: right;"><?php echo $this->__('Total')?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $total = 0; ?>
+                            <?php foreach ($constructor as $key => $value):?>
+                                <?php $increment = $value[0]?>
+                                <?php $order = Mage::getModel('sales/order')->loadByIncrementId($increment);?>      
+                                <?php $items = $order->getAllVisibleItems(); ?>
+                                <?php $vp = 0 ?>
+                                <?php foreach($items as $item){
+                                    $single = $item->getData(); 
+                                    $puntos = Mage::getModel('catalog/product')->setStoreId($single['store_id'])->load($single['product_id'])->getData('puntos') * .25;
+                                    $vp = $vp + ($puntos * $single['qty_ordered']);
+                                    $total = $total + $vp;
+                                }?>
+
+                                <tr>
+                                    <td><?php echo $key+1 ?></td>
+                                    <td><?php echo Mage::getModel('customer/customer')->load($order->getCustomerId())->getName() ?> </td>
+                                    <td style="text-align: right;"><?php echo $vp; ?> </td>
+                                </tr>
+                            <?php endforeach; ?>
+                                <tr>
+                                    <td></td>
+                                    <td style="text-align: right;">Total</td>
+                                    <td style="text-align: right;"><?php echo $total; ?></div>
+                                </tr>                                    
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<style>
+.badger{ background-color: #3f2a14; padding-top: 48px; padding-bottom: 48px; border-radius:  10px; text-align: center; color: #fff;}
+.badgerb{ background-color: #166700 !important; }
+.left-navigation{ margin-bottom: 30px; }    
+.nav > li > a { font-weight: 700; }
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {border: 2px solid #eaf5fb; border-bottom-color: transparent; }
+.nav-tabs { border-bottom: 2px solid #eaf5fb; }
+.nav-tabs > li { margin-bottom: -3px; }
+.nav-tabs > li > a:hover { background: #f2f9fd; }
+.card-panel { cursor: pointer; padding: 10px 10px 10px 106px; position: relative; border-radius: 50px; border: 1px solid #ddd; }
+.card-panel i.fa.stats-icon { border-radius: 50px; }
+.card-panel i.fa.stats-icon { color: #fff;font-size: 40px; height: 80px; left: 0; margin-left: 10px; padding: 20px;position: absolute; text-align: center; top: 10px; width: 80px;  background-color: #166700; }
+.card-panel h3 { color: #85868d; font-size: 13px; margin-top: 14px; margin-bottom: 12px; }
+.text-muted { font-size: 12px; display: block; margin-bottom: 15px; }
+
+
+@media only screen {
+  and (min-device-width: 800px);
+  and (max-device-width: 1400px);
+}
+
+.card-panel i.fa.stats-icon {
+    background-color: #166700;
+    color: #fff;
+    font-size: 24px;
+    height: 60px;
+    left: 0;
+    margin-left: 10px;
+    padding: 20px;
+    position: absolute;
+    text-align: center;
+    top: 10px;
+    width: 60px;
+}
+.text-muted {
+    display: block;
+    font-size: 7px;
+    margin-bottom: 12px;
+    margin-left: -30px;
+}
+
+.card-panel h3 {
+    color: #85868d;
+    font-size: 10px;
+    margin-bottom: 12px;
+    margin-left: -30px;
+    margin-top: 14px;
+}
+}
+</style>

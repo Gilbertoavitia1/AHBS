@@ -1,0 +1,355 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+     <affiliate_adminhtml_affiliate_index>        
+        <reference name="content">
+            <block type="affiliate/adminhtml_affiliate" name="affiliate" />
+        </reference>
+        
+    </affiliate_adminhtml_affiliate_index>
+     <affiliate_adminhtml_affiliateprogram_index>
+        <reference name="content">
+            <block type="affiliate/adminhtml_affiliateprogram" name="affiliateprogram" />
+        </reference>
+    </affiliate_adminhtml_affiliateprogram_index>
+    <affiliate_adminhtml_affiliateprogram_edit>
+        <reference name="head">
+            <action method="setCanLoadExtJs"><flag>1</flag></action>
+            <action method="setCanLoadRulesJs"><flag>1</flag></action>           
+            
+        </reference>
+    </affiliate_adminhtml_affiliateprogram_edit>
+    <affiliate_adminhtml_affiliatebanner_index>
+        <reference name="content">
+            <block type="affiliate/adminhtml_affiliatebanner" name="affiliatebanner" />
+        </reference>
+    </affiliate_adminhtml_affiliatebanner_index>
+    
+    <affiliate_adminhtml_affiliatebanner_member>
+        <block type="core/text_list" name="root">
+            <block type="affiliate/adminhtml_affiliatebanner_edit_tab_member" name="affiliatebanner_edit_tab_member"/>
+            <block type="adminhtml/widget_grid_serializer" name="upsell_grid_serializer">
+                <reference name="upsell_grid_serializer">
+                    <action method="initSerializerBlock">
+                        <grid_block_name>affiliatebanner_edit_tab_member</grid_block_name>
+                        <data_callback>getSelectedAddMembers</data_callback>
+                        <hidden_input_name>addmember[banner]</hidden_input_name>
+                        <reload_param_name>members_add</reload_param_name>
+                    </action>
+                    <action method="addColumnInputName">
+                        <input_name>position</input_name>
+                    </action>
+                </reference>
+            </block>
+        </block>
+    </affiliate_adminhtml_affiliatebanner_member> 
+    
+    <affiliate_adminhtml_affiliateviewhistory_index>
+        <reference name="content">
+            <block type="affiliate/adminhtml_affiliateviewhistory" name="affiliateviewhistory" />
+        </reference>
+    </affiliate_adminhtml_affiliateviewhistory_index>
+    
+    <affiliate_adminhtml_affiliatehistory_index>
+        <reference name="content">
+            <block type="affiliate/adminhtml_affiliatehistory" name="affiliatehistory" />
+        </reference>
+    </affiliate_adminhtml_affiliatehistory_index>
+    
+     <affiliate_adminhtml_affiliatecredithistory_index>
+        <reference name="content">
+            <block type="affiliate/adminhtml_affiliatecredithistory" name="affiliatecredithistory" />
+        </reference>
+    </affiliate_adminhtml_affiliatecredithistory_index>
+    
+    <affiliate_adminhtml_affiliatewithdrawn_index>
+        <reference name="content">
+            <block type="affiliate/adminhtml_affiliatewithdrawn" name="affiliatewithdrawn" />
+        </reference>
+    </affiliate_adminhtml_affiliatewithdrawn_index>
+    <affiliate_adminhtml_affiliatewithdrawnpending_index>
+        <reference name="content">
+            <block type="affiliate/adminhtml_affiliatewithdrawnpending" name="affiliatewithdrawnpending" />
+        </reference>
+    </affiliate_adminhtml_affiliatewithdrawnpending_index>
+    
+    <affiliate_adminhtml_affiliategroup_index>
+        <reference name="content">
+            <block type="affiliate/adminhtml_affiliategroup" name="affiliategroup" />
+        </reference>
+    </affiliate_adminhtml_affiliategroup_index>
+    
+     <affiliate_adminhtml_affiliategroup_program>
+        <block type="core/text_list" name="root">
+            <block type="affiliate/adminhtml_affiliategroup_edit_tab_program" name="affiliategroup_edit_tab_program"/>
+            <block type="adminhtml/widget_grid_serializer" name="upsell_grid_serializer">
+                <reference name="upsell_grid_serializer">
+                    <action method="initSerializerBlock">
+                        <grid_block_name>affiliategroup_edit_tab_program</grid_block_name>
+                        <data_callback>getSelectedAddPrograms</data_callback>
+                        <hidden_input_name>addprogram[member]</hidden_input_name>
+                        <reload_param_name>programs_add</reload_param_name>
+                    </action>
+                     <action method="addColumnInputName">
+                        <input_name>position</input_name>
+                    </action>
+                </reference>
+            </block>
+        </block>
+    </affiliate_adminhtml_affiliategroup_program>
+    
+    <affiliate_adminhtml_affiliategroup_member>
+        <block type="core/text_list" name="root">
+            <block type="affiliate/adminhtml_affiliategroup_edit_tab_member" name="affiliategroup_edit_tab_member"/>
+            <block type="adminhtml/widget_grid_serializer" name="upsell_grid_serializer">
+                <reference name="upsell_grid_serializer">
+                    <action method="initSerializerBlock">
+                        <grid_block_name>affiliategroup_edit_tab_member</grid_block_name>
+                        <data_callback>getSelectedAddMembers</data_callback>
+                        <hidden_input_name>addmember[group]</hidden_input_name>
+                        <reload_param_name>members_add</reload_param_name>
+                    </action>
+                    <action method="addColumnInputName">
+                        <input_name>position</input_name>
+                    </action>
+                </reference>
+            </block>
+        </block>
+    </affiliate_adminhtml_affiliategroup_member> 
+    
+    <affiliate_adminhtml_affiliatemember_index>
+        <reference name="content">
+            <block type="affiliate/adminhtml_affiliatemember" name="affiliatemember" />
+        </reference>
+    </affiliate_adminhtml_affiliatemember_index>
+    
+    <affiliate_adminhtml_affiliateorders_index>
+        <reference name="content">
+            <block type="affiliate/adminhtml_affiliateorders" name="affiliateorders" />
+        </reference>
+    </affiliate_adminhtml_affiliateorders_index>
+    
+    <affiliate_adminhtml_affiliatewebsite_index>
+        <reference name="content">
+            <block type="affiliate/adminhtml_affiliatewebsite" name="affiliate" />
+        </reference>
+    </affiliate_adminhtml_affiliatewebsite_index>
+    
+    <affiliate_adminhtml_affiliatecommissionholding_index>
+    	<reference name="content">
+    		<block type="affiliate/adminhtml_affiliatecommissionholding" name="affiliate_commission_holding" />
+    	</reference>
+    </affiliate_adminhtml_affiliatecommissionholding_index>
+    
+    <affiliate_adminhtml_affiliateparent_index>
+        <reference name="content">
+            <block type="affiliate/adminhtml_affiliateparent" name="affiliateparent" />
+        </reference>
+    </affiliate_adminhtml_affiliateparent_index>
+    
+    <!--  <affiliate_adminhtml_affiliatemember_edit>
+        <reference name="head">
+        	<action method="addJs"><script>mw_affiliate/affiliate.js</script></action>
+        </reference>
+    </affiliate_adminhtml_affiliatemember_edit>-->
+    
+    <affiliate_adminhtml_affiliatememberpending_index>
+        <reference name="content">
+            <block type="affiliate/adminhtml_affiliatememberpending" name="affiliateaffiliatememberpending" />
+        </reference>
+    </affiliate_adminhtml_affiliatememberpending_index>
+    
+    <affiliate_adminhtml_affiliateprogram_group>
+        <block type="core/text_list" name="root">
+            <block type="affiliate/adminhtml_affiliateprogram_edit_tab_group" name="affiliateprogram_edit_tab_group"/>
+            <block type="adminhtml/widget_grid_serializer" name="upsell_grid_serializer">
+                <reference name="upsell_grid_serializer">
+                    <action method="initSerializerBlock">
+                        <grid_block_name>affiliateprogram_edit_tab_group</grid_block_name>
+                        <data_callback>getSelectedAddGroups</data_callback>
+                        <hidden_input_name>addgroup[program]</hidden_input_name>
+                        <reload_param_name>groups_add</reload_param_name>
+                    </action>
+                    <action method="addColumnInputName">
+                        <input_name>position</input_name>
+                    </action>
+                </reference>
+            </block>
+        </block>
+    </affiliate_adminhtml_affiliateprogram_group>
+    
+    <adminhtml_system_config_edit>
+    	<reference name="head">
+    		<action method="addJs"><script>mw_affiliate/affiliate.validate.js</script></action>
+    	</reference>
+    </adminhtml_system_config_edit>
+    <affiliate_adminhtml_affiliatemember_edit>
+        <reference name="head">
+        	<action method="addJs"><script>mw_affiliate/validate.account.js</script></action>                
+                <action method="addJs"><script>mw_affiliate/jquery-1.10.2.js</script></action>
+                <action method="addJs"><script>mw_affiliate/jquery-ui.min.js</script></action>        
+                <action method="addJs"><script>mw_affiliate/jquery.iframe-transport.js</script></action>
+                <action method="addJs"><script>mw_affiliate/jquery.fileupload.js</script></action>
+                <action method="addJs"><script>mw_affiliate/jquery.cloudinary.js</script></action>
+        </reference>
+    </affiliate_adminhtml_affiliatemember_edit>
+    <adminhtml_sales_order_view>
+    	<reference name="order_info">
+            <action method="setTemplate"><template>mw_affiliate/sales/order/view/info.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_view>
+    
+    
+    <affiliate_adminhtml_affiliatenetwork_index>   
+         <reference name="head">            
+            <action method="addItem"><type>skin_js</type><name>js/jquery.min.js</name></action>     
+            <action method="addItem"><type>skin_js</type><name>js/jquery-ui-1.10.2.custom.min.js</name></action>            
+            <action method="addCss"><name>css/jquery.ui.all.css</name></action>                        
+            <action method="addCss"><name>css/primitives.latest.css</name></action>        
+        </reference>     
+        <reference name="content">
+            <block type="adminhtml/template" name="affiliate_network" template="mw_affiliate/affiliate_network.phtml"/>
+        </reference> 
+        
+    </affiliate_adminhtml_affiliatenetwork_index>
+    
+    <affiliate_adminhtml_affiliatebonus_faststart>  
+        <reference name="content">
+            <block type="adminhtml/template" name="affiliate_bonus" template="mw_affiliate/bonus/faststart.phtml"/>
+        </reference> 
+        
+    </affiliate_adminhtml_affiliatebonus_faststart>
+    
+    <affiliate_adminhtml_affiliatebonus_preferredcustomer>
+        <reference name="content">
+            <block type="affiliate/adminhtml_affiliatebonuspreferred" name="affiliatebonuspreferred" />
+        </reference>
+    </affiliate_adminhtml_affiliatebonus_preferredcustomer>
+    
+    <affiliate_adminhtml_affiliatebonus_viewpreferred>
+        <reference name="content">
+            <!--<block type="affiliate/adminhtml_affiliatebonuspreferred_edit" name="affiliatebonuspreferred_edit" />-->
+            <block type="adminhtml/template" name="affiliatebonuspreferred_edit" template="mw_affiliate/bonus/preferred_customer.phtml"/>
+        </reference>
+    </affiliate_adminhtml_affiliatebonus_viewpreferred>    
+    
+    <adminhtml_sales_order_view>
+        <reference name="sales_order_tabs">
+            <action method="addTab">
+                <name>order_view_tab_network</name>
+                <block>affiliate/adminhtml_order_view_tab_network</block>
+            </action>
+        </reference>
+    </adminhtml_sales_order_view>
+    
+    
+      
+    
+    
+    <!-- BINARY -->        
+    <affiliate_adminhtml_affiliatebinary_expired>
+        <reference name="content">
+            <block type="affiliate/adminhtml_affiliateexpired" name="affiliateexpired"/>
+        </reference>
+    </affiliate_adminhtml_affiliatebinary_expired>
+    
+    <affiliate_adminhtml_affiliatebinary_editexpired>
+        <reference name="content">
+            <block type="adminhtml/template"  ame="affiliatebinaryeditexpired" template="mw_affiliate/binary/expired/edit.phtml"/>
+        </reference>
+    </affiliate_adminhtml_affiliatebinary_editexpired>
+    
+    
+    
+    
+    
+    
+    <affiliate_adminhtml_affiliatebinary_residual>
+        <reference name="content">
+            <block type="affiliate/adminhtml_affiliatebinaryresidual" name="affiliatebinaryresidual"/>
+        </reference>
+    </affiliate_adminhtml_affiliatebinary_residual>    
+    
+    <affiliate_adminhtml_affiliatebinary_editresidual>
+        <reference name="content">
+            <!--<block type="affiliate/adminhtml_affiliatebinaryresidual_edit" name="affiliatebinaryresidualedit" />-->
+            <block type="adminhtml/template" name="affiliatebinaryresidualedit" template="mw_affiliate/binary/binary_residual.phtml"/>
+        </reference>
+    </affiliate_adminhtml_affiliatebinary_editresidual>
+    
+    
+    
+    
+    <affiliate_adminhtml_affiliatebinary_residualedit>
+        <reference name="content">
+            <!--<block type="affiliate/adminhtml_affiliatebinaryresidual_edit" name="affiliatebinaryresidualedit" />-->
+            <block type="adminhtml/template" name="affiliatebinaryresidualeditnew" template="mw_affiliate/binary/binary_residual_edit.phtml"/>
+        </reference>
+    </affiliate_adminhtml_affiliatebinary_residualedit>
+    
+    
+    
+    
+    <affiliate_adminhtml_affiliatebinary_igualable>
+        <reference name="content">
+            <block type="affiliate/adminhtml_affiliatebinarycheck" name="affiliatebinarycheck"/>
+        </reference>
+    </affiliate_adminhtml_affiliatebinary_igualable>  
+    
+     <affiliate_adminhtml_affiliatebinary_editigualable>
+        <reference name="content">
+            <!--<block type="affiliate/adminhtml_affiliatebinaryresidual_edit" name="affiliatebinaryresidualedit" />-->
+            <block type="adminhtml/template" name="affiliatebinaryigualableedit" template="mw_affiliate/binary/binary_check.phtml"/>
+        </reference>
+    </affiliate_adminhtml_affiliatebinary_editigualable>
+    
+    
+    
+    <affiliate_adminhtml_affiliatebinary_constructor>
+        <reference name="content">
+            <block type="affiliate/adminhtml_affiliatebinaryconstructor" name="affiliatebinaryconstructor"/>
+        </reference>
+    </affiliate_adminhtml_affiliatebinary_constructor>
+    
+    
+    
+    <affiliate_adminhtml_affiliatebinary_preferred>
+        <reference name="content">
+            <block type="affiliate/adminhtml_affiliatebinarypreferred" name="affiliatebinarypreferred"/>
+        </reference>
+    </affiliate_adminhtml_affiliatebinary_preferred>
+    
+    <affiliate_adminhtml_affiliatebinary_editpreferred>
+        <reference name="content">
+            <block type="adminhtml/template" name="affiliatebinarypreferrededit" template="mw_affiliate/binary/binary_preferred.phtml"/>
+        </reference>
+    </affiliate_adminhtml_affiliatebinary_editpreferred>
+    
+    
+    <affiliate_adminhtml_affiliatebinary_faststart>
+        <reference name="content">
+            <block type="affiliate/adminhtml_affiliatebinaryfaststart" name="affiliatebinaryfaststart"/>
+        </reference>
+    </affiliate_adminhtml_affiliatebinary_faststart>
+    
+    
+    <!-- BINARY REPORT -->
+    <affiliate_adminhtml_affiliatebinaryreport_residual>
+        <reference name="content">
+             <!--<block type="adminhtml/template" name="affiliatebinaryreportresidual" template="mw_affiliate/binary/report/residual.phtml"/>-->
+             <block type="affiliate/adminhtml_affiliatebinaryreportresidual" name="affiliatebinaryreportresidual"/>
+        </reference>
+    </affiliate_adminhtml_affiliatebinaryreport_residual>
+
+
+    <!-- CHECK REPORT -->
+    <affiliate_adminhtml_affiliatebinaryreport_check>
+       <reference name="content">
+    <block type="affiliate/adminhtml_affiliatebinaryreportcheck" name="affiliatebinaryreportcheck"/>
+       </reference>
+   </affiliate_adminhtml_affiliatebinaryreport_check>
+
+   
+
+
+
+</layout>

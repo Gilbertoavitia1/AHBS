@@ -1,0 +1,76 @@
+//credit Module
+
+"My Credit", "My Credit"
+
+// tab my credit trong credit va affiliate
+"Hide", "Hide"
+"Show", "Show"
+"Credit Manager", "Credit Manager"
+"Credit Information", "Credit Information"
+"Current Balance: <b>%s</b>", "Current Balance: <b>%s</b>"
+"Transaction History", "Transaction History"
+"No Credit Transaction History Found", "No Credit Transaction History Found"
+"Date", "Date"
+"Amount", "Amount"
+"Balance", "Balance"
+"Transaction Detail", "Transaction Detail"
+"Changed By Admin", "Changed By Admin"
+"Use Credit to Checkout", "Use Credit to Checkout"
+"Canceled Order using Credit", "Canceled Order using Credit"
+"Withdraw", "Withdraw"
+"Canceled Withdraw", "Canceled Withdraw"
+"Referred Customer Buys Product", "Referred Customer Buys Product"
+"Referred Customer Refunds Product", "Referred Customer Refunds Product"
+"You used credit to checkout order : <b><a href=\"%s\">#%s</a></b>", "You used credit to checkout order : <b><a href=\"%s\">#%s</a></b>"
+"You canceled order : <b><a href=\"%s\">#%s</a></b>, checkout by credit", "You canceled order : <b><a href=\"%s\">#%s</a></b>, checkout by credit"
+"Commission from order: <b>#%s</b>", "Commission from order: <b>#%s</b>"
+"Commission from order : <b><a href=\"%s\">#%s</a></b>", "Commission from order : <b><a href=\"%s\">#%s</a></b>"
+"Commission from order: #%s", "Commission from order: #%s"
+"Customer granted refund. Order <b>#%s</b>. Affiliate commission reversed.", "Customer granted refund. Order <b>#%s</b>. Affiliate commission reversed."
+"Withdrawal money: <b>%s</b> (Processing Fee: <b>%s</b>)", "Withdrawal money: <b>%s</b> (Processing Fee: <b>%s</b>)"
+"Canceled withdrawal money: <b>%s</b> (Processing Fee: <b>%s</b>)", "Canceled withdrawal money: <b>%s</b> (Processing Fee: <b>%s</b>)"
+"Affiliate Discount", "Affiliate Discount"
+"Credit Discount", "Credit Discount"
+
+// tab checkout by credit
+"Referral Code", "Referral Code"
+"Enter your referral code if you have.", "Enter your referral code if you have."
+"Apply Code", "Apply Code"
+"Cancel Code", "Cancel Code"
+"Enter your credit if you have.", "Enter your credit if you have."
+"Enter your credit here", "Enter your credit here"
+"Apply Credit", "Apply Credit"
+"Cancel Credit", "Cancel Credit"
+"Credit Cart", "Credit Cart"
+"Use Credit", "Use Credit"
+"The referral code is invalid.", "The referral code is invalid."
+"The referral code was applied successfully.", "The referral code was applied successfully."
+"The referral code has been cancelled successfully.", "The referral code has been cancelled successfully."
+"Can not apply the referral code.", "Can not apply the referral code."
+"You must login to use this function", "You must login to use this function"
+"You must join our Affiliate to use this function", "You must join our Affiliate to use this function"
+"Affiliate Account was disabled, please contact us to solve this problem.", "Affiliate Account was disabled, please contact us to solve this problem."
+"Your entered amount (%s) is greater than grand total.", "Your entered amount (%s) is greater than grand total."
+"Your entered amount (%s) is greater than subtotal.", "Your entered amount (%s) is greater than subtotal."
+"Your balance is not enough "%s".", "Your balance is not enough "%s"."
+"Maximum amount of credit to checkout is "%s". Please insert a number that must be less than or equal "%s"", "Maximum amount of credit to checkout is "%s". Please insert a number that must be less than or equal "%s""
+"Credit "%s" was applied successfully.", "Credit "%s" was applied successfully."
+"The credit has cancelled successfully.", "The credit has cancelled successfully."
+"Can not apply credit.", "Can not apply credit."
+"My Credit", "My Credit"
+
+// tab configuration
+"Options", "Options"
+"Show credit discount on shopping cart", "Show credit discount on shopping cart"
+"Max amount of credit to checkout", "Max amount of credit to checkout"
+"Customer can use credit to checkout but not over this amount. Input 0 or leave empty if no limitation", "Customer can use credit to checkout but not over this amount. Input 0 or leave empty if no limitation"
+
+
+
+
+
+
+
+
+
+

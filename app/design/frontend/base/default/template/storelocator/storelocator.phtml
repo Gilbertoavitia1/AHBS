@@ -1,0 +1,54 @@
+<?php echo $this->getJsandCss(); ?>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript">jQuery.noConflict();</script>
+<?php
+$storeid = Mage::app()->getStore()->getId();
+$lng = Mage::getStoreConfig('storelocator/settings/defaultlon', $storeid);
+$lat = Mage::getStoreConfig('storelocator/settings/defaultlat',$storeid);
+?>
+<div id="store-locator-container">
+ 
+    <h1><?php echo $this->__("Store Locator"); ?></h1>	
+    <div class="bottom-line"></div>
+    <div id="form-container">
+        <form id="user-location" method="post" action="#">
+            <input type="hidden" name="url" value="<?php echo $this->getBaseUrl() . 'storelocator/index/location'; ?>" id="url">
+            <input type="hidden" name="searchurl" value="<?php echo $this->getBaseUrl() . 'storelocator/index/searchlocation'; ?>" id="searchurl">
+            <input type="hidden" name="url1" value="<?php echo $this->getBaseUrl() . 'storelocator/index/infowindowdescription'; ?>" id="url1">
+            <input type="hidden" name="url2" value="<?php echo $this->getBaseUrl() . 'storelocator/index/locationlistdescription'; ?>" id="url2">
+            <div id="form-input">
+                <label for="address">Enter Name or City or State or Phone or Zip Code:</label>
+                <input type="text" id="address" name="address" class="input-text" />
+            </div>            
+            <button id="submit" type="submit">Submit</button>
+        </form>
+        <script type="text/javascript">
+            //<![CDATA[
+               var searchForm = new VarienForm('user-location', true);
+              //]]>
+        </script>
+    </div>
+    <div id="map-container">	
+        <div id="loc-list">
+            <ul id="list"></ul>
+        </div>
+        <div id="map"></div>
+    </div>
+</div>
+<?php $storeCol = Mage::getModel('storelocator/storelocator')->getCollection()
+				->addFieldToFilter('status',1); ?>
+<?php if($storeCol->count()): ?>
+<script type="text/javascript">
+    jQuery(function() {
+        jQuery('#map-container').storeLocator({'slideMap' : false, 'fullMapStart' : true, 'defaultLoc': true, 'defaultLat': '<?php echo $lat; ?>', 'defaultLng' : '<?php echo $lng; ?>' });
+    });
+</script>
+<?php else: ?>
+<script type="text/javascript">
+    jQuery(function() {
+        jQuery('#map-container').storeLocator({'slideMap' : false, 'defaultLoc': true, 'defaultLat': '<?php echo $lat; ?>', 'defaultLng' : '<?php echo $lng; ?>' });
+    });
+</script>
+<?php endif ?>
+
+

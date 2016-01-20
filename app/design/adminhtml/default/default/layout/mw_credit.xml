@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+   <!--  <adminhtml_system_config_edit>
+    	<reference name="head">
+    		<action method="addJs"><script>mw_credit/jquery-1.4.2.js</script></action>
+    		<action method="addJs"><script>mw_credit/noConflict.js</script></action>
+    		<action method="addJs"><script>mw_credit/configValidate.js</script></action>
+    	</reference>
+    </adminhtml_system_config_edit> -->
+</layout>

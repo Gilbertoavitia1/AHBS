@@ -1,0 +1,21 @@
+<?php
+/**
+ *
+ * @category   MW
+ * @package    MW_Credit
+ * @author Mage World <support@mage-world.com>
+ */
+?>
+<?php $credit = Mage::helper('credit')->getCreditByCustomer() ?>
+<?php //$money = Mage::helper('credit')->exchangeCreditToMoney($credit);?>
+<?php //$rate = Mage::helper('credit')->getCreditRate()?>
+<span class="amount" style="font-size:16px;font-weight:bold">
+    <?php echo $this->__('Current Balance: <b>%s</b>',Mage::helper('credit')->formatMoney($credit))?>
+</span>	
+
+
+<script type="text/javascript">
+//<![CDATA[
+    var exchangeForm = new VarienForm('frm_exchange_credit', true);
+    //]]>
+</script>

@@ -1,0 +1,36 @@
+<div id="cm-video-bg" class="full-width-box" style="padding:0; background:url(<?php echo $this->getSkinUrl('img/bg-wood.jpg')?>)">
+    <div style="position:absolute"><img src="<?php echo $this->getSkinUrl('img/costal.png')?>"></div> 
+    <div class="container">
+        <div class="row">
+            <div class="white col-sm-3 col-md-3" style="float:right; padding-top: 44px; padding-bottom: 70px;">
+                <div style="float:right;">
+                    <aside class="col-xs-12 widget social" style="float:left">
+                        <p style="font-size:1.2em"><strong>Siguenos en las redes</strong></p>
+                        <a class="sbtnf sbtnf-rounded color color-hover icon-facebook" href="http://www.facebook.com/pages/Habitos-Saludables/340941986092308" target="_blank"></a>
+                        <a class="sbtnf sbtnf-rounded color color-hover icon-twitter" href="http://twitter.com/HSOficialmx" target="_blank"></a>
+                        <a class="sbtnf sbtnf-rounded color color-hover icon-gplus" href="http://plus.google.com/u/0/b/118225272564693135140/118225272564693135140/posts"  target="_blank"></a>
+                        <div class="clearfix"></div>
+                    </aside>
+                </div>
+            </div>
+            <div class="white col-sm-6 col-md-6" style="float:right; padding-top: 44px; padding-bottom: 70px;">
+                <div class="title-box title-white">
+                    <h1 class="title" style="font-size:2.4em; text-shadow:#000 2px 2px 8px"><?php echo $this->__('Newsletter') ?></h1>
+                </div>
+                <p style="font-size:1.2em; text-shadow:#000 2px 2px 8px">Obtendrás las ultimas noticias, eventos, promociones y más... Solo escribe tu email abajo. Te garantizamos absoluta privacidad</p>
+                <form class="has-warning" id="newsletter-validate-detail" method="POST" action="<?php echo $this->getFormActionUrl() ?>">
+                    <div class="col-sm-8" style=" padding-left:0">
+                        <input class="form-control input-text required-entry validate-email" type="email" name="email" id="newsletter" title="<?php echo $this->__('Sign up for our newsletter') ?>" placeholder="<?php echo $this->__('Email') ?>">
+                        <div id="subscriber" class="alert alert-success" style="clear:both; display:none; padding:5px; margin:0; color:#FFF"><p><strong>Gracias por Suscribirte.</strong></p></div>
+                    </div>
+                    <div class="col-sm-4" style=" padding-left:0"><button class="btn btn-warning" type="submit" value="Submit" data-style="contract" style="float:left; margin:0"><span class="ladda-label"><strong><?php echo $this->__('Subscribe') ?></strong></span><span class="ladda-spinner"></span></button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>	
+    <script type="text/javascript">
+    //<![CDATA[
+        var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail');
+    //]]>
+    </script>

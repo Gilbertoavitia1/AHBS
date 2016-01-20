@@ -1,0 +1,84 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2009 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+<script type="text/javascript" src="http://www.plaxo.com/css/m/js/util.js"></script>
+<script type="text/javascript" src="http://www.plaxo.com/css/m/js/basic.js"></script>
+<script type="text/javascript" src="http://www.plaxo.com/css/m/js/abc_launcher.js"></script>
+<script type="text/javascript"><!--
+function onABCommComplete() {
+  // OPTIONAL: do something here after the new data has been populated in your text area
+}
+//--></script>
+<div class="dashboard">
+    <div class="page-title">
+        <h1><?php echo $this->__('My Invitations') ?></h1>
+    </div>
+    <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+   <?php if(Mage::helper('affiliate')->getAffiliateActive()==1) {?>
+    <div id="tabs">
+		<ul>
+			<li><a href="#tabs-1"><?php echo $this->__('Invitation') ?></a></li>
+			<li><a href="#tabs-2"><?php echo $this->__('Invitation History') ?></a></li>
+		</ul>
+		<div id="tabs-1">
+			<div class="box-account box-info">
+		        <div class="box-head">
+		            <h2><?php echo $this->__('My Invitations') ?></h2>
+		        </div>
+				<?php echo $this->getChildHtml('invite_form') ?>
+		    </div>
+		    
+		</div>
+		<div id="tabs-2">
+			<?php $history = Mage::helper('affiliate')->getInvitationHistory();?>
+	    	 <div class="box-account box-recent account-box ad-orders">
+		        <div class="head box-head">
+		            <h2><?php echo $this->__('Invitation History') ?></h2>
+		        </div>
+		        <?php if($history > 0){?>
+				<?php echo $this->getChildHtml('invite_transaction') ?>
+				<?php } else if($history == 0){?>
+				<div ><?php echo $this->__('No Invitation Transaction History') ?></div>
+				<?php }?>
+		    </div>
+		</div>
+		
+	</div>
+ <?php } else {?>   
+ <ul class="messages"><li class="error-msg"><ul><li><?php echo $this->__('You must register in My Affiliate to use this function.') ?></li></ul></li></ul>
+ <?php }?>
+</div>
+<script type="text/javascript">
+$j_mw(function() {
+	$j_mw("#tabs").tabs({
+//		cookie: {
+//		expires: 1
+//				}
+
+	});
+});
+</script>

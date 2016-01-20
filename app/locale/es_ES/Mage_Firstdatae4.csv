@@ -1,0 +1,29 @@
+//Affiliate Module Fontend
+"Firstdatae4 Recurring Profiles", "Domiciliaci&oacute;n"
+
+"Recurring Plans", "Planes Recurrentes"
+"I do not want any plan at this time", "No quiero ningun plan"
+
+
+//Grid
+"Recurring Type", "Tipo de Plan"
+"Recurring Id", "No. de Tarea"
+
+"Next Run", "Pr&oacute;xima Ejecuci&oacute;n"
+"Last Run", "Ultima Ejecuci&oacute;n"
+"Created Date", "Fecha de Creaci&oacute;n"
+"Recurring Details", "Detalles de Domiciliaci&oacute;n"
+"Recurring Information", "Ordenes"
+
+
+//Status
+"Running", "En Ejecuci&oacute;n"
+"Proccessing", "En Proceso"
+"Created", "Creado"
+"Deleted", "Eliminado"
+
+//Plans
+"Daily", "Diariamente"
+"Quarterly", "Trimestral"
+"4 Months", "Cuatrimestral"
+"Annually", "Anualmente"

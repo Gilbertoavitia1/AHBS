@@ -5,7 +5,7 @@
     $readConnection = $resource->getConnection('core_read');
     $writeConnection = $resource->getConnection('core_write');
      
-    $id = '100001813';
+    $id = '100002256';
     $query = "SELECT * FROM sales_flat_order WHERE increment_id={$id}";
     $results = $readConnection->fetchAll($query);
 
@@ -100,3 +100,4 @@
     echo $query.';<br>';
     $writeConnection->query($query);
 ?>
+

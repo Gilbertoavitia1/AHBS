@@ -1,0 +1,17 @@
+<!--@subject El Balance de su credito ha cambiado. @-->
+
+<p>Hola {{var customer_name}},</p>
+
+<p>Su balance ha cambiado.<br>
+Detalles de la Transaccion:</p>
+
+<p><strong>Centidad:</strong> {{var transaction_amount}}<br>
+<strong>Balance:</strong> {{var customer_balance}}<br>
+<strong>Detalle:</strong> {{var transaction_detail}}<br>
+<strong>Fecha/Hora:</strong> {{var transaction_time}}</p>
+
+<p>Por favor, da click <a href="{{var customer_credit_link}}">aqui</a> para iniciar sesion en su cuenta.<br>
+Si tiene alguna pregunta sobre su transaccion, contactenos en<a href="mailto:{{config path='trans_email/ident_support/email'}}">{{config path='trans_email/ident_support/email'}}</a> o llamenos a {{config path='general/store_information/phone'}}.</p>                                            
+
+<p>Este mensaje ha sido enviado por el Departamento de Servicio al cliente, {{var store_name}}.</p>
+

@@ -1,0 +1,279 @@
+2015-12-13T17:02:25+00:00 DEBUG (7): Array
+(
+    [url] => https://api-3t.paypal.com/nvp
+    [SetExpressCheckout] => Array
+        (
+            [PAYMENTACTION] => Sale
+            [AMT] => 1575.00
+            [CURRENCYCODE] => MXN
+            [RETURNURL] => https://www.habitossaludables.com.mx/mx/paypal/express/return/
+            [CANCELURL] => https://www.habitossaludables.com.mx/mx/paypal/express/cancel/
+            [INVNUM] => 100002205
+            [SOLUTIONTYPE] => Mark
+            [GIROPAYCANCELURL] => https://www.habitossaludables.com.mx/mx/paypal/express/cancel/
+            [GIROPAYSUCCESSURL] => https://www.habitossaludables.com.mx/mx/checkout/onepage/success/
+            [BANKTXNPENDINGURL] => https://www.habitossaludables.com.mx/mx/checkout/onepage/success/
+            [LOCALECODE] => es_ES
+            [ITEMAMT] => 1450.00
+            [TAXAMT] => 0.00
+            [SHIPPINGAMT] => 125.00
+            [L_NUMBER0] => TEGCP-005
+            [L_NAME0] => Te HS Bolsa c/2 sobres
+            [L_QTY0] => 10
+            [L_AMT0] => 145.00
+            [BUSINESS] => 
+            [NOTETEXT] => 
+            [EMAIL] => juanpablo@avansys.com.mx
+            [FIRSTNAME] => Juan Pablo
+            [LASTNAME] => Gonzalez Jaime
+            [MIDDLENAME] => 
+            [SALUTATION] => 
+            [SUFFIX] => 
+            [COUNTRYCODE] => MX
+            [STATE] => JA
+            [CITY] => Zapopan
+            [STREET] => San Felipe Neri 585 Col. Camino Real
+            [ZIP] => 45040
+            [PHONENUM] => 331256832
+            [SHIPTOCOUNTRYCODE] => MX
+            [SHIPTOSTATE] => JA
+            [SHIPTOCITY] => Zapopan
+            [SHIPTOSTREET] => San Felipe Neri 585 Col. Camino Real
+            [SHIPTOZIP] => 45040
+            [SHIPTOPHONENUM] => 331256832
+            [SHIPTOSTREET2] => 
+            [STREET2] => 
+            [SHIPTONAME] => Juan Pablo Gonzalez Jaime
+            [ADDROVERRIDE] => 1
+            [METHOD] => SetExpressCheckout
+            [VERSION] => 72.0
+            [USER] => ****
+            [PWD] => ****
+            [SIGNATURE] => ****
+            [BUTTONSOURCE] => Magento_Cart_Community
+        )
+
+    [response] => Array
+        (
+            [TOKEN] => EC-79J32674B1538261F
+            [TIMESTAMP] => 2015-12-13T17:02:25Z
+            [CORRELATIONID] => 750728cd9220d
+            [ACK] => Success
+            [VERSION] => 72.0
+            [BUILD] => 18308778
+        )
+
+    [__pid] => 21438
+)
+
+2015-12-13T17:04:31+00:00 DEBUG (7): Array
+(
+    [url] => https://api-3t.paypal.com/nvp
+    [GetExpressCheckoutDetails] => Array
+        (
+            [TOKEN] => EC-79J32674B1538261F
+            [METHOD] => GetExpressCheckoutDetails
+            [VERSION] => 72.0
+            [USER] => ****
+            [PWD] => ****
+            [SIGNATURE] => ****
+            [BUTTONSOURCE] => Magento_Cart_Community
+        )
+
+    [response] => Array
+        (
+            [TOKEN] => EC-79J32674B1538261F
+            [PHONENUM] => 331256832
+            [BILLINGAGREEMENTACCEPTEDSTATUS] => 0
+            [CHECKOUTSTATUS] => PaymentActionNotInitiated
+            [TIMESTAMP] => 2015-12-13T17:04:31Z
+            [CORRELATIONID] => ff3649b787e4e
+            [ACK] => Success
+            [VERSION] => 72.0
+            [BUILD] => 18308778
+            [EMAIL] => juanpablo@avansys.com.mx
+            [PAYERID] => N98PDKFCKXSWY
+            [PAYERSTATUS] => verified
+            [FIRSTNAME] => Juan Pablo
+            [LASTNAME] => GonzÃ¡lez Jaime
+            [COUNTRYCODE] => MX
+            [SHIPTONAME] => Juan Pablo Gonzalez Jaime
+            [SHIPTOSTREET] => San Felipe Neri 585 Col. Camino Real
+            [SHIPTOCITY] => Zapopan
+            [SHIPTOSTATE] => JA
+            [SHIPTOZIP] => 45040
+            [SHIPTOCOUNTRYCODE] => MX
+            [SHIPTOPHONENUM] => 331256832
+            [SHIPTOCOUNTRYNAME] => Mexico
+            [ADDRESSSTATUS] => Confirmed
+            [CURRENCYCODE] => MXN
+            [AMT] => 1575.00
+            [ITEMAMT] => 1450.00
+            [SHIPPINGAMT] => 125.00
+            [HANDLINGAMT] => 0.00
+            [TAXAMT] => 0.00
+            [INVNUM] => 100002205
+            [INSURANCEAMT] => 0.00
+            [SHIPDISCAMT] => 0.00
+            [INSURANCEOPTIONOFFERED] => false
+            [L_NAME0] => Te HS Bolsa c/2 sobres
+            [L_NUMBER0] => TEGCP-005
+            [L_QTY0] => 10
+            [L_TAXAMT0] => 0.00
+            [L_AMT0] => 145.00
+            [PAYMENTREQUEST_0_CURRENCYCODE] => MXN
+            [PAYMENTREQUEST_0_AMT] => 1575.00
+            [PAYMENTREQUEST_0_ITEMAMT] => 1450.00
+            [PAYMENTREQUEST_0_SHIPPINGAMT] => 125.00
+            [PAYMENTREQUEST_0_HANDLINGAMT] => 0.00
+            [PAYMENTREQUEST_0_TAXAMT] => 0.00
+            [PAYMENTREQUEST_0_INVNUM] => 100002205
+            [PAYMENTREQUEST_0_INSURANCEAMT] => 0.00
+            [PAYMENTREQUEST_0_SHIPDISCAMT] => 0.00
+            [PAYMENTREQUEST_0_SELLERPAYPALACCOUNTID] => administracion@habitossaludables.com.mx
+            [PAYMENTREQUEST_0_INSURANCEOPTIONOFFERED] => false
+            [PAYMENTREQUEST_0_SHIPTONAME] => Juan Pablo Gonzalez Jaime
+            [PAYMENTREQUEST_0_SHIPTOSTREET] => San Felipe Neri 585 Col. Camino Real
+            [PAYMENTREQUEST_0_SHIPTOCITY] => Zapopan
+            [PAYMENTREQUEST_0_SHIPTOSTATE] => JA
+            [PAYMENTREQUEST_0_SHIPTOZIP] => 45040
+            [PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE] => MX
+            [PAYMENTREQUEST_0_SHIPTOPHONENUM] => 331256832
+            [PAYMENTREQUEST_0_SHIPTOCOUNTRYNAME] => Mexico
+            [PAYMENTREQUEST_0_ADDRESSSTATUS] => Confirmed
+            [L_PAYMENTREQUEST_0_NAME0] => Te HS Bolsa c/2 sobres
+            [L_PAYMENTREQUEST_0_NUMBER0] => TEGCP-005
+            [L_PAYMENTREQUEST_0_QTY0] => 10
+            [L_PAYMENTREQUEST_0_TAXAMT0] => 0.00
+            [L_PAYMENTREQUEST_0_AMT0] => 145.00
+            [PAYMENTREQUESTINFO_0_ERRORCODE] => 0
+        )
+
+    [__pid] => 17338
+)
+
+2015-12-13T17:04:35+00:00 DEBUG (7): Array
+(
+    [url] => https://api-3t.paypal.com/nvp
+    [DoExpressCheckoutPayment] => Array
+        (
+            [TOKEN] => EC-79J32674B1538261F
+            [PAYERID] => N98PDKFCKXSWY
+            [PAYMENTACTION] => Sale
+            [AMT] => 1575.00
+            [CURRENCYCODE] => MXN
+            [BUTTONSOURCE] => Magento_Cart_Community
+            [NOTIFYURL] => http://www.habitossaludables.com.mx/mx/paypal/ipn/
+            [RETURNFMFDETAILS] => 1
+            [ITEMAMT] => 1450.00
+            [TAXAMT] => 0.00
+            [SHIPPINGAMT] => 125.00
+            [L_NUMBER0] => TEGCP-005
+            [L_NAME0] => Te HS Bolsa c/2 sobres
+            [L_QTY0] => 10
+            [L_AMT0] => 145.00
+            [METHOD] => DoExpressCheckoutPayment
+            [VERSION] => 72.0
+            [USER] => ****
+            [PWD] => ****
+            [SIGNATURE] => ****
+        )
+
+    [response] => Array
+        (
+            [TOKEN] => EC-79J32674B1538261F
+            [SUCCESSPAGEREDIRECTREQUESTED] => false
+            [TIMESTAMP] => 2015-12-13T17:04:34Z
+            [CORRELATIONID] => 5501c96a443ba
+            [ACK] => Success
+            [VERSION] => 72.0
+            [BUILD] => 18308778
+            [TRANSACTIONID] => 5HB14005GK750072L
+            [TRANSACTIONTYPE] => cart
+            [PAYMENTTYPE] => instant
+            [ORDERTIME] => 2015-12-13T17:04:33Z
+            [AMT] => 1575.00
+            [FEEAMT] => 65.43
+            [TAXAMT] => 0.00
+            [CURRENCYCODE] => MXN
+            [PAYMENTSTATUS] => Completed
+            [PENDINGREASON] => None
+            [REASONCODE] => None
+            [PROTECTIONELIGIBILITY] => Eligible
+            [INSURANCEOPTIONSELECTED] => false
+            [SHIPPINGOPTIONISDEFAULT] => false
+            [PAYMENTINFO_0_TRANSACTIONID] => 5HB14005GK750072L
+            [PAYMENTINFO_0_TRANSACTIONTYPE] => cart
+            [PAYMENTINFO_0_PAYMENTTYPE] => instant
+            [PAYMENTINFO_0_ORDERTIME] => 2015-12-13T17:04:33Z
+            [PAYMENTINFO_0_AMT] => 1575.00
+            [PAYMENTINFO_0_FEEAMT] => 65.43
+            [PAYMENTINFO_0_TAXAMT] => 0.00
+            [PAYMENTINFO_0_CURRENCYCODE] => MXN
+            [PAYMENTINFO_0_PAYMENTSTATUS] => Completed
+            [PAYMENTINFO_0_PENDINGREASON] => None
+            [PAYMENTINFO_0_REASONCODE] => None
+            [PAYMENTINFO_0_PROTECTIONELIGIBILITY] => Eligible
+            [PAYMENTINFO_0_PROTECTIONELIGIBILITYTYPE] => ItemNotReceivedEligible,UnauthorizedPaymentEligible
+            [PAYMENTINFO_0_SECUREMERCHANTACCOUNTID] => J2PLPMXLYENPG
+            [PAYMENTINFO_0_ERRORCODE] => 0
+            [PAYMENTINFO_0_ACK] => Success
+        )
+
+    [__pid] => 17338
+)
+
+2015-12-13T17:04:58+00:00 DEBUG (7): Array
+(
+    [ipn] => Array
+        (
+            [address_city] => Zapopan
+            [address_country] => Mexico
+            [address_country_code] => MX
+            [address_name] => Juan Pablo Gonzalez Jaime
+            [address_state] => JA
+            [address_status] => confirmed
+            [address_street] => San Felipe Neri 585 Col. Camino Real
+            [address_zip] => 45040
+            [business] => administracion@habitossaludables.com.mx
+            [charset] => windows-1252
+            [custom] => 
+            [first_name] => Juan Pablo
+            [invoice] => 100002205
+            [ipn_track_id] => 5501c96a443ba
+            [item_name1] => Te HS Bolsa c/2 sobres
+            [item_number1] => TEGCP-005
+            [last_name] => González Jaime
+            [mc_currency] => MXN
+            [mc_fee] => 65.43
+            [mc_gross] => 1575.00
+            [mc_gross_1] => 1450.00
+            [mc_handling] => 0.00
+            [mc_shipping] => 125.00
+            [notify_version] => 3.8
+            [num_cart_items] => 1
+            [payer_email] => juanpablo@avansys.com.mx
+            [payer_id] => N98PDKFCKXSWY
+            [payer_status] => verified
+            [payment_date] => 09:04:33 Dec 13, 2015 PST
+            [payment_fee] => 
+            [payment_gross] => 
+            [payment_status] => Completed
+            [payment_type] => instant
+            [protection_eligibility] => Eligible
+            [quantity1] => 10
+            [receiver_email] => administracion@habitossaludables.com.mx
+            [receiver_id] => J2PLPMXLYENPG
+            [residence_country] => MX
+            [tax] => 0.00
+            [tax1] => 0.00
+            [transaction_subject] => 
+            [txn_id] => 5HB14005GK750072L
+            [txn_type] => cart
+            [verify_sign] => AomRS5l2W2xlt2An.GaSrAzpCl-NAayfk9yCoPwqmFnO6g82nV0jwoJU
+        )
+
+    [postback_to] => https://www.paypal.com/cgi-bin/webscr
+    [__pid] => 17439
+)
+

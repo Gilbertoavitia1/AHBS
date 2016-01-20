@@ -1,0 +1,257 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    	<reference name="top.links">
+    		<block type="affiliate/affiliateheader" name="affiliate_header">
+             </block>    
+    	</reference>
+    	<reference name="footer_links">
+    		<block type="affiliate/affiliatefooter" name="affiliate_footer">
+    		</block>
+    	</reference>
+    </default>
+    <!-- create menu link for credit in customer account -->
+	<customer_account translate="label">        
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" ifconfig="affiliate/config/enabled"><name>affiliate</name><path>affiliate/index/index/</path><label>My Affiliate Account</label></action>
+        </reference>
+    </customer_account>
+    <customer_account_create>
+    	 <reference name="head">
+    	    <action method="addJs"><script>mw_affiliate/validate.account.js</script></action>
+    	 </reference>
+    	 <!--  <reference name="customer_form_register">
+            <action method="setTemplate" ifconfig="affiliate/config/overwrite_register"><value>mw_affiliate/customer/form/register.phtml</value></action>
+        </reference>-->
+    </customer_account_create> 
+     <affiliate_accountnew_createaffiliate>
+    	 <reference name="head">
+    	 	<action method="addJs"><script>mw_affiliate/validate.account.js</script></action>
+    	 </reference>
+    	 <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+    	 <reference name="content">
+            <block type="customer/form_register" name="customer_form_register_affiliate" template="mw_affiliate/customer/form/register_new.phtml"/>
+         </reference>
+    </affiliate_accountnew_createaffiliate>
+    <!-- create menu link for credit in customer account -->
+   <!-- <affiliate_index_index>
+	 	<update handle="customer_account"/> 
+	   <update handle="affiliate_index_account"/>
+		<reference name="head">
+			<action method="addCss"><stylesheet>mw_affiliate/css/osx.css</stylesheet></action> 
+    		<action method="addJs"><script>mw_affiliate/jquery-1.4.2.js</script></action>
+    		<action method="addJs"><script>mw_affiliate/jquery.simplemodal.js</script></action>
+    		<action method="addJs"><script>mw_affiliate/osx.js</script></action>
+    		<action method="addJs"><script>mw_affiliate/noConflict.js</script></action>  
+    		<action method="addJs"><script>mw_affiliate/toggleHistory.js</script></action>
+    	</reference>
+        <reference name="content">
+        	<block type="core/template" name="customer_affiliate_dashboard" template="mw_affiliate/customer/account/affiliate.phtml">
+	            <block type="core/template" name="customer_affiliate_info" as="affiliate_info" template="mw_affiliate/customer/account/affiliate/info.phtml"/>
+	            <block type="core/template" name="customer_affiliate_active" as="affiliate_active" template="mw_affiliate/customer/account/affiliate/active.phtml"/> 
+				<block type="affiliate/affiliate_transaction" name="customer_affiliate_transaction" as="transaction" template="mw_affiliate/customer/account/affiliate/transaction.phtml"/>
+	        </block>
+        </reference>
+    </affiliate_index_index>-->
+     <affiliate_index_account>
+        <label>Customer My Account (All Pages)</label>
+        <!-- Mage_Customer -->
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="page/html_wrapper" name="my.account.wrapper">
+                <action method="setElementClass"><value>my-account</value></action>
+            </block>
+        </reference>
+        <reference name="left">
+            <block type="customer/account_navigation" name="customer_account_navigation" before="-" template="mw_affiliate/customer/account/navigation.phtml">              
+              <!-- <action method="addLink" translate="label" ifconfig="affiliate/config/enabled"><name>affiliate_create</name><path>affiliate/index/createaccount/</path><label>Signup Referral</label></action> --> 
+               <action method="addLink" translate="label" ifconfig="affiliate/config/enabled"><name>affiliate_referral</name><path>affiliate/index/referralaccount/</path><label>My Account Info</label></action>  
+               <action method="addLink" translate="label" ifconfig="affiliate/config/enabled"><name>affiliate_credit</name><path>credit/index/index</path><label>My Transaction History</label></action> 
+               <action method="addLink" translate="label" ifconfig="affiliate/config/enabled"><name>affiliate_transaction</name><path>affiliate/index/transaction</path><label>My Commission History</label></action> 
+               <action method="addLink" translate="label" ifconfig="affiliate/config/enabled"><name>affiliate_withdrawn</name><path>affiliate/index/withdrawn</path><label>My Withdrawal Request</label></action> 
+               <action method="addLink" translate="label" ifconfig="affiliate/config/enabled"><name>affiliate_invitation</name><path>affiliate/invitation/</path><label>My Invitations</label></action>
+               <action method="addLink" translate="label" ifconfig="affiliate/config/enabled"><name>affiliate_invitation_banner</name><path>affiliate/banner/</path><label>My Affiliate Banners</label></action>
+               <action method="addLink" translate="label" ifconfig="affiliate/config/enabled"><name>affiliate_program</name><path>affiliate/index/listprogram/</path><label>My Affiliate Programs</label></action>
+               <action method="addLink" translate="label" ifconfig="affiliate/config/enabled"><name>affiliate_network</name><path>affiliate/index/affiliatenetwork/</path><label>My Affiliate Network</label></action>
+               <action method="addLink" translate="label" ifconfig="affiliate/config/enabled"><name>affiliate_website</name><path>affiliate/website/</path><label>My Affiliate Websites</label></action>
+			   <action method="addLink"	translate="label" ifconfig="affiliate/config/enabled"><name>affiliate_likebox</name><path>affiliate/likebox/</path><label>My Affiliate Widget</label></action>
+            </block>
+        </reference>
+    </affiliate_index_account>
+    
+    <affiliate_index_accountnew >
+        <label>Customer My Account (All Pages)</label>
+        <!-- Mage_Customer -->
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="page/html_wrapper" name="my.account.wrapper">
+                <action method="setElementClass"><value>my-account</value></action>
+            </block>
+        </reference>
+        <reference name="left">
+            <block type="customer/account_navigation" name="customer_account_navigation" before="-" template="mw_affiliate/customer/account/navigation.phtml">              
+              <action method="addLink" translate="label" ifconfig="affiliate/config/enabled"><name>affiliate_create</name><path>affiliate/index/createaccount/</path><label>Signup Referral</label></action>  
+            </block>
+        </reference>
+    </affiliate_index_accountnew>
+    
+    <affiliate_invitation_index>
+    <update handle="affiliate_index_account"/>
+   		<reference name="head">
+   			<action method="addJs"><script>mw_js/jquery.js</script></action>
+    		<action method="addJs"><script>mw_affiliate/noConflict.js</script></action>
+			<action method="addCss"><stylesheet>mw_affiliate/css/jquery.ui.all.css</stylesheet></action> 
+    		<action method="addJs"><script>mw_affiliate/jquery.ui.core.js</script></action>
+    		<action method="addJs"><script>mw_affiliate/jquery.ui.widget.js</script></action>
+    		<action method="addJs"><script>mw_affiliate/jquery.ui.tabs.js</script></action>
+    		<action method="addJs"><script>mw_affiliate/jquery.cookie.js</script></action>
+    	</reference>
+    	<reference name="content">
+	        <block type="core/template" name="customer_invitation_dashboard_affiliate" template="mw_affiliate/customer/account/invitation.phtml">
+	            <block type="affiliate/invitation" name="invitation_form" as="invite_form" template="mw_affiliate/customer/account/invitation/invite_form.phtml"/>
+	       		<block type="affiliate/invitation_transaction" name="invitation_transaction" as="invite_transaction" template="mw_affiliate/customer/account/invitation/invite_transaction.phtml"/>
+	        </block>
+        </reference>
+   </affiliate_invitation_index>
+   <affiliate_invitation_loginmail>
+   		<reference name="root">
+            <action method="setTemplate"><template>page/empty.phtml</template></action>
+        </reference>
+    	<reference name="content">
+	    	<block type="affiliate/invitation_mail"  template="mw_affiliate/customer/account/invitation/login_mail.phtml"/>
+        </reference>
+   </affiliate_invitation_loginmail>
+   <affiliate_invitation_processmail>
+   		<reference name="root">
+            <action method="setTemplate"><template>page/empty.phtml</template></action>
+        </reference>
+    	<reference name="content">
+	    	<block type="affiliate/invitation_mail" name="process_mail" as="process_mail" template="mw_affiliate/customer/account/invitation/process_mail.phtml"/>
+        </reference>
+   </affiliate_invitation_processmail>
+   <affiliate_invitation_gmail>
+   		<reference name="root">
+            <action method="setTemplate"><template>page/empty.phtml</template></action>
+        </reference>
+    	<reference name="content">
+	    	<block type="affiliate/invitation"  template="mw_affiliate/customer/account/invitation/gmail.phtml"/>
+        </reference>
+   </affiliate_invitation_gmail>
+   
+   <affiliate_banner_index>
+   <update handle="affiliate_index_account"/>
+    	<reference name="content">
+	       <block type="core/template" name="customer_invitation_banner" as="invitation_banner" template="mw_affiliate/customer/account/invitation/invite_banner.phtml"/>
+        </reference>
+   </affiliate_banner_index>
+    <affiliate_index_referralaccount>
+   <update handle="affiliate_index_account"/>
+   		<reference name="head">
+   			<action method="addJs"><script>mw_affiliate/validate.account.js</script></action>
+    	</reference>
+    	<reference name="content">
+	       <block type="core/template" name="customer_referral_account" as="referral_account" template="mw_affiliate/customer/account/referral_account.phtml"/>
+        </reference>
+   </affiliate_index_referralaccount>
+   
+   <affiliate_index_createaccount>
+   <update handle="affiliate_index_accountnew"/>
+   		<reference name="head">
+   			<action method="addJs"><script>mw_affiliate/validate.account.js</script></action>
+    	</reference>
+    	<reference name="content">
+	       <block type="core/template" name="affiliate_customer_create_account" as="create_account" template="mw_affiliate/customer/account/create_account.phtml"/>
+        </reference>
+   </affiliate_index_createaccount>
+  <!-- <affiliate_index_credit>
+	 	<update handle="customer_account"/>
+	   <update handle="affiliate_index_account"/>
+		<reference name="head">
+			<action method="addJs"><script>mw_affiliate/jquery-1.4.2.js</script></action>
+    		<action method="addJs"><script>mw_affiliate/noConflict.js</script></action>
+    		<action method="addJs"><script>mw_affiliate/toggleHistory.js</script></action>
+    	</reference>
+        <reference name="content">
+        	<block type="core/template" name="customer_affiliate_dashboard" template="mw_affiliate/customer/account/affiliate.phtml">
+	            <block type="core/template" name="customer_affiliate_info" as="affiliate_info" template="mw_affiliate/customer/account/affiliate/info.phtml"/>
+				<block type="affiliate/affiliate_transaction" name="customer_affiliate_transaction" as="transaction" template="mw_affiliate/customer/account/affiliate/transaction.phtml"/>
+	        </block>
+        </reference>
+    </affiliate_index_credit> -->
+    <affiliate_index_transaction>
+	   <update handle="affiliate_index_account"/>
+        <reference name="content">
+			<block type="affiliate/affiliate_history" name="customer_affiliate_history" as="history" template="mw_affiliate/customer/account/affiliate/history.phtml"/>
+        </reference>
+    </affiliate_index_transaction>
+    
+     <affiliate_index_viewhistory>
+	   <update handle="affiliate_index_account"/>
+        <reference name="content">
+			<block type="affiliate/affiliate_viewhistory" name="view_history" as="view_history" template="mw_affiliate/customer/account/affiliate/view_history.phtml"/>
+        </reference>
+    </affiliate_index_viewhistory>
+    
+    <affiliate_index_withdrawn>
+	    <update handle="affiliate_index_account"/>
+        <reference name="content">
+			<block type="core/template" name="customer_affiliate_dashboard" template="mw_affiliate/customer/account/withdrawn.phtml">
+	        	<block type="core/template" name="customer_affiliate_withdrawn" as="withdrawn" template="mw_affiliate/customer/account/withdrawn/withdrawn.phtml"/>
+	            <block type="affiliate/affiliate_withdrawnhistory" name="customer_affiliate_withdrawn_history" as="withdrawn_history" template="mw_affiliate/customer/account/withdrawn/withdrawn_history.phtml"/>
+	       </block>
+        </reference>
+    </affiliate_index_withdrawn>
+    
+    <affiliate_index_withdrawnpost>
+	    <update handle="affiliate_index_account"/>
+        <reference name="content">
+				<block type="core/template" name="customer_affiliate_dashboard" template="mw_affiliate/customer/account/withdrawn_next.phtml">
+	            <block type="core/template" name="customer_affiliate_withdrawn_next" as="withdrawn_next" template="mw_affiliate/customer/account/withdrawn/withdrawn_next.phtml"/>
+	       		<block type="affiliate/affiliate_withdrawnhistory" name="customer_affiliate_withdrawn_history" as="withdrawn_history" template="mw_affiliate/customer/account/withdrawn/withdrawn_history.phtml"/>
+	       </block>
+        </reference>
+    </affiliate_index_withdrawnpost>
+    
+    <affiliate_index_listprogram>
+	    <update handle="affiliate_index_account"/>
+        <reference name="content">
+       		<block type="core/template" name="customer_affiliate_myprogram" template="mw_affiliate/customer/account/myprogram.phtml">
+				<block type="affiliate/affiliate_listmemberprogram" name="list_member_program" as="list_member_program" template="mw_affiliate/customer/account/myprogram/list_member_program.phtml"/>
+       		</block>
+        </reference>
+    </affiliate_index_listprogram>
+    <affiliate_index_viewprogram>
+	    <update handle="affiliate_index_account"/>
+        <reference name="content">
+       		<block type="affiliate/affiliate_viewprogram" name="customer_affiliate_viewprogram" template="mw_affiliate/customer/account/viewprogram.phtml">
+       		</block>
+        </reference>
+    </affiliate_index_viewprogram>
+    <affiliate_index_affiliatenetwork>
+    	<update handle="affiliate_index_account" />
+    	<reference name="content">
+    		<block type="affiliate/affiliate_network" name="customer_affiliate_affiliatenetwork" template="mw_affiliate/customer/account/network.phtml"></block>
+    	</reference>
+    </affiliate_index_affiliatenetwork>
+    <affiliate_website_index>
+    	<update handle="affiliate_index_account" />
+    	<reference name="content">
+    		<block type="affiliate/website" name="customer_affiliate_website" template="mw_affiliate/customer/account/website.phtml"></block>
+    	</reference>
+    </affiliate_website_index>
+	<affiliate_likebox_index>
+		<update handle="affiliate_index_account" />
+		<reference name="head">
+			<action method="addCss"><stylesheet>mw_affiliate/css/likebox.css</stylesheet></action>
+		</reference>
+		<reference name="content">
+			<block type="affiliate/likebox" name="customer_affiliate_likebox" template="mw_affiliate/customer/account/likebox.phtml"></block>
+		</reference>
+	</affiliate_likebox_index>		
+</layout> 

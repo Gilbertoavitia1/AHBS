@@ -1,0 +1,41 @@
+body { 
+	background-image: url(/media/wysiwyg/bg-hsmx.jpg);
+}
+
+.languague { 
+	text-align: center;
+}
+
+.logo {
+    height: 300px;
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+}
+
+#aviso p{
+	color: #666;
+	font-family: arial;
+	font-size: 9px;
+	width: 400px; 
+	text-align: center;
+	margin: 10px auto;
+	max-height: 400px;
+	display: block;
+
+}
+
+
+.icon-languague {
+    display: inline-block;
+    margin: 20px;
+    width: 100px;
+}
+
+.icon-languague:hover{
+	-webkit-transition: all 0.3s ease-in-out;
+transition: background-size 0.2s;
+}
+.selector {
+	display: block;
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <storelocator_adminhtml_storelocator_index>
+        <reference name="head">
+            <action method="setCanLoadExtJs">
+                <flag>1</flag>
+            </action>
+            <action method="setCanLoadTinyMce">
+                <flag>1</flag>
+            </action>
+            <action method="addJs">
+                <script>lib/flex.js</script>
+            </action>
+            <action method="addJs">
+                <script>mage/adminhtml/flexuploader.js</script>
+            </action>
+            <action method="addJs">
+                <script>mage/adminhtml/browser.js</script>
+            </action>
+            <action method="addJs">
+                <script>prototype/window.js</script>
+            </action>
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/default.css</name>
+            </action>
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/magento.css</name>
+            </action>
+            <action method="addItem">
+                <type>js</type>
+                <name>mage/adminhtml/wysiwyg/tiny_mce/setup.js</name>
+                <params/>
+            </action>
+            <action method="addItem">
+                <type>js</type>
+                <name>tiny_mce/tiny_mce.js</name>
+                <params/>
+            </action>
+        </reference>
+
+        <reference name="content">
+            <block type="storelocator/adminhtml_storelocator" name="storelocator" />
+        </reference>
+    </storelocator_adminhtml_storelocator_index>
+</layout>

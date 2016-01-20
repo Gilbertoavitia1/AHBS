@@ -1,0 +1,118 @@
+<script src="<?php echo $this->getSkinUrl('js/jquery.min.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/jquery-ui-1.10.2.custom.min.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/bootstrap.min.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/price-regulator/jshashtable-2.1_src.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/price-regulator/jquery.numberformatter-1.2.3.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/price-regulator/tmpl.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/price-regulator/jquery.dependClass-0.1.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/price-regulator/draggable-0.1.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/price-regulator/jquery.slider.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/jquery.carouFredSel-6.2.1-packed.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/jquery.touchSwipe.min.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/jquery.elevateZoom-3.0.8.min.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/jquery.imagesloaded.min.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/jquery.appear.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/jquery.sparkline.min.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/jquery.easypiechart.min.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/jquery.easing.1.3.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/jquery.fancybox.pack.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/isotope.pkgd.min.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/jquery.knob.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/jquery.stellar.min.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/jquery.selectBox.min.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/jquery.royalslider.min.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/jquery.tubular.1.0.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/SmoothScroll.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/country.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/spin.min.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/ladda.min.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/masonry.pkgd.min.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/morris.min.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/raphael.min.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/video.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/pixastic.custom.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/livicons-1.3.min.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/layerslider/greensock.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/layerslider/layerslider.transitions.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/layerslider/layerslider.kreaturamedia.jquery.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/revolution/jquery.themepunch.plugins.min.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/revolution/jquery.themepunch.revolution.min.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/bootstrapValidator.min.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/bootstrap-datepicker.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/jplayer/jquery.jplayer.min.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/jplayer/jplayer.playlist.min.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/jquery.scrollbar.min.js')?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/main.js')?>"></script>
+
+
+
+<?php $url = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";?>
+<?php if (strpos($url,'affiliatenetwork') !== false):?>
+<script src="<?php echo $this->getSkinUrl('js/primitives.min.js');?>" ></script>
+<script src="<?php echo $this->getSkinUrl('js/orgdiagram.js');?>" ></script>
+<?php endif; ?>
+
+
+<?php if (strpos($url,'binary') !== false):?>
+<script src="<?php echo $this->getSkinUrl('js/jquery-ui-1.10.2.custom.min.js');?>" ></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('js/jquery/ui-lightness/jquery-ui-1.10.2.custom.css');?>">
+<script src="<?php echo $this->getSkinUrl('js/sweetalert-dev.js');?>" ></script>
+<link href="<?php echo $this->getSkinUrl('css/sweetalert.css');?>" media="screen" rel="stylesheet" type="text/css" />
+
+
+<?php endif; ?>
+
+<?php if (strpos($url,'network') !== false):?>
+<script src="<?php echo $this->getSkinUrl('js/primitives.binary.min.js');?>" ></script>
+<script src="<?php echo $this->getSkinUrl('js/orgdiagram-binary.js');?>" ></script>
+
+<?php endif; ?>
+
+
+<?php if (strpos($url,'panel') !== false):?>
+<script src="<?php echo $this->getSkinUrl('js/intro.js');?>" ></script>
+<link href="<?php echo $this->getSkinUrl('css/introjs.css');?>" media="screen" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<?php endif; ?>
+
+<?php if (strpos($url,'affiliatereport') !== false):?>
+<script type="text/javascript">
+     var $ = jQuery;
+    $('#d_from').datepicker();
+    $('#d_to').datepicker();
+
+</script>
+<?php endif; ?>
+
+
+<script type="text/javascript">
+jQuery.noConflict();
+jQuery(function ($) { 
+   // $('.product-images').addClass('img-wrapper');
+   // $('.product-images img').addClass('img-responsive');
+    
+  $('.product-images img').mouseover(function() {
+    var _hw = '650px';
+    $( this ).fadeIn( 500 );
+    $(this).css('height', _hw);
+    $(this).css('width',_hw);
+    $(this).css('z-index', '9999');
+    $(this).css('position', 'relative');
+    $(this).parent().css('height', _hw);
+    $(this).parent().css('width',_hw);
+  });
+  
+   $('.product-images img').mouseout(function() {
+     var _hw = 'auto';
+    $( this ).fadeIn( 500 );
+    $(this).css('height', _hw);
+    $(this).css('width',_hw);
+    $(this).css('z-index', '1');
+    $(this).css('position', 'relative');
+    $(this).parent().css('height', _hw);
+    $(this).parent().css('width',_hw);
+   });
+});
+
+
+</script>

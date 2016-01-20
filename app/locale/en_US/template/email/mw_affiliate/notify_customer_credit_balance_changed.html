@@ -1,0 +1,17 @@
+<!--@subject Your credit balance has changed @-->
+
+<p>Hello {{var customer_name}},</p>
+
+<p>Your credit balance has changed.<br>
+Here is the transaction detail:</p>
+
+<p><strong>Amount:</strong> {{var transaction_amount}}<br>
+<strong>Balance:</strong> {{var customer_balance}}<br>
+<strong>Detail:</strong> {{var transaction_detail}}<br>
+<strong>Time:</strong> {{var transaction_time}}</p>
+
+<p>Please <a href="{{var customer_credit_link}}">login to your account</a> to review your credit history.<br>
+If you have any questions about your transaction, please feel free to contact us at <a href="mailto:{{config path='trans_email/ident_support/email'}}">{{config path='trans_email/ident_support/email'}}</a> or by phone at {{config path='general/store_information/phone'}}.</p>                                            
+
+<p>This message was sent by the Customer Service department, {{var store_name}}.</p>
+

@@ -1,0 +1,12 @@
+<config>
+ <modules>
+	<Mage_Firstdatae4>
+		<active>true</active>
+		<codePool>local</codePool>
+		<depends>
+			<Mage_Paygate />
+		</depends>
+		<version>0.1.2</version>
+	</Mage_Firstdatae4>
+ </modules>
+</config>

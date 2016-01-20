@@ -1,0 +1,124 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+?>
+<?php if ($this->getRequest()->getParam('mw_aref')) {
+    $url =  Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).Mage::app()->getStore()->getCode();
+    header("Location: {$url}");die();
+} ?>
+<?php $cookie = (int)Mage::getModel('core/cookie')->get('customer'); ?>
+
+<div id="top-box">
+    <div class="top-box-wrapper">
+	<div class="container">
+            <div class="row">
+		<div class="col-xs-8 col-sm-5 top-info">
+                    <?php $store = Mage::app()->getStore(); ?>
+                    <a href="<?php echo Mage::getBaseUrl(); ?>"><strong><?php echo $store->getName(); ?></strong></a>  
+		</div>
+		<div class="col-xs-4 col-sm-7">
+                    <div class="top-info text-right " style="float:right">
+                        <?php echo $this->getChildHtml('topLinks') ?>
+                    </div>
+		</div>
+            </div>
+	</div>
+    </div>
+    
+    <?php if ($cookie): ?>
+    <?php 
+        $affiliate_customer = Mage::getModel('affiliate/affiliatecustomers')->load($cookie);
+        $active = $affiliate_customer->getActive();
+        $status = $affiliate_customer->getStatus();
+        if($active == MW_Affiliate_Model_Statusactive::ACTIVE && $status == MW_Affiliate_Model_Statusreferral::ENABLED):
+            $referral_code = $affiliate_customer ->getReferralCode();
+            $name = Mage::getModel('customer/customer')->load($cookie)->getName();
+    ?>    
+        <div class="top-box-wrapper affiliate-wrapper">
+            <div class="container">
+                <div class="row">
+                    <?php echo $name ?> | ID: <strong><?php echo $referral_code ?></strong>
+                </div>
+            </div>
+        </div>    
+    <?php endif; ?>
+    <?php endif; ?>
+</div>
+
+<header class="header">
+  <div class="header-wrapper">
+	<div class="container">
+            <div class="row">
+		<div class="col-xs-6 col-md-2 col-lg-3 logo-box">
+                    <div class="logo">
+			<a href="<?php echo Mage::getBaseUrl(); ?>">
+			  <img src="<?php echo $this->getSkinUrl('img/logo.png')?>" class="logo-img" alt="" style="max-width:none">
+			</a>
+                    </div>
+		</div><!-- .logo-box -->        
+                <div style="float:right; padding-top:20px; font-size:2em; padding-right:10px; line-height:.7em"><span style="font-size:.8em">México: </span><strong>(664) 448-0863</strong><br>
+                   <span style="font-size:.5em">Desde USA: <strong>011+52+(664)448-08-63</strong><br>
+                   USA: <strong>(619)752-95-93</strong></span></div>
+
+                <div style="float:right; padding-top:20px">
+                    <aside class="col-xs-12 widget social" style="float:left">
+                      <a class="sbtnf sbtnf-rounded color color-hover icon-facebook" href="http://www.facebook.com/pages/Habitos-Saludables/340941986092308" target="_blank"></a>
+                      <a class="sbtnf sbtnf-rounded color color-hover icon-twitter" href="http://twitter.com/HSOficialmx" target="_blank"></a>
+                      <a class="sbtnf sbtnf-rounded color color-hover icon-gplus" href="http://plus.google.com/u/0/b/118225272564693135140/118225272564693135140/posts"  target="_blank"></a>
+                              <div class="clearfix"></div>
+                    </aside>
+                </div>
+                <div class="clearfix"></div>
+		
+		<!--<div class="col-xs-6 col-md-10 col-lg-9 right-box">-->
+                <div>
+                    <!-- <div class="right-box-wrapper">-->
+                    <div>			
+                        <div class="primary">
+                            <div class="navbar navbar-default" role="navigation">
+                                <button type="button" class="navbar-toggle btn-navbar collapsed" data-toggle="collapse" data-target=".primary .navbar-collapse">
+                                    <span class="text">Menu</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+
+                                <nav class="collapse collapsing navbar-collapse">
+                                    <ul class="nav navbar-nav navbar-center">
+                                        <?php echo $this->getChildHtml('navigation_menu') ?>
+                                    </ul>
+                                    
+                                </nav>
+                            </div>
+                        </div><!-- .primary -->
+                    </div>      
+                </div>
+            </div><!--.row -->
+	</div>
+    </div><!-- .header-wrapper -->
+</header><!-- .header --> 

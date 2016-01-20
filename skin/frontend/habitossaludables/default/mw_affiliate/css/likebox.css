@@ -1,0 +1,51 @@
+/* likebox.phtml */
+#likebox-form-boxinfo, #likebox-form-iteminfo {border:1px solid #C1C1C1;float:left;margin:0px 10px 15px 0;padding:10px;width:270px}
+#likebox-form-iteminfo {margin-left:20px}
+.likebox-box-head {border-bottom: 1px solid #C1C1C1;padding-bottom:2px;margin-bottom:5px;margin-right:8px}
+.likebox-box-head h2{font-size:13px;font-weight:bold;margin:0;padding:0}
+.likebox-item-list {margin-top:10px}
+.likebox-item {float:left;margin-right:12px;width:55px;margin-bottom:8px}
+.likebox-item .item-thumb {width:50px;height:50px;border:1px solid #c1c1c1;padding:2px;margin-bottom:2px}
+.likebox-item .item-price {color:#C76200;font-size:11px;font-weight:bold;margin:0;padding:0}
+.likebox-item .item-name{font-size:11px;line-height:12px;margin:0;padding:0}
+#likebox-form-iteminfo .button {float:right;margin-right:5px}
+#likebox-preview {float:left}
+#change-item-btn{margin-top:10px;margin-right:10px}
+
+/* render.phtml */
+#likebox-preview-container {font:12px/1.55 Arial,Helvetica,sans-serif;}	
+.preview-content {margin-top:10px}
+.preview-head {border-bottom:1px solid #C1C1C1;padding-bottom:2px;margin-bottom:5px;margin-right:8px}
+.preview-head h2 {font-size:12px;font-weight:bold;margin:0;padding:0;line-height:1.35}
+.preview-head a {text-decoration:none;}
+.preview-item {float:left;margin-right:9px;width:50px;margin-bottom:8px}
+.preview-item.last {margin-right:0;}
+.preview-item .item-thumb {width:44px;height:44px;border:1px solid #c1c1c1;padding:2px;margin-bottom:2px;}
+.preview-item .item-price {color:#C76200;font-size:11px;font-weight:bold;margin:0;padding:0;}
+.preview-item a.item-name {font-size:11px;line-height:13px;display:block;text-decoration:none;}
+.preview-item a.item-name:hover {text-decoration:underline;}
+
+/* loading-mask */
+#loading-mask {
+    color: #D85909;
+    font-size: 1.1em;
+    font-weight: bold;
+    opacity: 0.8;
+    position: absolute;
+    text-align: center;
+    z-index: 500;
+}
+#loading-mask .loader {
+    background: none repeat scroll 0 0 #FFF4E9;
+    border: 2px solid #F1AF73;
+    color: #D85909;
+    font-weight: bold;
+    left: 50%;
+    margin-left: -105px;
+    padding: 15px 30px;
+    position: fixed;
+    text-align: center;
+    top: 45%;
+    width: 150px;
+    z-index: 1000;
+}

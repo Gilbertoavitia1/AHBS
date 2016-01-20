@@ -1,0 +1,181 @@
+<?php
+	$oRequestToken = $this->getRequestToken();
+
+?>
+<form id="form-validate" method="post" action="<?php echo $this->getUrl('affiliate/invitation/invite')?>">
+	<div class="fieldset group-select">
+        <h2 class="legend"><?php echo $this->__('Connect & Share');?></h2>
+        <span><?php echo $this->__('With friends on Facebook, Twitter, or Google.') ?></span>
+        <ul class="form-list">
+            <li class="fields">
+                <div class="customer-name">
+                	<?php $addonClass="";?>
+                	<?php if(version_compare(Mage::getVersion(),"1.3.2.4","<=")) $addonClass = " input-box";?>
+				    <div class="<?php echo $addonClass;?> name-firstname">
+				        <?php 
+				        $url_new = Mage::app()->getRequest()->getParam('mw_link');
+				        $url_protocol = Mage::app()->getRequest()->getParam('mw_pro');
+				        if($url_new && $url_protocol)
+				        {   
+				        	$url_news = $url_protocol.'//'.$url_new;
+				        	$url = Mage::helper('affiliate')->getLinkBanner(Mage::getModel('customer/session')->getCustomer(),$url_news);
+				        	
+				        }
+				        else $url = Mage::helper('affiliate')->getLink(Mage::getModel('customer/session')->getCustomer());
+				        ?>
+				        <div style = "padding-top: 10px;">
+		        			<!-- AddThis Button BEGIN -->
+							<div class="addthis_toolbox addthis_default_style addthis_32x32_style"
+								addthis:url="<?php echo $url;?>"
+						        addthis:title="<?php echo $url; ?>"
+						        addthis:description="<?php echo $url; ?>">
+							<a class="addthis_button_preferred_1"></a>
+							<a class="addthis_button_preferred_2"></a>
+							<a class="addthis_button_preferred_3"></a>
+							<a class="addthis_button_preferred_4"></a>
+							<!--  <a class="addthis_button_compact"></a>-->
+							<a href="http://www.addthis.com/bookmark.php?v=250&pubid={YOUR_PROFILE_ID}" class="addthis_button_compact"></a> 
+							<a class="addthis_counter addthis_bubble_style"></a>
+							</div>
+							<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-500a790c6c746380"></script>
+						</div>
+						<!--  <div class="div_share">
+						<a target="_blank" href="https://www.facebook.com/sharer.php?u=<?php //echo $url ?>" title="Share With Facebook"><img src="<?php //echo $this->getSkinUrl('mw_affiliate/images/facebook.png')?>" alt="share" /></a>
+						<a target="_blank" href="https://twitter.com/home/?status=<?php //echo $url ?>" title="Share With Twitter"><img src="<?php //echo $this->getSkinUrl('mw_affiliate/images/twitter.png') ?>" alt="share" /></a>
+						<a target="_blank" href="http://delicious.com/post?v=4&amp;noui&amp;jump=close&amp;url=<?php //echo $url ?>" title="Share With Delicious"><img src="<?php //echo $this->getSkinUrl('mw_affiliate/images/delicious.png') ?>" alt="share" /></a>
+						<a target="_blank" href="http://digg.com/submit?phase=2&amp;url=<?php //echo $url ?>" title="Share With Digg"><img src="<?php //echo $this->getSkinUrl('mw_affiliate/images/digg.png') ?>" alt="share" /></a>
+						<a target="_blank" href="http://www.furl.net/storeIt.jsp?u=<?php //echo $url ?>" title="Share With Furl"><img src="<?php //echo $this->getSkinUrl('mw_affiliate/images/furl.png') ?>" alt="share" /></a>
+						<a target="_blank" href="http://www.stumbleupon.com/submit?url=<?php //echo $url ?>" title="Share With Stumbleupon"><img src="<?php //echo $this->getSkinUrl('mw_affiliate/images/stumbleupon.png') ?>" alt="share" /></a>
+						<a target="_blank" href="http://technorati.com/faves?add=<?php //echo $url ?>" title="Share With Technorati"><img src="<?php //echo $this->getSkinUrl('mw_affiliate/images/technorati.png') ?>" alt="share" /></a>
+						<?php 
+						/*
+						 * <a target="_blank" href="http://myweb.yahoo.com/myresults/bookmarklet?ei=UTF&amp;u=<?php echo $url ?>" title="Share With Yahoo"><img src="<?php echo $this->getSkinUrl('mw_invitation/images/yahoo.png') ?>" alt="share" /></a>
+						 */
+						?>  
+						    <script>var GBuzz= {
+											url : '<?php //echo $url ?>',
+											title: 'Lets Save Together',
+											customImage : '<?php //echo $this->getSkinUrl('mw_affiliate/images/google_buzz.png') ?>'
+											}</script>
+											<script 
+											src="https://orkut-share.googlecode.com/svn/trunk/GBuzz.js">
+											</script>
+								<div class="clear_both"><span> </span></div>						
+						</div>-->
+				    </div>
+				</div>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="fieldset group-select">
+        <h2 class="legend"><?php echo $this->__('Referral Link');?></h2>
+        <span><?php echo $this->__('Copy + paste your personal link into your website, blog, email or IM.') ?></span>
+        <ul class="form-list">
+            <li class="fields">
+                <div class="customer-name">
+                	<?php $addonClass="";?>
+                	<?php if(version_compare(Mage::getVersion(),"1.3.2.4","<=")) $addonClass = " input-box";?>
+				    <div>
+						<div class="div_share">
+							<input type="text" name="url_link" value="<?php echo $url ?>"  readonly="readonly" style="width:100%" onclick="this.select()">
+							<div class="clear_both"><span> </span></div>						
+						</div>
+				    </div>
+				</div>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="fieldset group-select">
+       <h2 class="legend"><?php echo $this->__('Referral Code');?></h2>
+       <span><?php echo $this->__('') ?></span>
+        <ul class="form-list">
+            <li class="fields">
+                <div class="customer-name">
+				    <div>
+				    	<div class="div_share">
+							<?php $customer_id = Mage::getModel('customer/session')->getCustomer()->getId();
+								  if($customer_id){
+								  	$referral_code = Mage::getModel('affiliate/affiliatecustomers')->load($customer_id)->getReferralCode();
+								  	if($referral_code == '') Mage::helper('affiliate') ->setReferralCode($customer_id);
+								  }
+								  $referral_code = Mage::getModel('affiliate/affiliatecustomers')->load($customer_id)->getReferralCode();
+								  
+							?>
+							<span><?php echo $this->__('Your referral code (manual): <b>%s</b>',$referral_code) ?></span>					
+						</div>
+				    </div>
+				</div>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="fieldset group-select">
+        <?php echo $this->getBlockHtml('formkey')?>
+        <h2 class="legend"><?php echo $this->__('Invite Friends Via Email');?></h2>
+        <span><?php echo $this->__('Send invitation emails to your friends and family');?></span>
+        <ul class="form-list">
+            <li class="fields">
+			    <div class="field">
+			        <label class="required" style="color:#666666;text-align: left;" for="email"><?php echo Mage::helper('affiliate')->__('Email of your friends');?><em style="color:#EB340A">*</em></label>
+			        <div class="input-box">
+			            <textarea class="input-text required-entry" title="Email" name="email" id="email" style="width:550px; height:70px"></textarea>
+			            <?php 
+			            	//$url = Mage::getUrl('affiliate/invitation/widget');
+			            	//$url = substr($url,strpos($url,'/',7));
+			            ?>
+			        </div>
+			     </div>
+			     <div class="field">
+			        <!-- <a href="#" onclick="showPlaxoABChooser('email', '<?php //echo $url;?>'); return false"><img src="<?php //echo $this->getSkinUrl('mw_affiliate/images/add_button.gif')?>" alt="<?php //echo Mage::helper('affiliate')->__('Add from my address book');?>" /></a> 
+			        <a href="#" onClick="javascript:mw_popup_func();return false;"><img src="<?php //echo $this->getSkinUrl('mw_affiliate/images/add_button.gif')?>" alt="<?php //echo Mage::helper('affiliate')->__('Add from my address book');?>" /></a>-->
+			        <!-- Gmail contacts import btn -->
+				    <a href="javascript:void()" onclick="javascript:popup('https://www.google.com/accounts/OAuthAuthorizeToken?oauth_token=<?php echo $oRequestToken; ?>')" style="display:inline-block;margin-bottom:10px"><?php echo Mage::helper('affiliate')->__('Add from Google contacts')?></a>
+			        
+			        <div><?php echo $this->__('Separate with commas (,)');?></div>
+			            
+			        <label class="required" style="color:#666666; text-align: left;" for="email"><?php echo Mage::helper('affiliate')->__('Message');?><em style="color:#EB340A">*</em></label>
+			        <div class="input-box">
+			            <textarea class="input-text required-entry" title="Message" name="message" id="message" style="width:550px; height:200px"></textarea>
+			        </div>
+			    </div>
+            </li>      
+        </ul>
+        <div class="buttons-set form-buttons">
+	        <button class="button form-button" title="<?php echo Mage::helper('affiliate')->__("Send");?>" type="submit"><span><span>  <?php echo Mage::helper('affiliate')->__("Send");?>  </span></span></button>
+	    </div>
+	    <p class="required"><?php echo Mage::helper('affiliate')->__("* Required Fields");?></p>
+    </div>
+</form>
+<script type="text/javascript">
+//<![CDATA[
+    var dataForm = new VarienForm('form-validate', true);
+    function mw_popup_func(){
+		var popWin =  window.open('<?php echo $this->getUrl('affiliate/invitation/loginmail');?>','newwindow','toolbar=no,location=no,menubar=no,titlebar=no,status=yes,width=500,height=500,resizable=no,scrollbars=yes,top=0,left=0');
+	}
+    //]]>
+    function popup(url) {
+    	window.open(url, 'gmailwindow','toolbar=no,location=no,menubar=no,titlebar=no,status=yes,width=800,height=600,resizable=no,scrollbars=yes,top=0,left=0');
+    }
+
+    document.observe('dom:loaded', function() {
+        $('referral_link_edit_block').hide();
+    });
+
+    $('referral_link_edit').observe('click', function(Event) {
+        Event.stop();
+        $(this).hide();
+        $('referral_link_edit_block').show();
+    });
+
+    $('referral_link_update').observe('click', function(Event) {
+        Event.stop();
+        $('referral_link_edit').show();
+        $('referral_link_edit_block').hide();
+
+        linkComponent = ($('referral_link_input').value).split('?');
+        verifiedKey = linkComponent[1];
+        $('referral_link_input').setValue($('referral_link_custom').value + '/?' + verifiedKey);
+    });
+</script>

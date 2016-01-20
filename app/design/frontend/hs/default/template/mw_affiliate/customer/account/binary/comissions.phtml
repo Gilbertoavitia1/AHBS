@@ -1,0 +1,110 @@
+<?php $binary = Mage::registry('binary');?>
+<?php $affiliate = Mage::registry('network');?>
+<?php $firstDay   = date("Y-m-d 00:00:00", strtotime("last friday")); ?>
+<?php $lastDay    = date("Y-m-d 23:59:59", strtotime("this thursday")); ?>
+<?php $period = Mage::getSingleton('core/session')->getPeriodc();?>
+<form action="<?php echo $this->getUrl('affiliate/binary/commissions') ?>" method="post" id="form-validate" >
+<div class="row">    
+    <div class="col-md-4">
+        <label><?php echo $this->__('Period');?></label>
+        <select name="period" id="period" class="form-control" onChange="this.form.submit()">
+            <option value="thisweek" <?php echo $period == "thisweek" ? "selected": ""?>><?php echo $this->__('This Week');?></option>
+            <?php foreach ($binary as $key => $value): ?>
+            <?php $datea = new DateTime($value['start_date']);?>
+            <?php $dateb = new DateTime($value['end_date']);?>
+            <option value="<?php echo $value['id']?>" <?php echo $period == $value['id'] ? "selected": ""?>>de <?php echo $datea->format('Y-m-d').' a '. $dateb->format('Y-m-d') ?></option>
+            <?php endforeach;?>            
+        </select>
+    </div>
+    <hr>
+    <div class="clearfix"></div>
+    <div class="col-xs-4 col-md-4">
+        <div class="badger">
+            <span style="font-weight: bold;"><?php echo $this->__('VP');?></span><br>
+            <span id="vp"><?php echo $affiliate['vp'] ? $affiliate['vp'] : 0?></span>
+        </div>
+    </div>
+    <div class="col-xs-4 col-md-4">
+        <div class="badger">
+            <span style="font-weight: bold;"><?php echo $this->__('VG');?></span><br>
+            <span id="vg"><?php echo $affiliate['vg'] ? $affiliate['tvg'] : 0?></span>
+        </div>
+    </div>
+    <div class="col-xs-4 col-md-4">
+        <div class="badger">
+            <span style="font-weight: bold;"><?php echo $this->__('Commission');?></span><br>
+            <span id="vg">$ <?php echo $affiliate['paid'] ? $affiliate['paid'] : 0?></span>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <hr>
+    <div class="col-xs-12 col-md-12">
+        <label><?php echo $this->__('Details');?></label>
+
+        <table class="data-table table">
+            <thead>
+                <tr class="headings">
+                    <th><?php echo $this->__('#')?></th>
+                    <th><?php echo $this->__('Customer')?></th>
+                    <th><?php echo $this->__('Order')?></th>  
+                    <th style="text-align: right;"><?php echo $this->__('Total')?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $total = 0; ?>
+                <?php $package = $affiliate['package'] ?>
+                <?php $customer = $affiliate['customer_id'] ?>
+                <?php $vp_ = 0 ?>
+                <?php $vg_ = 0 ?>
+                <?php foreach ($package as $key => $value):?>
+                    <?php $increment = $value[0]?>
+                    <?php $order = Mage::getModel('sales/order')->loadByIncrementId($increment);?>      
+                        <?php $items = $order->getAllVisibleItems(); ?>
+                        <?php $vp = 0 ?>
+                        <?php array_push($this->orders, array($order->getIncrementId()));
+                        foreach($items as $item){
+                            $single = $item->getData(); 
+                            $puntos = Mage::getModel('catalog/product')->setStoreId($single['store_id'])->load($single['product_id'])->getData('puntos');
+                        
+                            if ($single['product_type'] == 'bundle'){
+                                if (array_search($single['sku'], array('PTK-USA-010','PKT-USA-009','PKT-USA-008','PKT-USA-007','PKT-REC'))){
+                                    $puntos = $puntos;
+                                }
+                                else
+                                {
+                                    $puntos = $puntos / 2;
+                                }
+                            }
+                            
+                            $vp = $vp + ($puntos * $single['qty_ordered']);
+                        }?>
+
+                    <?php $class = $customer == $order->getCustomerId() ? "even" : "odd" ?>
+                    <tr class='<?php echo $class?>'>
+                        <td><?php echo $key+1 ?></td>
+                        <td><?php echo Mage::getModel('customer/customer')->load($order->getCustomerId())->getName() ?> </td>
+                        <td><?php echo $increment?></td>
+                        <td style="text-align: right;"><?php echo $vp; ?> </td>
+                    </tr>
+
+
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+</form>
+
+
+<style>
+    .badger{
+        background-color: #eee;
+        padding-top: 48px;
+        padding-bottom: 48px;
+        border-radius:  10px;
+        text-align: center;
+    }
+    .left-navigation{
+        margin-bottom: 30px;
+    }
+</style>

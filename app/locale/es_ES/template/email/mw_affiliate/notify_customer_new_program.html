@@ -1,0 +1,20 @@
+<!--@subject Nuevo programa de Afiliados - {{var program_name}} @-->
+
+<p>Hola {{var customer_name}},</p>
+
+<p>Acabamos de actualizar nuestro programa de Afiliados.
+Detalles del programa:</p> 
+
+<p>Nombre del Programa: {{var program_name}}<br>
+Comision de Afiliados: {{var program_commission}}<br>
+Descuento al Cliente: {{var program_discount}}<br>
+Inision: {{var start_date}}<br>
+Fin: {{var end_date}} 
+</p>
+<p><u>Descripcion:</u><br> 
+{{var program_description}}</p>
+
+<p>Por favor, da click <a href="{{var customer_program_link}}">aqui</a> para dar su opinion acerca del programa.<br>
+Si tiene alguna pregunta del programa, contactenos en <a href="mailto:{{config path='trans_email/ident_support/email'}}">{{config path='trans_email/ident_support/email'}}</a> o llamenos a {{config path='general/store_information/phone'}}.</p>                                            
+
+<p>Este mensaje ha sido enviado por el Departamento de Servicio al cliente, {{var store_name}}.</p>

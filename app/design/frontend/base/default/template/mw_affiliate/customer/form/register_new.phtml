@@ -1,0 +1,394 @@
+    <?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   design_blank
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Create account form template
+ *
+ * @see Mage_Customer_Block_Form_Register
+ */
+?>
+<?php $cokie = (int)Mage::getModel('core/cookie')->get('customer');
+	  $referral_code = '';
+	  if($cokie){
+	  	$affiliate_customer = Mage::getModel('affiliate/affiliatecustomers')->load($cokie);
+	  	$active = $affiliate_customer ->getActive();
+    	$status = $affiliate_customer ->getStatus();
+	  	if($active == MW_Affiliate_Model_Statusactive::ACTIVE && $status == MW_Affiliate_Model_Statusreferral::ENABLED){
+	  		$referral_code = $affiliate_customer ->getReferralCode();
+	  	}
+	  }
+?>
+<div class="account-create">
+    <div class="page-title">
+        <h1><?php echo $this->__('Create an Account') ?></h1>
+    </div>
+    <?php echo $this->getChildHtml('form_fields_before')?>
+    <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+    <form action="<?php echo Mage::getUrl('affiliate/accountnew/createpost') ?>" method="post" id="form-validate" >
+        <div class="fieldset">
+            <input type="hidden" name="success_url" value="<?php echo $this->getSuccessUrl() ?>" />
+            <input type="hidden" name="error_url" value="<?php echo $this->getErrorUrl() ?>" />
+            <h2 class="legend"><?php echo $this->__('Personal Information') ?></h2>
+            <ul class="form-list">
+                <li class="fields">
+                    <?php echo $this->getLayout()->createBlock('customer/widget_name')->setObject($this->getFormData())->toHtml() ?>
+                </li>
+                <li class="fields">
+                	<div class="field">
+                    	<label for="email_address" class="required"><em>*</em><?php echo $this->__('Email Address') ?></label>
+                    	<div class="input-box">
+                        	<input type="text" name="email" id="email_address" value="<?php echo $this->htmlEscape($this->getFormData()->getEmail()) ?>" title="<?php echo $this->__('Email Address') ?>" class="input-text validate-email required-entry" />
+                    	</div>
+                    </div>
+                    <div class="field">
+                    	<label for="referral_code"><?php echo $this->__('Referral Code') ?></label>
+                    	<div class="input-box">
+                        	<input type="text" name="referral_code" id="referral_code" value="<?php echo $referral_code; ?>" title="<?php echo $this->__('Referral Code') ?>" class="input-text" />
+                    	</div>
+                    </div>
+                </li>
+                <?php if ($this->isNewsletterEnabled()): ?>
+                <li class="control">
+                    <div class="input-box">
+                        <input type="checkbox" name="is_subscribed" title="<?php echo $this->__('Sign Up for Newsletter') ?>" value="1" id="is_subscribed"<?php if($this->getFormData()->getIsSubscribed()): ?> checked="checked"<?php endif; ?> class="checkbox" />
+                    </div>
+                    <label for="is_subscribed"><?php echo $this->__('Sign Up for Newsletter') ?></label>
+                </li>
+                <?php endif ?>
+            <?php $_dob = $this->getLayout()->createBlock('customer/widget_dob') ?>
+            <?php if ($_dob->isEnabled()): ?>
+                <li><?php echo $_dob->setDate($this->getFormData()->getDob())->toHtml() ?></li>
+            <?php endif ?>
+            <?php $_taxvat = $this->getLayout()->createBlock('customer/widget_taxvat') ?>
+            <?php if ($_taxvat->isEnabled()): ?>
+                <li><?php echo $_taxvat->setTaxvat($this->getFormData()->getTaxvat())->toHtml() ?></li>
+            <?php endif ?>
+            <?php $_gender = $this->getLayout()->createBlock('customer/widget_gender') ?>
+            <?php if ($_gender->isEnabled()): ?>
+                <li><?php echo $_gender->setGender($this->getFormData()->getGender())->toHtml() ?></li>
+            <?php endif ?>
+            </ul>
+        </div>
+    <?php if($this->getShowAddressFields()): ?>
+        <div class="fieldset">
+            <input type="hidden" name="create_address" value="1" />
+            <h2 class="legend"><?php echo $this->__('Address Information') ?></h2>
+            <ul class="form-list">
+                <li class="fields">
+                    <div class="field">
+                        <label for="company"><?php echo $this->__('Company') ?></label>
+                        <div class="input-box">
+                            <input type="text" name="company" id="company" value="<?php echo $this->htmlEscape($this->getFormData()->getCompany()) ?>" title="<?php echo $this->__('Company') ?>" class="input-text" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="telephone" class="required"><em>*</em><?php echo $this->__('Telephone') ?></label>
+                        <div class="input-box">
+                            <input type="text" name="telephone" id="telephone" value="<?php echo $this->htmlEscape($this->getFormData()->getTelephone()) ?>" title="<?php echo $this->__('Telephone') ?>" class="input-text required-entry" />
+                        </div>
+                    </div>
+                </li>
+                <li class="wide">
+                    <label for="street_1" class="required"><em>*</em><?php echo $this->__('Street Address') ?></label>
+                    <div class="input-box">
+                        <input type="text" name="street[]" value="<?php echo $this->htmlEscape($this->getFormData()->getStreet(1)) ?>" title="<?php echo $this->__('Street Address') ?>" id="street_1" class="input-text required-entry" />
+                    </div>
+                </li>
+            <?php for ($_i=2, $_n=$this->helper('customer/address')->getStreetLines(); $_i<=$_n; $_i++): ?>
+                <li class="wide">
+                    <div class="input-box">
+                        <input type="text" name="street[]" value="<?php echo $this->htmlEscape($this->getFormData()->getStreet($_i)) ?>" title="<?php echo $this->__('Street Address '.$_i) ?>" id="street_<?php echo $_i?>" class="input-text" />
+                    </div>
+                </li>
+            <?php endfor ?>
+                <li class="fields">
+                    <div class="field">
+                        <label for="city" class="required"><em>*</em><?php echo $this->__('City') ?></label>
+                        <div class="input-box">
+                            <input type="text" name="city" value="<?php echo $this->htmlEscape($this->getFormData()->getCity()) ?>" title="<?php echo $this->__('City') ?>" class="input-text required-entry" id="city" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="region_id" class="required"><em>*</em><?php echo $this->__('State/Province') ?></label>
+                        <div class="input-box">
+                            <select id="region_id" name="region_id" title="<?php echo $this->__('State/Province') ?>" class="validate-select" style="display:none;">
+                                <option value=""><?php echo $this->__('Please select region, state or province') ?></option>
+                            </select>
+                            <script type="text/javascript">
+                            //<![CDATA[
+                                $('region_id').setAttribute('defaultValue', "<?php echo $this->getFormData()->getRegionId() ?>");
+                            //]]>
+                            </script>
+                            <input type="text" id="region" name="region" value="<?php echo $this->htmlEscape($this->getRegion()) ?>" title="<?php echo $this->__('State/Province') ?>" class="input-text" style="display:none;" />
+                        </div>
+                    </div>
+                </li>
+                <li class="fields">
+                    <div class="field">
+                        <label for="zip" class="required"><em>*</em><?php echo $this->__('Zip/Postal Code') ?></label>
+                        <div class="input-box">
+                            <input type="text" name="postcode" value="<?php echo $this->htmlEscape($this->getFormData()->getPostcode()) ?>" title="<?php echo $this->__('Zip/Postal Code') ?>" id="zip" class="input-text validate-zip-international required-entry" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="country" class="required"><em>*</em><?php echo $this->__('Country') ?></label>
+                        <div class="input-box">
+                            <?php echo $this->getCountryHtmlSelect() ?>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <input type="hidden" name="default_billing" value="1" />
+            <input type="hidden" name="default_shipping" value="1" />
+        </div>
+    <?php endif; ?>
+        <div class="fieldset">
+            <h2 class="legend"><?php echo $this->__('Login Information') ?></h2>
+            <ul class="form-list">
+                <li class="fields">
+                    <div class="field">
+                        <label for="password" class="required"><em>*</em><?php echo $this->__('Password') ?></label>
+                        <div class="input-box">
+                            <input type="password" name="password" id="password" title="<?php echo $this->__('Password') ?>" class="input-text required-entry validate-password" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="confirmation" class="required"><em>*</em><?php echo $this->__('Confirm Password') ?></label>
+                        <div class="input-box">
+                            <input type="password" name="confirmation" title="<?php echo $this->__('Confirm Password') ?>" id="confirmation" class="input-text required-entry validate-cpassword" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <?php $store_id = Mage::app()->getStore()->getId();
+	   		  if (Mage::helper('affiliate/data')->getEnabledStore($store_id))  { ?>
+        <?php 
+        	$session = Mage::getSingleton('customer/session');	
+        	$payment_gateway = $session->getPaymentGateway();
+		    $payment_email = $session->getPaymentEmail();
+		    $auto_withdrawn = $session->getAutoWithdrawn();
+		    if($auto_withdrawn == MW_Affiliate_Model_Autowithdrawn::MANUAL) $session->unsetData('withdrawn_level');
+		    $withdrawn_level = $session->getWithdrawnLevel();
+		    $reserve_level = $session->getReserveLevel();
+		    $bank_name = $session->getBankName();
+		    $name_account = $session->getNameAccount();
+		    $bank_country = $session->getBankCountry();
+		    $swift_bic = $session->getSwiftBic();
+		    $referral_site = $session->getReferralSite();
+        ?>
+        <div class="fieldset">
+            <h2 class="legend"><?php echo $this->__('Affiliate Signup Information') ?></h2>
+            <ul class="form-list">
+                <li class="fields">
+                    <div class="field">
+                         <label for="getway_withdrawn" class="required"><em>*</em><?php echo $this->__('Payment Method') ?></label>
+	                     <div class="input-box">
+	                        <select id="getway_withdrawn" name="getway_withdrawn" class="required-entry">
+	                        	<option value=""><?php echo $this->__('Please select a payment method') ?></option>
+								<?php $gateways = unserialize(Mage::helper('affiliate/data')->getGatewayStore());?>
+	                        	<?php foreach ($gateways as $gateway) {
+	                        		if(strtolower(trim($gateway['mw_status'])) == 'yes'){
+	                        	?>
+								<option <?php if($payment_gateway == $gateway['gateway_value']) echo 'selected="selected"'?> value="<?php echo $gateway['gateway_value'];?>"><?php echo $gateway['gateway_title'];?></option>
+						    	<?php }
+	                        	}?>
+							</select>
+	                    </div>
+                    </div>
+                    <div class="field" id="mw_paypal_email">
+						<label for="paypal_email" class="required"><em>*</em><?php echo $this->__('Payment Email') ?></label>
+	                    <div class="input-box">
+	                        <input type="text" name="paypal_email" id="paypal_email" value="<?php echo $payment_email;?>" title="<?php echo $this->__('Payment Email') ?>" class="input-text validate-email required-entry" />
+	                    
+	                    </div>
+				  </div>
+                </li>
+                <ul id="form_account_bank">
+                <li class="fields">
+                     <div class="field">
+						<label for="bank_name" class="required"><em>*</em><?php echo $this->__('Bank Name') ?></label>
+	                    <div class="input-box">
+	                        <input type="text" name="bank_name" id="bank_name" value="<?php echo $bank_name;?>" title="<?php echo $this->__('Bank Name') ?>" class="input-text required-entry" />
+	                    
+	                    </div>
+				    </div>
+                    <div class="field">
+						<label for="name_account" class="required"><em>*</em><?php echo $this->__('Name on account') ?></label>
+	                    <div class="input-box">
+	                        <input type="text" name="name_account" id="name_account" value="<?php echo $name_account;?>" title="<?php echo $this->__('Name on account') ?>" class="input-text required-entry" />
+	                    </div>
+				    </div>
+                </li>
+                <li class="fields">
+                     <div class="field">
+						<label for="bank_country" class="required"><em>*</em><?php echo $this->__('Bank Country') ?></label>
+	                    <div class="input-box">
+	                    	<!--  <input type="text" name="bank_country" id="bank_country" value="<?php //echo $this->htmlEscape($this->getFormData()->getCity()) ?>" title="<?php //echo $this->__('Bank Country') ?>" class="input-text required-entry"/>-->
+	                    	<?php echo Mage::getBlockSingleton('directory/data')->getCountryHtmlSelect($bank_country,'bank_country','bank_country','Bank Country') ?>
+	                    </div>
+				    </div>
+                    <div class="field">
+						<label for="swift_bic" class="required"><em>*</em><?php echo $this->__('SWIFT code') ?></label>
+	                    <div class="input-box">
+	                        <input type="text" name="swift_bic" id="swift_bic" value="<?php echo $swift_bic;?>" title="<?php echo $this->__('SWIFT code') ?>" class="input-text required-entry" />
+	                    
+	                    </div>
+				    </div>
+                </li>
+                <li class="fields">
+                     <div class="field">
+						<label for="account_number" class="required"><em>*</em><?php echo $this->__('Account Number') ?></label>
+	                    <div class="input-box">
+	                        <input type="text" name="account_number" id="account_number" value="<?php //echo $account_number;?>" title="<?php echo $this->__('Account Number') ?>" class="input-text required-entry" />
+	                    
+	                    </div>
+				    </div>
+				    <div class="field">
+						<label for="re_account_number" class="required"><em>*</em><?php echo $this->__('Re-enter Account Number') ?></label>
+	                    <div class="input-box">
+	                        <input type="text" name="re_account_number" id="re_account_number" value="<?php //echo $re_account_number;?>" title="<?php echo $this->__('Re-enter Account Number') ?>" class="input-text required-entry validate-re_account_number" />
+	                    
+	                    </div>
+				    </div>
+				</li>
+				</ul>
+                <li class="fields">
+                	<div class="field">
+                        <label for="auto_withdrawn" class="required"><em>*</em><?php echo $this->__('Auto Withdrawal') ?></label>
+	                    <div class="input-box">
+	                        <select id="auto_withdrawn" name="auto_withdrawn">
+	                        	<?php $auto_withdrawns = MW_Affiliate_Model_Autowithdrawn::getOptionArray();?>
+	                        	<?php foreach ($auto_withdrawns as $value=>$autowithdrawn) {?>
+								<option <?php if($auto_withdrawn == $value) echo 'selected="selected"'?> value="<?php echo $value;?>"><?php echo $autowithdrawn;?></option>
+						    	<?php }?>
+							</select>
+	                    </div>
+                    </div>
+                	<div class="field" id="payment_release_level_">
+                	<?php  
+                		   $store_id = Mage::app()->getStore()->getId();
+                		   $max = Mage::helper('affiliate/data')->getWithdrawMaxStore($store_id);
+	  					   $min = Mage::helper('affiliate/data')->getWithdrawMinStore($store_id);?>
+						<label for="payment_release_level" class="required"><em>*</em><?php echo $this->__('Auto payment when account balance reaches (%s - %s)',Mage::helper('core')->currency($min),Mage::helper('core')->currency($max))?></label>
+						<div class="input-box">
+							<input type="text" name="payment_release_level" id="payment_release_level" value ="<?php echo $withdrawn_level;?>" title="<?php echo $this->__('Auto payment when account balance reaches') ?>" class="input-text validate-digits required-entry" />
+						</div>
+				    </div>
+				    
+                </li>
+                <li class="fields">
+                   <div class="field">
+						<label for="reserve_level"><?php echo $this->__('Reserve Level') ?></label>
+	                    <div class="input-box">
+	                        <input type="text" name="reserve_level" id="reserve_level" value ="<?php echo $reserve_level;?>" title="<?php echo $this->__('Reserve Level') ?>" class="input-text validate-digits " />
+	                    
+	                    </div>
+				    </div>
+				    <div class="field">
+						<label for="referral_site"><?php echo $this->__('Affiliate Website(s)') ?></label>
+	                    <div class="input-box">
+	                    	<textarea class="input-text" title="<?php echo $this->__('Affiliate Website(s)') ?>" name="referral_site" id="referral_site" ><?php echo $referral_site;?></textarea>
+	                    </div>
+				    </div>
+                </li>
+            </ul>
+        </div>
+        <?php }?>
+        <div class="buttons-set">
+            <p class="required"><?php echo $this->__('* Required Fields') ?></p>
+            <p class="back-link"><a href="<?php echo $this->getBackUrl() ?>" class="back-link"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+            <button type="submit" title="<?php echo $this->__('Submit') ?>" class="button" ><span><span><?php echo $this->__('Submit') ?></span></span></button>
+        </div>
+    </form>
+    <script type="text/javascript">
+    //<![CDATA[
+        var dataForm = new VarienForm('form-validate', true);
+        <?php if($this->getShowAddressFields()): ?>
+        new RegionUpdater('country', 'region', 'region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'zip');
+        <?php endif; ?>
+    //]]>
+    </script>
+    <?php $store_id = Mage::app()->getStore()->getId();
+	   	  if (Mage::helper('affiliate/data')->getEnabledStore($store_id))  { ?>
+    <script type="text/javascript">
+    
+		if($('auto_withdrawn').value=='2')
+        {
+        	$('payment_release_level_').hide(); 
+        }
+        else
+        {
+        	$('payment_release_level_').show();
+        };
+        if($('getway_withdrawn').value=='banktransfer')
+        {
+        	$('form_account_bank').show(); 
+        	$('mw_paypal_email').hide();
+        }
+        else if($('getway_withdrawn').value=='check'){
+        	$('form_account_bank').hide(); 
+        	$('mw_paypal_email').hide();
+        }
+        else
+        {
+        	$('mw_paypal_email').show();
+        	$('form_account_bank').hide();
+        };
+        $('getway_withdrawn').observe('change', function () {		
+			if($('getway_withdrawn').value=='banktransfer')
+	        {
+	        	$('form_account_bank').show(); 
+	        	$('mw_paypal_email').hide();
+	        }
+			else if($('getway_withdrawn').value=='check'){
+	        	$('form_account_bank').hide(); 
+	        	$('mw_paypal_email').hide();
+	        }
+	        else
+	        {
+	        	$('mw_paypal_email').show();
+	        	$('form_account_bank').hide();
+	        }
+				 
+		});
+		$('auto_withdrawn').observe('change', function () {		
+            if($('auto_withdrawn').value=='2')
+            {
+            	$('payment_release_level_').hide(); 
+            }
+            else
+            {
+            	$('payment_release_level_').show();
+            }
+				 
+		})
+
+    	
+    </script>
+    <?php }?>
+</div>

@@ -1,0 +1,332 @@
+<?php
+/**
+ * @var $this Mage_Paypal_Block_Express_Shortcut
+ */
+?>
+<style type="text/css">
+#btnscppmx{
+	display: none;
+}
+#backgr {
+	display: none;
+	background-color: #EFEFEF;
+	bottom: 0;
+	height: 100%;
+	left: 0;
+	opacity: 0.5;
+	position: fixed;
+	right: 0;
+	top: 0;
+	width: 100%;
+	z-index: 980;
+}
+
+#ppmx_popup {
+	z-index: 1001;
+	display: none;
+	width: 400px;
+	height: 300px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin: -200px 0 0 -200px;
+	line-height: normal;
+	background: #fefefe; /* Old browsers */
+	background: -moz-linear-gradient(top, #fefefe 0%, #f1f2f4 100%);
+	/* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fefefe),
+		color-stop(100%, #f1f2f4)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #fefefe 0%, #f1f2f4 100%);
+	/* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #fefefe 0%, #f1f2f4 100%);
+	/* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #fefefe 0%, #f1f2f4 100%);
+	/* IE10+ */
+	background: linear-gradient(to bottom, #fefefe 0%, #f1f2f4 100%);
+	/* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient(   startColorstr='#fefefe',
+		endColorstr='#f1f2f4', GradientType=0); /* IE6-9 */
+}
+
+#ppmx_popup .ppmx_logo {
+	float: right;
+	margin: 10px;
+}
+
+#ppmx_popup .ppmx_content {
+	margin-top: 80px;
+}
+
+#ppmx_popup .ppmx_loader {
+	display: block;
+	margin: 20px 0 0 0px;
+}
+
+#ppmx_popup .ppmx_loader div {
+	color: #0071BB;
+	font-size: 10px;
+	text-align: center;
+}
+
+#ppmx_popup .ppmx_loader img {
+	position: relative;
+	left: 50%;
+	margin: 0 0 15px -85px;
+}
+
+#ppmx_popup .ppmx_title {
+	font-size: 25px;
+	color: #0F4073;
+}
+
+#ppmx_popup .ppmx_box {
+	margin: 0 10px 0 0;
+	float: left;
+	width: 50px;
+	height: 100px;
+	background: #0079C0;
+	-webkit-border-top-right-radius: 6px;
+	-webkit-border-bottom-right-radius: 6px;
+	-moz-border-radius-topright: 6px;
+	-moz-border-radius-bottomright: 6px;
+	border-top-right-radius: 6px;
+	border-bottom-right-radius: 6px;
+}
+
+#tooltip {
+	margin: 0 0 0 150px;
+}
+
+#tooltip:hover #nopos {
+	display: inline;
+	position: absolute;
+	color: #1182C5;
+	border: 1px solid #1182C5;
+	background: #FFFFFF;
+	text-align: left;
+}
+
+#nopos {
+	z-index: 10;
+	display: none;
+	padding: 14px 20px;
+	margin: 35px 0 0 -200px;
+	width: 235px;
+	line-height: 16px;
+	font-size: 10px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-box-shadow: 0px 0px 20px 5px #CCC;
+	-webkit-box-shadow: 0px 0px 20px 5px #CCC;
+	box-shadow: 0px 0px 20px 5px #CCC;
+	display: none;
+	background-color: #000000;
+	-webkit-transition: opacity 0.2s ease;
+	-moz-transition: opacity 0.2s ease;
+	-o-transition: opacity 0.2s ease;
+}
+</style>
+
+<script type="text/javascript">
+
+var PpmxShippingMethod = Class.create();
+PpmxShippingMethod.prototype = {
+    initialize: function(form, saveUrl){
+        this.form = form;
+        if ($(this.form)) {
+            $(this.form).observe('submit', function(event){this.save();Event.stop(event);}.bind(this));
+        }
+        this.saveUrl = saveUrl;
+        this.onSave = this.nextStep.bindAsEventListener(this);
+        this.onComplete = this.resetLoadWaiting.bindAsEventListener(this);
+        
+    },
+    save: function(){
+
+        if (checkout.loadWaiting!=false) return;
+        if (true) {
+            checkout.setLoadWaiting('shipping-method');
+            var request = new Ajax.Request(
+                this.saveUrl,
+                {
+                    method:'post',
+                    onComplete: this.onComplete,
+                    onSuccess: this.onSave,
+                    onFailure: this.failppmx,
+                    parameters: Form.serialize(this.form)
+                }
+            );
+        }
+    },
+	failppmx: function(){
+		takeoffppmxloading();
+		checkout.ajaxFailure.bind(checkout);
+	},
+    resetLoadWaiting: function(transport){
+        checkout.setLoadWaiting(false);
+    },
+
+    nextStep: function(transport){
+        if (transport && transport.responseText){
+            try{
+                response = eval('(' + transport.responseText + ')');
+            }
+            catch (e) {
+                response = {};
+            }
+        }
+
+        if (response.error) {
+            alert(response.message);
+            return false;
+        }
+
+        if (response.update_section) {
+            $('checkout-'+response.update_section.name+'-load').update(response.update_section.html);
+        }
+        payment.initWhatIsCvvListeners();
+        if (response.goto_section) {
+            //checkout.gotoSection(response.goto_section);
+            checkout.reloadProgressBlock();
+
+    		this.ppmxRedirectPayment();
+            return;
+        }
+        if (response.payment_methods_html) {
+            $('checkout-payment-method-load').update(response.payment_methods_html);
+        }
+
+        checkout.setShippingMethod();
+
+		this.ppmxRedirectPayment();
+    },
+
+    ppmxRedirectPayment: function() {
+    	setTimeout(function () {
+    		window.location = "<?php echo $this->getCheckoutUrl()?>";
+    		}, 2000);
+    }
+}
+
+ppmxshippingMethod = new PpmxShippingMethod('co-shipping-method-form', "<?php echo $this->getUrl('checkout/onepage/saveShippingMethod') ?>");
+
+</script>
+
+
+<script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+
+<script type="text/javascript">
+	$j = jQuery.noConflict();
+
+	function onclickshortcutppmx(){
+		entro = false;
+		methodSelected = false;
+		$j('#co-shipping-method-form :input:radio').each(function (i){
+			entro = true;
+		    if(this.checked){
+		    	methodSelected = true;
+		    	return;
+		    }
+	    });;
+	    if(entro && !methodSelected){
+			alert("Seleccione una forma de envío.");
+			return;
+	    }
+	    showbtnppmx();
+	    ppmxshippingMethod.save();
+	    //$j.when($j("#shipping-method-buttons-container :button").trigger("click")).done(window.location = "<?php echo $this->getCheckoutUrl()?>");
+	}
+	$j( document ).ready(function() {
+		$j('#payment-buttons-container :input').click(function() {
+			onclickpaymentppmx();
+		});
+		$j('#btnscppmx').prependTo('#shipping-method-buttons-container');
+		$j('#btnscppmx').css("display", "inline-block");
+	});
+	function sortPPMX(){
+		$j( '#p_method_ppmx' ).parent().after($j('#p_method_ppmx_debito2').parent());
+		$j( '#p_method_ppmx_debito2').parent().after($j('#p_method_ppmx_mensualidades2').parent());
+		if(!validateifselectedppmx()) {
+			$j('#p_method_ppmx').attr('checked','checked');
+			payment.switchMethod('ppmx');
+		}
+	}
+	function validateifselectedppmx(){
+	    var val = false;
+	    $j('#co-payment-form :input:radio').each(function (i){
+		    if((this.value=="ppmx"||this.value=="ppmx_debito2"|| this.value=="ppmx_mensualidades2") &&  this.checked){
+			    val = true;
+		    }
+	    });;
+	    return val;
+	};
+	function onclickpaymentppmx(){
+		if(validateifselectedppmx()){
+			showbtnppmx();
+		}
+	}
+	function takeoffppmxloading(){
+		$j('#backgr').css("display", "none"); 
+		$j('#ppmx_popup').css("display", "none");	
+	}
+	function showbtnppmx(){
+		$j('#backgr').css("display", "inline"); 
+		$j('#ppmx_popup').css("display", "inline");
+	}
+</script>
+<div id="backgr"></div>
+<div id='ppmx_popup'>
+	<img style="width: 125px; height: 44px"
+		src="<?php echo $this->getSkinUrl('images/paypalmx/bdg_compra_segura_pp_.PNG'); ?>"
+		class='ppmx_logo'>
+	<div class='ppmx_content'>
+		<div class='ppmx_box'></div>
+		<span class='ppmx_title'>Lo estamos redirigiendo a los servidores
+			seguros</span></br>
+		<div class='ppmx_loader'>
+			<img alt=""
+				src="<?php echo $this->getSkinUrl('images/paypalmx/paypalmx_loader.gif');?>">
+			<div>Usted puede pagar con tarjetas de crédito y débito</div>
+		</div>
+	</div>
+</div>
+<?php if($this->prueba()){  $shortcutHtmlId = $this->getShortcutHtmlId(); ?>
+<span id="btnscppmx" onClick="onclickshortcutppmx()">
+	<p class="paypal-logo">
+		<?php if ($this->isOrPositionBefore()): ?>
+		<span class="paypal-or"><?php echo $this->__('-OR-');?> </span>
+		<?php endif; ?>
+
+		<a id="<?php echo $shortcutHtmlId ?>"><img
+			src="<?php echo $this->getImageUrl()?>"
+			alt="<?php echo Mage::helper('paypalmx')->__('Pague con PayPal');?>"
+			title="<?php echo Mage::helper('paypalmx')->__('Pague con PayPal');?>" />
+		</a>
+		<?php if ($this->isOrPositionAfter()): ?>
+		<span class="paypal-or"><?php echo $this->__('-OR-');?> </span>
+		<?php endif; ?>
+		<?php if ($this->getConfirmationUrl() || $this->getIsInCatalogProduct()): ?>
+		<?php if ($this->getIsInCatalogProduct()): ?>
+		<input type="hidden" id="pp_checkout_url" name="return_url" value="" />
+		<?php endif; ?>
+		<script type="text/javascript">
+//<![CDATA[
+    Event.observe('<?php echo $shortcutHtmlId ?>', 'click', function(event) {
+        <?php if ($this->getConfirmationUrl()): ?>
+            if (confirm('<?php echo Mage::helper('core')->jsQuoteEscape($this->getConfirmationMessage())?>')) {
+                this.href = '<?php echo $this->getConfirmationUrl() ?>';
+            }
+        <?php endif; ?>
+        <?php if ($this->getIsInCatalogProduct()): ?>
+            $('pp_checkout_url').value = this.href;
+            productAddToCartForm.submit(this);
+            event.stop();
+        <?php endif; ?>
+    });
+//]]>
+</script>
+		<?php endif;?>
+	</p>
+</span>
+<?php } ?>

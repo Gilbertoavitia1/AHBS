@@ -1,0 +1,83 @@
+<?php $_priceDisplay = ($this->helper('tax')->displayCartBothPrices()) ? 'display-both-prices' : 'display-single-price'; ?>
+
+<div id="cart" class="sidebar col-sm-12 col-md-12">
+<aside class="widget cart <?php echo $_priceDisplay; ?>">
+  <header>
+        <h1 class="title"><strong><?php echo $this->__('Shopping Cart') ?></strong></h1>
+        <!--<?php if(!$this->hasError()): ?>
+        <ul class="checkout-types top pull-right">
+        <?php foreach ($this->getMethods('top_methods') as $method): ?>
+            <?php if ($methodHtml = $this->getMethodHtml($method)): ?>
+            <li><?php echo $methodHtml; ?></li>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        </ul>
+        <?php endif; ?>-->
+  </header>
+</aside>
+<aside class="widget cart">
+    <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+    <?php echo $this->getChildHtml('form_before') ?>
+    <form action="<?php echo $this->getUrl('checkout/cart/updatePost') ?>" method="post" >
+    <?php echo $this->getBlockHtml('formkey'); ?>        
+        <table class="table ">
+            <tr>
+                <th></th>
+                <th><?php echo $this->__('Product Name') ?></th>
+                <th><?php echo $this->__('Price') ?></th>
+                <th><?php echo $this->__('Qty') ?></th>
+                <th><?php echo $this->__('Subtotal') ?></th>
+                <th></th>
+                <th></th>
+            </tr>
+            
+                <?php foreach($this->getItems() as $_item): ?>
+                    <tr><?php echo $this->getItemHtml($_item) ?></tr>
+                <?php endforeach ?>
+            
+            
+        </table>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="update-buttons form-box">    
+        <?php if($this->getContinueShoppingUrl()): ?>
+            <button type="button" title="<?php echo $this->__('Continue Shopping') ?>" class="button_link btn btn-continue" onclick="setLocation('<?php echo $this->getContinueShoppingUrl() ?>')"><span><span><?php echo $this->__('Continue Shopping') ?></span></span></button>
+        <?php endif; ?>
+        <button type="submit" title="<?php echo $this->__('Update Shopping Cart') ?>" class="button_link btn btn-update"><span><span><?php echo $this->__('Update Shopping Cart') ?></span></span></button>
+        
+        </div>
+            </div>
+        </div>
+        
+        
+        
+    </form>
+</aside>
+<div class="row">    
+    <div class="cart-forms">
+        <div class="col-xs-12 col-sm-3 col-md-3">
+        <?php echo $this->getChildHtml('crosssell') ?>
+        <?php echo $this->getChildHtml('coupon') ?>
+        <?php echo $this->getChildHtml('credit');?>
+        <?php echo $this->getChildHtml('referral_code') ?>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4">
+             <?php if (!$this->getIsVirtual()): echo $this->getChildHtml('shipping'); endif; ?>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-5">
+            <div class="cart-totals-wrapper">
+        <div class="cart-totals">
+            <?php echo $this->getChildHtml('totals'); ?>
+            <?php if(!$this->hasError()): ?>
+            <?php foreach ($this->getMethods('methods') as $method): ?>
+                <?php if ($methodHtml = $this->getMethodHtml($method)): ?>
+                <?php echo $methodHtml; ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            <?php endif; ?>
+        </div>        
+    </div>
+        </div>
+    </div>    
+</div>
+</div>

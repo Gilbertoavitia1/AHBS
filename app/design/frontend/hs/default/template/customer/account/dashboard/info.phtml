@@ -1,0 +1,37 @@
+<div class="col2-set">
+    <div class="col-md-6 col-sm-6">
+        <div class="box form-box">
+            <div class="box-title">
+                <h5><?php echo $this->__('Contact Information') ?></h5>
+            </div>
+            <div class="box-content">
+                <?php echo $this->escapeHtml($this->getCustomer()->getName()) ?><br>
+                <?php echo $this->escapeHtml($this->getCustomer()->getEmail()) ?>
+                <hr>
+                <a class="btn" href="<?php echo $this->getUrl('customer/account/edit') ?>"><?php echo $this->__('Edit') ?></a>
+                <a class="btn" href="<?php echo $this->getChangePasswordUrl() ?>"><?php echo $this->__('Change Password') ?></a>
+                
+            </div>
+        </div>
+    </div>
+    <?php if( $this->isNewsletterEnabled() ): ?>
+    <div class="col-md-6 col-sm-6 ">
+        <div class="box form-box">
+            <div class="box-title">
+                <h5><?php echo $this->__('Newsletters') ?></h5>
+            </div>
+            <div class="box-content">
+                <?php if( $this->getIsSubscribed() ): ?>
+                    <?php echo $this->__("You are currently subscribed to 'General Subscription'.") ?>
+                <?php else: ?>
+                    <?php echo $this->__('You are currently not subscribed to any newsletter.') ?>
+                <?php endif; ?>
+                <hr>
+                <a  class="btn" href="<?php echo $this->getUrl('newsletter/manage') ?>"><?php echo $this->__('Edit') ?></a>
+            </div>
+        </div>
+        <?php /* Extensions placeholder */ ?>
+        <?php echo $this->getChildHtml('customer.account.dashboard.info.extra')?>
+    </div>
+    <?php endif; ?>
+</div>

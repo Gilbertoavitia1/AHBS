@@ -1,0 +1,65 @@
+<?php
+/**
+ *
+ * @category   MW
+ * @package    MW_Credit
+ * @author Mage World <support@mage-world.com>
+ */
+?>
+<div id="toggleSectionnew">
+<?php $_programs = $this->getCollection();
+	  //$_numberCustomer = $this->getNumberCustomer(); ?>
+<?php if($_programs->getSize()): ?>
+	<?php echo $this->getPagerHtml(); ?>
+	<table class="data-table" id="my_listmemberprogram_table" >
+	    <thead>
+	        <tr>
+				<th style="text-align: center;"><?php echo $this->__('Program Name') ?></th>
+				<th style="text-align: center;"><?php echo $this->__('Commission Earned *') ?></th>
+				<th style="text-align: center;"><?php echo $this->__('Customer Discount *') ?></th>
+				<th style="text-align: center;"><?php echo $this->__('Start Date') ?></th>
+				<th style="text-align: center;"><?php echo $this->__('End Date') ?></th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	        <?php foreach ($_programs as $_program): ?>
+	            <tr style="text-align:left">
+	            	<td ><a href='<?php echo $this->getUrl('affiliate/index/viewprogram').'id/'.$_program->getProgramId(); ?>'><?php echo $_program->getProgramName();?></a></td>
+					<td style=" width:95px;"><?php 
+						if(substr_count($_program->getCommission(),',') >= 1){
+							echo $_program->getCommission();
+						}else{
+							if(substr_count($_program->getCommission(),'%') == 0){
+							 echo Mage::helper('affiliate')->formatMoney($_program->getCommission());
+							 } else if(substr_count($_program->getCommission(),'%') == 1){
+							 echo $_program->getCommission();}
+						}
+						?>
+						 </td>
+						<td >
+						<?php 
+						if(substr_count($_program->getDiscount(),',') >= 1){
+							echo $_program->getDiscount();
+						}else{
+							if(substr_count($_program->getDiscount(),'%') == 0){
+							 echo Mage::helper('affiliate')->formatMoney($_program->getDiscount());
+							 } else if(substr_count($_program->getDiscount(),'%') == 1){
+							 echo $_program->getDiscount();}
+						}
+						
+						 
+						 ?>
+					 </td>
+	            	<td style="text-align: center;width: 80px;"><?php echo $_program->getStartDate();?></td>
+	            	<td style="text-align: center;width: 80px;"><?php echo $_program->getEndDate();?></td>
+	            </tr>
+	        <?php endforeach; ?>
+	    </tbody>
+	</table>
+	<?php echo $this->getPagerHtml(); ?>
+	<script type="text/javascript">decorateTable('my_listmemberprogram_table')</script>
+<?php endif ?>
+	<br />
+	<label  class="page-title" for="note_affiliate" ><?php echo $this->__('* per qualified transaction.') ?></label>
+</div>
+

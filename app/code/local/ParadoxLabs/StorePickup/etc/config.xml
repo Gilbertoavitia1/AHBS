@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<ParadoxLabs_StorePickup>
+			<version>1.1.1</version>
+		</ParadoxLabs_StorePickup>
+	</modules>
+
+	<global>
+		<models>
+			<pl_store_pickup>
+				<class>ParadoxLabs_StorePickup_Model</class>
+			</pl_store_pickup>
+		</models>
+	</global>
+
+	<default>
+		<carriers>
+			<pl_store_pickup>
+				<active>1</active>
+				<model>pl_store_pickup/carrier_pickup</model>
+				<title>In-store Pickup (during store hours)</title>
+				<method>Fee</method>
+				<specificerrmsg>In-store pickup is currently unavailable. If you would like to pick your order up, please contact us.</specificerrmsg>
+				<min_amount>0.00</min_amount>
+				<max_amount>99,999.00</max_amount>
+			</pl_store_pickup>
+		</carriers>
+	</default>
+</config>

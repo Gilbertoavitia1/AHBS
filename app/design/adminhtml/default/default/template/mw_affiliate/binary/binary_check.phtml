@@ -1,0 +1,101 @@
+<?php $affiliate = Mage::registry('check');?>
+<?php $datea = new DateTime($affiliate['start_date']);?>
+<?php $dateb = new DateTime($affiliate['end_date']);?>
+<?php $won = $affiliate['profit'] ? $affiliate['profit'] : '0';?>
+<?php $chain = $affiliate['chain'] ? $affiliate['chain'] : '0';?>
+<div class="main-col-inner">
+    <div id="messages"></div>
+    <div class="content-header">
+        <h3 class="icon-head head-adminhtml-affiliatebonuspreferred"><?php echo $this->__('Cheque Igualable') ?>: 
+            <?php echo Mage::getModel('customer/customer')->load($affiliate['customer_id'])->getName() ?>
+        </h3>
+                
+        <p class="form-buttons">
+            <button style="" onclick="setLocation('<?php echo Mage::helper('adminhtml')->getUrl("affiliate/adminhtml_affiliatebinary/igualable") ?>')" class="scalable back" type="button" title="Volver"><span><span><span>Volver</span></span></span></button>
+        </p>
+    </div>
+    <div class="entry-edit">
+        <div class="box-left">
+            <div class="entry-edit">
+                <div class="entry-edit-head">
+                    <h4 class="icon-head head-account"><?php echo $datea->format('Y-m-d').' a '. $dateb->format('Y-m-d') ?> </h4>
+                </div>
+                <div class="fieldset">
+                    <div class="main-stuff">  
+                        <h3><?php echo $this->__('Earned Commission') ?></h3>
+                        <h3><?php echo $won?></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="box-right">
+            <div class="entry-edit">
+                <div class="entry-edit-head">
+                    <h4 class="icon-head head-account"><?php echo $this->__('Profit') ?></h4>
+                </div>
+                <div class="fieldset">
+                    <div class="grid">
+                        <table cellspacing="0" class="data">
+                            <thead>
+                                <tr class="headings">
+                                    <th><?php echo $this->__('Customer')?></th>
+                                    <th><?php echo $this->__('Paid')?></th>  
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php $info = Mage::getModel('affiliate/affiliatebinaryresidual')->getCollection()
+                                
+                                ->addFieldToFilter('id', array('eq' => $chain))
+                                ->getData(); ?>
+                            <?php foreach ($info as $key => $value):?>
+                                <tr>
+                                    <td><?php echo Mage::getModel('customer/customer')->load($value['customer_id'])->getName() ?> </td>
+                                    <td><?php echo $value['paid']?> </td>
+                                    <td><a href="<?php echo Mage::helper('adminhtml')->getUrl("affiliate/adminhtml_affiliatebinary/editresidual/", array('id' => $value['id'])) ?>" target="_blank">Ver Reporte</a></td>
+                                </tr>
+                            <?php endforeach;?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>    
+        <div class="clear"></div>            
+    </div>
+</div>
+<style>
+    .form-control {
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555;
+    display: block;
+    font-size: 14px;
+    height: 34px;
+    line-height: 1.42857;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 40%;
+    margin: 0 auto;
+    
+    text-align: right;
+}
+
+select.form-control {
+    
+    text-align: left;
+}
+
+.main-stuff{
+    text-align: center;
+    
+}
+
+.main-stuff h3{
+    margin-top: 10px;
+}
+    </style>
